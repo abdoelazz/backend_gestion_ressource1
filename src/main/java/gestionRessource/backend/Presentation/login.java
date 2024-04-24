@@ -1,28 +1,60 @@
 package gestionRessource.backend.Presentation;
-import gestionRessource.backend.controler.UserControler;
-import gestionRessource.backend.dto.AuthentificationDTO;
-import gestionRessource.backend.model.User;
 import org.springframework.stereotype.Controller;
+import gestionRessource.backend.controler.*;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import gestionRessource.backend.controler.UserControler;
+import gestionRessource.backend.dto.AuthentificationDTO;
+import gestionRessource.backend.model.User;
+
 @Controller
 public class login {
+
+    @Autowired
+    private UserControler userControler;
+
     @GetMapping("/login")
-    public String index() {
-
-        return "login";  // This will look for /WEB-INF/jsp/index.jsp
+    public String showLoginPage() {
+        return "login"; // This will look for login.jsp or login.html
     }
+
     @PostMapping("/Login")
-    public String login(@RequestParam(name = "username")String username
-                        ,@RequestParam(name = "password")String password) {
-        AuthentificationDTO authentificationDTO = new AuthentificationDTO().setLogin(username).setPassword(password);
-        UserControler userControler = new UserControler();
+    public String handleLogin(
+            @RequestParam("username") String username,
+            @RequestParam("password") String password,
+            RedirectAttributes redirectAttributes,
+            Model model
+    ) {
+        AuthentificationDTO authDto = new AuthentificationDTO();
+        authDto.setLogin(username);
+        authDto.setPassword(password);
 
-        System.out.println(userControler.authentification(authentificationDTO));
+        User user = userControler.authentification(authDto);
 
-        return "index";  // This will look for /WEB-INF/jsp/index.jsp
+        if (user != null) {
+            // Login successful
+            // Redirect to a secure page, or set user in session, etc.
+            redirectAttributes.addFlashAttribute("message", "Login successful!");
+            System.out.println("l7wa");
+            return "redirect:/home"; // Change to your secure page
+        } else {
+            // Login failed
+            model.addAttribute("error", "Invalid username or password");
+            return "login"; // Return to login page with error message
+        }
     }
+
 
 }
