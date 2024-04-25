@@ -28,9 +28,17 @@ public class login {
     private UserControler userControler;
 
     @GetMapping("/login")
-    public String showLoginPage() {
-        return "login"; // This will look for login.jsp or login.html
+    public String showLoginPage(HttpServletRequest request) {
+        HttpSession session = request.getSession(false); // Retrieve existing session or null if no session exist
+        if (session != null && session.getAttribute("user") != null) {
+            // If a session exists and a user is logged in, redirect to the home page
+            return "home";
+        } else {
+            // If no session exists or no user is logged in, return the login page
+            return "login";
+        }
     }
+
 
     @PostMapping("/Login")
     public String handleLogin(
@@ -51,10 +59,11 @@ public class login {
             // Login successful
             // Redirect to a secure page, or set user in session, etc.
             redirectAttributes.addFlashAttribute("message", "Login successful!");
+
             HttpSession session = request.getSession();
             // Store data in the session
-            session.setAttribute("username", username); // Store the actual username
-            System.out.println(session.getAttribute("username"));
+            session.setAttribute("user", user);
+            User loggedInUser = (User) session.getAttribute("user");
             return "redirect:/home"; // Change to your secure page
         } else {
             // Login failed
