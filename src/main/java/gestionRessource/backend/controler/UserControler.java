@@ -34,29 +34,30 @@ public class UserControler {
 	@Autowired
 	private DepartementService departementService;
 
-	public ResponseEntity<?> authentification( AuthentificationDTO authentification) {
+	@PostMapping("/authentification")
+	public User authentification(@RequestBody AuthentificationDTO authentification) {
 		String encodedPassword = PasswordEncoderUtil.encodePassword(authentification.getPassword());
-			User user = userService.getUserByLoginPassword(authentification.getLogin(), encodedPassword);
-			if (user != null) {
-				System.out.println(user.getLogin());
-				return ResponseEntity.ok(user);
-			} else {
-				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login or Password incorrect");
-			}
+		User user = userService.getUserByLoginPassword(authentification.getLogin(), encodedPassword);
+		if (user != null) {
+			return user;
 
 
-
-
+		} else {
+			System.out.println("Login ou Password incorrecte");
+			return null;
+		}
 	}
 
 	@PostMapping("/addUser")
 	public ResponseEntity<String> addUser(@RequestBody UserDTO userdto) {
 		User user = UserConvert.convertUserDtoToUser(userdto);
+		Departement departement = departementService.getDepartementById(userdto.getDepartementId());
+		user.setDepartement(departement);
 		User userAdded = userService.saveUser(user);
 		if (userAdded != null) {
-			return ResponseEntity.ok("User added successfully");
+			return new ResponseEntity<>("User added successfully", HttpStatus.OK);
 		} else {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add user");
+			return new ResponseEntity<>("Failed to add user", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -78,7 +79,12 @@ public class UserControler {
 		oldUser.setFirst_name(userdto.getFirst_name());
 		oldUser.setLast_name(userdto.getLast_name());
 		oldUser.setLogin(userdto.getLogin());
-		return userService.saveUser(oldUser);
+		User userModified = userService.saveUser(oldUser);
+		if (userModified != null) {
+			return userModified;
+		} else {
+			return null;
+		}
 	}
 
 	@PutMapping("/modifyPasswordUser")
@@ -86,11 +92,17 @@ public class UserControler {
 		User oldUser = userService.getUserById(user_id);
 		String encodedPassword = PasswordEncoderUtil.encodePassword(password);
 		oldUser.setPassword(encodedPassword);
-		return userService.saveUser(oldUser);
+		User userModified = userService.saveUser(oldUser);
+		if (userModified != null) {
+			return userModified;
+		} else {
+			return null;
+		}
 	}
 
 	@PostMapping("/getUsersByRoleAndDep")
 	public List<User> getUsersByRoleAndDep(@RequestBody UserDTO userDTO) {
 		return userService.getUsersByRoleAndDep(userDTO.getRole(), userDTO.getDepartementId());
 	}
+
 }
