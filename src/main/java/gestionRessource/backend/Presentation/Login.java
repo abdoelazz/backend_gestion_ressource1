@@ -2,7 +2,6 @@ package gestionRessource.backend.Presentation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
-import gestionRessource.backend.controler.*;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,11 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import gestionRessource.backend.controler.UserControler;
@@ -22,17 +17,17 @@ import gestionRessource.backend.dto.AuthentificationDTO;
 import gestionRessource.backend.model.User;
 
 @Controller
-public class login {
+public class Login {
 
     @Autowired
     private UserControler userControler;
 
     @GetMapping("/login")
     public String showLoginPage(HttpServletRequest request) {
-        HttpSession session = request.getSession(false); // Retrieve existing session or null if no session exist
+        HttpSession session = request.getSession(false); // Retrieve existing session or null if no session exists
         if (session != null && session.getAttribute("user") != null) {
             // If a session exists and a user is logged in, redirect to the home page
-            return "home";
+            return "redirect:/home";
         } else {
             // If no session exists or no user is logged in, return the login page
             return "login";
