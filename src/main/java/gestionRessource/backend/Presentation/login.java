@@ -1,4 +1,6 @@
 package gestionRessource.backend.Presentation;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import gestionRessource.backend.controler.*;
 
@@ -35,7 +37,9 @@ public class login {
             @RequestParam("username") String username,
             @RequestParam("password") String password,
             RedirectAttributes redirectAttributes,
-            Model model
+            Model model,
+            HttpServletRequest request // Inject HttpServletRequest object
+
     ) {
         AuthentificationDTO authDto = new AuthentificationDTO();
         authDto.setLogin(username);
@@ -47,8 +51,11 @@ public class login {
             // Login successful
             // Redirect to a secure page, or set user in session, etc.
             redirectAttributes.addFlashAttribute("message", "Login successful!");
-            System.out.println("l7wa");
-            return "redirect:/home"; // Change to your secure page
+            HttpSession session = request.getSession();
+            // Store data in the session
+            session.setAttribute("username", "john_doe");
+            System.out.println(session.getAttribute("username"));
+            return "redirect:/home"; // Change to your index page
         } else {
             // Login failed
             model.addAttribute("error", "Invalid username or password");
