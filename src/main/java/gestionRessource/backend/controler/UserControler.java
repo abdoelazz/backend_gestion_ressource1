@@ -36,7 +36,6 @@ public class UserControler {
 
 	public ResponseEntity<?> authentification( AuthentificationDTO authentification) {
 		String encodedPassword = PasswordEncoderUtil.encodePassword(authentification.getPassword());
-			System.out.println("dkhelt");
 			User user = userService.getUserByLoginPassword(authentification.getLogin(), encodedPassword);
 			if (user != null) {
 				System.out.println(user.getLogin());
