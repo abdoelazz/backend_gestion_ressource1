@@ -38,7 +38,7 @@ public class login {
             @RequestParam("password") String password,
             RedirectAttributes redirectAttributes,
             Model model,
-            HttpServletRequest request // Inject HttpServletRequest object
+            HttpServletRequest request
 
     ) {
         AuthentificationDTO authDto = new AuthentificationDTO();
@@ -53,9 +53,9 @@ public class login {
             redirectAttributes.addFlashAttribute("message", "Login successful!");
             HttpSession session = request.getSession();
             // Store data in the session
-            session.setAttribute("username", "john_doe");
+            session.setAttribute("username", username); // Store the actual username
             System.out.println(session.getAttribute("username"));
-            return "redirect:/home"; // Change to your index page
+            return "redirect:/home"; // Change to your secure page
         } else {
             // Login failed
             model.addAttribute("error", "Invalid username or password");
