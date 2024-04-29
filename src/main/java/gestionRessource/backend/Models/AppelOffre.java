@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Table
 public class AppelOffre {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
     private LocalDate dateDebut;

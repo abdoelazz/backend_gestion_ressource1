@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Table
 public class Panne {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(columnDefinition = "boolean default false")
     private boolean treated;

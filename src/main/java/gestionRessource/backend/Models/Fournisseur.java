@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 @Table
 public class Fournisseur{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(unique = true)
     private String nomSociete;

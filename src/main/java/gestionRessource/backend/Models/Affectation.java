@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @Table
 public class Affectation {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
     private String departement;

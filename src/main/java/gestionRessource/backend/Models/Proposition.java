@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Table
 public class Proposition {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
     @Enumerated(EnumType.STRING)

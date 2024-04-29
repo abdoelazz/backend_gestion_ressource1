@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Table
 public class Message {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
     private String message;

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Table
 public class Materiel_Proposition {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
     private String marque;
