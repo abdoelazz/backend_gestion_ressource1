@@ -1,0 +1,76 @@
+package gestionRessource.backend.Controllers;
+
+import gestionRessource.backend.DTO.*;
+import gestionRessource.backend.Services.*;
+import gestionRessource.backend.Utils.UserNotFoundException;
+import gestionRessource.backend.Utils.WrongPasswordException;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+public class UserController {
+    @Autowired
+    private UserService userService;
+    @GetMapping("/getEnseignants/{departement}")
+    public ResponseEntity<List<UserDTO>> getEnseignants(@PathVariable String departement){
+        return new ResponseEntity<>(userService.getEnseignants(departement), HttpStatus.OK);
+    }
+    @GetMapping("/getChefs")
+    public ResponseEntity<List<UserDTO>> getChefDept(){
+        return new ResponseEntity<>(userService.getChefs(), HttpStatus.OK);
+    }
+    @GetMapping("/getTechniciens")
+    public ResponseEntity<List<UserDTO>> getTechniciens(){
+        return new ResponseEntity<>(userService.getTechniciens(), HttpStatus.OK);
+    }
+    @GetMapping("/getUsers")
+    public ResponseEntity<List<UserDTO>> getUsers(){
+        return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
+    }
+    @DeleteMapping("/deleteUser/{id}")
+    public void deleteUser(@PathVariable Integer id){
+        userService.deleteUser(id);
+    }
+    @PutMapping("/editUser")
+    public ResponseEntity<?> editUser(@RequestBody UserDTO userDTO, HttpServletRequest request){
+        try {
+            userService.editUser(userDTO, request);
+            return ResponseEntity.ok().build();
+        } catch (WrongPasswordException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        }
+    }
+    @GetMapping("/getUser/{id}")
+    public ResponseEntity<?> getUser(@PathVariable Integer id){
+        try {
+            return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
+        } catch (WrongPasswordException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+    @PutMapping("/editProfile/{id}")
+    public ResponseEntity<?> editProfile(@PathVariable Integer id, @RequestBody UserDTO userDTO){
+        try {
+            userService.editProfile(id, userDTO);
+            return ResponseEntity.ok().build();
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        }
+    }
+    @PutMapping("/changePassword")
+    public ResponseEntity<?> changePassword(@RequestBody PassWordDTO passWordDTO, @NonNull HttpServletRequest request){
+        try {
+            userService.changePassword(passWordDTO, request);
+            return ResponseEntity.ok().build();
+        } catch (WrongPasswordException | UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        }
+    }
+
+}
