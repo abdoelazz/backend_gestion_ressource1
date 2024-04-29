@@ -19,7 +19,6 @@ public class MyRestController {
 
     @Autowired
     ResponsableService ImService;
-    @Autowired
 
     @GetMapping("/message")
     public String getMessage() {
