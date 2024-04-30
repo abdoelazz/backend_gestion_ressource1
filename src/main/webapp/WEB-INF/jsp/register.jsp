@@ -36,7 +36,58 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                         </div>
+
+
+
                         <form class="user" action="<c:url value='/register'/>" method="post">
+                            <div class="form-group">
+                                <select id="roleSelect" class="form-select form-control-user" required style="width: 300px">
+                                    <option value="">Select Role</option>
+                                    <option value="ENSEIGNANT">Enseignant</option>
+                                    <option value="CHEF_DEPARTEMENT">Chef Departement</option>
+                                    <option value="RESPONSABLE">Responsable</option>
+                                    <option value="FOURNISSEUR">Fournisseur</option>
+                                    <option value="TECHNICIEN">Technicien</option>
+                                </select>
+                            </div>
+                            <div id="dynamicFields">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-user btn-block">
+                                Register Account
+                            </button>
+                            <hr>
+                        </form>
+                        <div class="text-center">
+                            <a class="small" href="login">Already have an account? Login!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<script src="js/sb-admin-2.min.js"></script>
+
+</body>
+
+
+<script>
+    document.getElementById('roleSelect').addEventListener('change', function() {
+        var role = this.value;
+        var dynamicFieldsDiv = document.getElementById('dynamicFields');
+        dynamicFieldsDiv.innerHTML = ''; // Clear existing dynamic fields
+
+        if (role === 'ENSEIGNANT') {
+            dynamicFieldsDiv.innerHTML += `
+
+
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <input type="text" name="username" class="form-control form-control-user" id="exampleFirstName"
@@ -61,30 +112,22 @@
                                            id="exampleRepeatPassword" placeholder="Repeat Password" required>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-user btn-block">
-                                Register Account
-                            </button>
-                            <hr>
 
-                        </form>
-                        <div class="text-center">
-                            <a class="small" href="login">Already have an account? Login!</a>
-                        </div>
-                    </div>
+            `;
+        } else if (role === 'CHEF_DEPARTEMENT') {
+            dynamicFieldsDiv.innerHTML += `
+                <div class="form-group">
+                    <input type="text" name="departement" class="form-control form-control-user" id="exampleInputDepartement"
+                           placeholder="Departement" required>
                 </div>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<script src="js/sb-admin-2.min.js"></script>
-
-</body>
+                <div class="form-group">
+                    <input type="text" name="additionalField" class="form-control form-control-user" id="exampleInputAdditionalField"
+                           placeholder="Additional Field" required>
+                </div>
+            `;
+        }
+        // Add additional fields for other roles as needed
+    });
+</script>
 
 </html>
