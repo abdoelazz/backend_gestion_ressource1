@@ -36,29 +36,29 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                         </div>
-                        <form class="user" action="<c:url value='/register'/>" method="post">
+                        <form class="user" action="<c:url value='/registerFournisseur'/>" method="post">
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="text" name="username" class="form-control form-control-user" id="exampleFirstName"
+                                    <input type="text" name="username" class="form-control form-control-user" id="username"
                                            placeholder="Username" required>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail"
+                                    <input type="email" name="email" class="form-control form-control-user" id="email"
                                            placeholder="Email Address" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input type="text" name="departementId" class="form-control form-control-user" id="exampleDepartement"
-                                       placeholder="Departement ID" required>
+                                <input type="text" name="Society" class="form-control form-control-user" id="Society"
+                                       placeholder="Society" required>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <input type="password" name="password" class="form-control form-control-user"
-                                           id="exampleInputPassword" placeholder="Password" required>
+                                           id="password" placeholder="Password" required>
                                 </div>
                                 <div class="col-sm-6">
                                     <input type="password" class="form-control form-control-user"
-                                           id="exampleRepeatPassword" placeholder="Repeat Password" required>
+                                           id="repeatPassword" placeholder="Repeat Password" required>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary btn-user btn-block">
@@ -67,8 +67,9 @@
                             <hr>
 
                         </form>
+
                         <div class="text-center">
-                            <a class="small" href="login">Already have an account? Login!</a>
+                            <a class="small" href="forgot-password.html">Forgot Password?</a>
                         </div>
                     </div>
                 </div>
