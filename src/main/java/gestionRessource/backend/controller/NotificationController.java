@@ -1,4 +1,4 @@
-package gestionRessource.backend.controler;
+package gestionRessource.backend.controller;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import gestionRessource.backend.service.UserService;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/notification")
-public class NotificationControler {
+public class NotificationController {
 	@Autowired
 	private NotificationService notificationService;
 

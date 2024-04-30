@@ -1,4 +1,4 @@
-package gestionRessource.backend.controler;
+package gestionRessource.backend.controller;
 
 import java.sql.Date;
 import java.util.List;
@@ -25,7 +25,7 @@ import gestionRessource.backend.service.UserService;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/panne")
-public class PanneControler {
+public class PanneController {
 
 	@Autowired
 	private PanneService panneService;

@@ -1,4 +1,4 @@
-package gestionRessource.backend.controler;
+package gestionRessource.backend.controller;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import gestionRessource.backend.service.PanneService;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/constat")
-public class ConstatControler {
+public class ConstatController {
 	@Autowired
 	private ConstatService constatService;
 

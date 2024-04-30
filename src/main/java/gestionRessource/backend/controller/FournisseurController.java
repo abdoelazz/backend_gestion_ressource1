@@ -1,4 +1,4 @@
-package gestionRessource.backend.controler;
+package gestionRessource.backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,7 +18,7 @@ import gestionRessource.backend.utils.PasswordEncoderUtil;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/fournisseur")
-public class FournisseurControler {
+public class FournisseurController {
 	@Autowired
 	private FournisseurService fournisseurService;
 
