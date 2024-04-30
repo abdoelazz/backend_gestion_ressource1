@@ -1,5 +1,5 @@
 package gestionRessource.backend.Presentation;
-import gestionRessource.backend.controler.UserControler;
+import gestionRessource.backend.controller.UserController;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -16,7 +16,7 @@ public class Home {
 
 
     @Autowired
-    private UserControler userControler;
+    private UserController userControler;
 
     @GetMapping("/home")
     public String showHomePage(HttpServletRequest request) {

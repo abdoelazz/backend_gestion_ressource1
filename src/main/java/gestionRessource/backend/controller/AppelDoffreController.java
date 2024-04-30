@@ -1,4 +1,4 @@
-package gestionRessource.backend.controler;
+package gestionRessource.backend.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ import gestionRessource.backend.service.RessourceService;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/appelDoffre")
-public class AppelDoffreControler {
+public class AppelDoffreController {
 	@Autowired
 	private AppelDoffreService appelDoffreService;
 	@Autowired

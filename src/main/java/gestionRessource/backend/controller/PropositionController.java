@@ -1,4 +1,4 @@
-package gestionRessource.backend.controler;
+package gestionRessource.backend.controller;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ import gestionRessource.backend.service.RessourceService;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/proposition")
-public class PropositionControler {
+public class PropositionController {
 	@Autowired
 	private PropositionService propositionService;
 

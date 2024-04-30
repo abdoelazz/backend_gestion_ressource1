@@ -1,4 +1,4 @@
-package gestionRessource.backend.controler;
+package gestionRessource.backend.controller;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ import gestionRessource.backend.utils.PasswordEncoderUtil;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/user")
-public class UserControler {
+public class UserController {
 
 	@Autowired
 	private UserService userService;

@@ -1,4 +1,4 @@
-package gestionRessource.backend.controler;
+package gestionRessource.backend.controller;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ import gestionRessource.backend.service.UserService;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/ressource")
-public class RessourceControler {
+public class RessourceController {
 
 	@Autowired
 	private RessourceService ressourceService;

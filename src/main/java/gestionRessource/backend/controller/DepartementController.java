@@ -1,4 +1,4 @@
-package gestionRessource.backend.controler;
+package gestionRessource.backend.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ import gestionRessource.backend.service.UserService;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/departement")
-public class DepartementControler {
+public class DepartementController {
 	@Autowired
 	private DepartementService departementService;
 

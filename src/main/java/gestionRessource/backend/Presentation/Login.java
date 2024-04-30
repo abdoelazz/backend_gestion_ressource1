@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import gestionRessource.backend.controler.UserControler;
+import gestionRessource.backend.controller.UserController;
 import gestionRessource.backend.dto.AuthentificationDTO;
 import gestionRessource.backend.model.User;
 
@@ -20,7 +20,7 @@ import gestionRessource.backend.model.User;
 public class Login {
 
     @Autowired
-    private UserControler userControler;
+    private UserController userControler;
 
     @GetMapping("/login")
     public String showLoginPage(HttpServletRequest request) {
