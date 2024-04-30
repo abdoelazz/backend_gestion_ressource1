@@ -26,7 +26,7 @@ public class SecurityConfiguration {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    String urlPattern = "/api/auth/**";
+    String urlPattern = "/**";
     RequestMatcher requestMatcher = new AntPathRequestMatcher(urlPattern);
 
     http
@@ -50,6 +50,6 @@ public class SecurityConfiguration {
             .cors(withDefaults()); // New way to configure CORS
 
     return http.build();
-  }
+    }
 }
 

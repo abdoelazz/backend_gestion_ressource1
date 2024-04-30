@@ -195,4 +195,6 @@ public class UserService {
         List<User> users = userRepository.findUsersByRole(Role.TECHNICIEN);
         return getUserDTOS(users);
     }
+
+
 }
