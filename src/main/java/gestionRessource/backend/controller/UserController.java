@@ -51,8 +51,14 @@ public class UserController {
 	@PostMapping("/addUser")
 	public ResponseEntity<String> addUser(@RequestBody UserDTO userdto) {
 		User user = UserConvert.convertUserDtoToUser(userdto);
-		Departement departement = departementService.getDepartementById(userdto.getDepartementId());
-		user.setDepartement(departement);
+		if(user.getRole().equals("Enseignant") || user.getRole().equals("ChefDepartement"))
+		{
+			Departement departement = departementService.getDepartementById(userdto.getDepartementId());
+			user.setDepartement(departement);
+		}
+		else {
+			user.setDepartement(null);
+		}
 		User userAdded = userService.saveUser(user);
 		if (userAdded != null) {
 			return new ResponseEntity<>("User added successfully", HttpStatus.OK);
