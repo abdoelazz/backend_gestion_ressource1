@@ -2,6 +2,7 @@ package gestionRessource.backend.controler;
 
 import java.util.List;
 
+import gestionRessource.backend.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,7 +52,7 @@ public class UserControler {
 	@PostMapping("/addUser")
 	public ResponseEntity<String> addUser(@RequestBody UserDTO userdto) {
 		User user = UserConvert.convertUserDtoToUser(userdto);
-		if(user.getRole().equals("Enseignant") || user.getRole().equals("ChefDepartement"))
+		if(user.getRole()== Role.Enseignant || user.getRole() == Role.ChefDepartement)
 		{
 			Departement departement = departementService.getDepartementById(userdto.getDepartementId());
 			user.setDepartement(departement);
