@@ -46,7 +46,7 @@
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
-            <a class="nav-link" href="departements.jsp">
+            <a class="nav-link" href="departements">
                 <i class="fas fa-building"></i>
                 <span>Departements</span></a>
         </li>

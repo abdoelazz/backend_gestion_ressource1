@@ -3,6 +3,7 @@ package gestionRessource.backend.Presentation;
 import gestionRessource.backend.controller.DepartementController;
 import gestionRessource.backend.controller.UserController;
 import gestionRessource.backend.model.Departement;
+import gestionRessource.backend.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,11 @@ public class Departements {
         @Autowired
         private UserController userControler;
 
+
+        @Autowired
+        private DepartementController departementController;
+
+
         @GetMapping("/departements")
         public String showDepartementsPage(HttpServletRequest request) {
 //        HttpSession session = request.getSession(false); // Retrieve existing session or null if no session exists
@@ -31,9 +37,18 @@ public class Departements {
 //        }
 
 
-            DepartementController departementController = new DepartementController();
             List<Departement> departements = departementController.getAllDepartements();
             request.setAttribute("departements", departements);
+            for(Departement departement:departements)
+            {
+                System.out.println(departement.getNomDepartement());
+                List<User> users = departement.getUsers();
+                for(User user:users)
+                {
+                    System.out.println(user.getLogin());
+                }
+
+            }
             return "departements";
         }
 
