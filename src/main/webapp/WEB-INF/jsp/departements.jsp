@@ -21,6 +21,7 @@
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
 
+    <link href="css/ours.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
@@ -330,12 +331,26 @@
                                     List<User> users = departement.getUsers();
                                 %>
                                 <tr>
-                                    <td><%= nomDepartement %></td>
                                     <td>
-                                        <% for (User user : users) { %>
-                                        <%= user.getLogin()%>,
+                                        <a href="#" onclick="showDepartmentUsers(<%= users %>); return false;">
+                                            <%= nomDepartement %>
+                                        </a>
+
+                                    </td>
+                                    <td>
+                                        <% if (users.size() == 1) { %>
+                                        <%= users.get(0).getFirst_name() %>
+                                        <%= users.get(0).getLast_name() %>
+                                        <% } else { %>
+                                            <% for (int i = 0; i < users.size(); i++) { %>
+                                                <%= users.get(i).getFirst_name() %>
+                                                <%= users.get(i).getLast_name() %>
+                                                <% if (i < users.size() - 1) { %>,
+                                                <% } %>
+                                            <% } %>
                                         <% } %>
                                     </td>
+
                                 </tr>
                                 <% } %>
                                 </tbody>
@@ -346,6 +361,14 @@
 
             </div>
             <!-- /.container-fluid -->
+            <!-- Modal -->
+            <div id="userModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <div id="userDetails"></div>
+                </div>
+            </div>
+
 
         </div>
         <!-- End of Main Content -->
@@ -390,6 +413,31 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    function showDepartmentUsers(users) {
+        var modalContent = document.getElementById("userDetails");
+        modalContent.innerHTML = ""; // Clear previous content
+
+        // Iterate over users and append their names to modal content
+        for (var i = 0; i < users.length; i++) {
+            var user = users[i];
+            modalContent.innerHTML += "<p>" + user.first_name + " " + user.last_name + "</p>";
+        }
+
+        // Display the modal
+        var modal = document.getElementById("userModal");
+        modal.style.display = "block";
+    }
+
+    // JavaScript function to close the modal
+    function closeModal() {
+        var modal = document.getElementById("userModal");
+        modal.style.display = "none";
+    }
+
+</script>
 
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>

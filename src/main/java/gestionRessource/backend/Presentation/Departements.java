@@ -24,6 +24,8 @@ public class Departements {
         @Autowired
         private DepartementController departementController;
 
+        @Autowired
+        private UserController userController;
 
         @GetMapping("/departements")
         public String showDepartementsPage(HttpServletRequest request) {
@@ -39,16 +41,6 @@ public class Departements {
 
             List<Departement> departements = departementController.getAllDepartements();
             request.setAttribute("departements", departements);
-            for(Departement departement:departements)
-            {
-                System.out.println(departement.getNomDepartement());
-                List<User> users = departement.getUsers();
-                for(User user:users)
-                {
-                    System.out.println(user.getLogin());
-                }
-
-            }
             return "departements";
         }
 
