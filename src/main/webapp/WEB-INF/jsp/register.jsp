@@ -11,7 +11,10 @@
 
     <title>Register</title>
 
-
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -36,36 +39,35 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                         </div>
-                        <form class="user" action="<c:url value='/register'/>" method="post">
+                        <form class="user" action="/register" method="post">
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="text" name="username" class="form-control form-control-user" id="exampleFirstName"
-                                           placeholder="Username" required>
+                                    <input type="text" name="first_name" class="form-control form-control-user" id="first_name"
+                                           placeholder="First Name" required>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail"
-                                           placeholder="Email Address" required>
+                                    <input type="text" name="last_name" class="form-control form-control-user" id="last_name"
+                                           placeholder="Last Name" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input type="text" name="departementId" class="form-control form-control-user" id="exampleDepartement"
-                                       placeholder="Departement ID" required>
+                                <input type="text" name="societe" class="form-control form-control-user" id="societe"
+                                       placeholder="Societe" required>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="password" name="password" class="form-control form-control-user"
-                                           id="exampleInputPassword" placeholder="Password" required>
+                                    <input type="text" name="username" class="form-control form-control-user"
+                                           id="username" placeholder="Username" required>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="password" class="form-control form-control-user"
-                                           id="exampleRepeatPassword" placeholder="Repeat Password" required>
+                                    <input type="password" name="password" class="form-control form-control-user"
+                                           id="password" placeholder="Password" required>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary btn-user btn-block">
                                 Register Account
                             </button>
                             <hr>
-
                         </form>
                         <div class="text-center">
                             <a class="small" href="login">Already have an account? Login!</a>
@@ -84,7 +86,35 @@
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
 <script src="js/sb-admin-2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Check if registration was successful
+        var registrationSuccess = '${registrationSuccess}';
+        if (registrationSuccess) {
+            $('#successModal').modal('show');
+        }
+    });
+</script>
 
+<!-- Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Registration Success</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Congratulations! Your account has been successfully created.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>

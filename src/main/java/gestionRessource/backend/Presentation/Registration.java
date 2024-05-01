@@ -1,61 +1,64 @@
 package gestionRessource.backend.Presentation;
 
-import gestionRessource.backend.dto.UserDTO;
-import gestionRessource.backend.model.User;
-import gestionRessource.backend.service.DepartementService;
-import gestionRessource.backend.service.UserService;
+import gestionRessource.backend.dto.FournisseurDTO;
+import gestionRessource.backend.model.Fournisseur;
+import gestionRessource.backend.model.Role;
+import gestionRessource.backend.service.FournisseurService;
 import gestionRessource.backend.utils.PasswordEncoderUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class Registration {
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
-    private DepartementService departementService;
+    private FournisseurService fournisseurService;
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("departments", departementService.getAllDepartement());
-        return "register"; // Looks for /WEB-INF/jsp/register.jsp
+        return "register"; // Adjust the view to cater to the Fournisseur registration form
     }
 
     @PostMapping("/register")
-    public String registerUserAccount(@RequestParam(name = "username") String username,
-                                      @RequestParam(name = "password") String password,
-                                      // ... include other parameters as needed
-                                      @RequestParam(name = "departementId") Long departementId, // Assuming this is the selected department
-                                      Model model) {
-        User newUser = new User();
-        newUser.setLogin(username);
-        newUser.setPassword(PasswordEncoderUtil.encodePassword(password));
-        // Assuming that you have setters for other fields like email and nomSociete
-        // newUser.setEmail(email);
-        // newUser.setNomSociete(nomSociete);
+    public String registerFournisseurAccount(
+            @RequestParam(name = "username") String username,
+            @RequestParam(name = "password") String password,
+            @RequestParam(name = "societe") String societe,
+            @RequestParam(name = "first_name") String first_name,
+            @RequestParam(name = "last_name") String last_name,
+            Model model,
+            HttpServletRequest request,
+            RedirectAttributes redirectAttributes) {
 
-        // Assuming that the user's role and department are identified by departementId
-        // and you have a way to set the role, perhaps with a default role value or a dedicated method.
-        // newUser.setRole(defaultUserRole); // You would set this according to your business logic
-        newUser.setDepartement(departementService.getDepartementById(departementId)); // Setting the department
+        Fournisseur newFournisseur = new Fournisseur();
+        newFournisseur.setLogin(username);
+        newFournisseur.setPassword(PasswordEncoderUtil.encodePassword(password));
+        newFournisseur.setSociete(societe);
+        newFournisseur.setFirst_name(first_name);
+        newFournisseur.setLast_name(last_name);
+        newFournisseur.setRole(Role.Fournisseur);
 
         try {
-            User savedUser = userService.saveUser(newUser);
-            if (savedUser != null) {
+            Fournisseur savedFournisseur = fournisseurService.ajouterFournisseur(newFournisseur);
+            if (savedFournisseur != null) {
+                redirectAttributes.addFlashAttribute("registrationSuccess", true);
+                model.addAttribute("successMessage", "Registration completed successfully.");
                 return "redirect:/login"; // Redirect to login after successful registration
             } else {
-                model.addAttribute("errorMessage", "Registration failed: User could not be saved.");
-                return "register"; // Returns back to the registration form with an error message
+                redirectAttributes.addFlashAttribute("errorMessage", "Registration failed. Please try again.");
+                model.addAttribute("errorMessage", "Registration failed: Fournisseur could not be saved.");
+                return "register"; // Return to the registration form with an error message
             }
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Registration failed: " + e.getMessage());
-            return "register"; // Returns back to the registration form with an error message
+            return "register"; // Return to the registration form with an error message
         }
     }
+
 }

@@ -10,7 +10,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    <style>
+        #errorMessage {
+        display: none;
+        color: red;
+        margin-left: 5%;
+    }
+    </style>
     <title>Login</title>
 
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -46,7 +52,7 @@
                             <img src="/images/pages/favicon.png" alt="branding logo" style="margin: 27%;margin-left: 15%; height: 60%; display: block;">
                         </div>
                         <div class="col-lg-6">
-                            <div class="p-5">
+                            <div class="p-5" style="margin-top: 12%">
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                 </div>
@@ -58,26 +64,24 @@
                                     <div class="form-group">
                                         <input type="password" class="form-control form-control-user"
                                                placeholder="Password"  id="password" name="password" required>
+                                        <div id="errorMessage"  >
+                                            <!-- Error message will be inserted here -->
+                                        </div>
                                     </div>
 
-                                    <a  class="btn btn-primary btn-user btn-block" type="submit">
+                                    <button type="submit" class="btn btn-primary btn-user btn-block">
                                         Login
-                                    </a>
-                                    <hr>
+                                    </button>
                                     <a href="index.html" class="btn btn-google btn-user btn-block">
-                                        <i class="fab  fa-fw"></i> Appel d'Offres
-                                    </a>
-                                    <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                        <i class="fab  fa-fw"></i> Login with Facebook
+                                        <i class="fab fa-fw"></i> Appel d'Offres
                                     </a>
                                 </form>
                                 <hr>
                                 <div class="text-center">
-                                    <a class="small" href="Forget_pwd">Forgot Password?</a>
-                                </div>
-                                <div class="text-center">
                                     <a class="small" href="register">Create an Account!</a>
                                 </div>
+                                <!-- Error Message Div -->
+
                             </div>
                         </div>
                     </div>
@@ -99,6 +103,16 @@
 
 <!-- Custom scripts for all pages-->
 <script src="js/sb-admin-2.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var loginError = "<%= (request.getAttribute("loginError") != null) ? request.getAttribute("loginError") : "" %>";
+        if (loginError && loginError.trim().length > 0) {
+            var errorMessageDiv = document.getElementById('errorMessage');
+            errorMessageDiv.textContent = loginError;
+            errorMessageDiv.style.display = 'block';
+        }
+    });
+</script>
 
 </body>
 

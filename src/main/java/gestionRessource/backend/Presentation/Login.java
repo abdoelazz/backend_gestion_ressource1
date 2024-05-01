@@ -42,7 +42,6 @@ public class Login {
             RedirectAttributes redirectAttributes,
             Model model,
             HttpServletRequest request
-
     ) {
         AuthentificationDTO authDto = new AuthentificationDTO();
         authDto.setLogin(username);
@@ -51,21 +50,19 @@ public class Login {
         User user = userControler.authentification(authDto);
 
         if (user != null) {
-            // Login successful
-            // Redirect to a secure page, or set user in session, etc.
-            redirectAttributes.addFlashAttribute("message", "Login successful!");
-
+            // Authentication successful
             HttpSession session = request.getSession();
-            // Store data in the session
             session.setAttribute("user", user);
-            User loggedInUser = (User) session.getAttribute("user");
-            return "redirect:/home"; // Change to your secure page
+            return "redirect:/home"; // Redirect to home page upon successful login
         } else {
-            // Login failed
-            model.addAttribute("error", "Invalid username or password");
-            return "login"; // Return to login page with error message
+            // Authentication failed
+            model.addAttribute("loginError", "Invalid username or password");
+            return "login"; // Stay on login page and show error
         }
     }
 
 
+
 }
+
+
