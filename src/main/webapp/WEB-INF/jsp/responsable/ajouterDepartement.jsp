@@ -1,7 +1,3 @@
-<%@ page import="gestionRessource.backend.model.Departement" %>
-<%@ page import="java.util.List" %>
-<%@ page import="gestionRessource.backend.model.User" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,24 +9,18 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Tables</title>
+    <title>SB Admin 2 - Blank</title>
 
-    <!-- Custom fonts for this template -->
+    <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
 
-    <link href="css/ours.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
+    <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this page -->
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
 </head>
-
-
 
 <body id="page-top">
 
@@ -56,7 +46,7 @@
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
-            <a class="nav-link" href="departements" style="background-color: #0a53be;">
+            <a class="nav-link" href="departements">
                 <i class="fas fa-building"></i>
                 <span>Departements</span></a>
         </li>
@@ -101,11 +91,9 @@
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                 <!-- Sidebar Toggle (Topbar) -->
-                <form class="form-inline">
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                </form>
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
 
                 <!-- Topbar Search -->
                 <form
@@ -173,6 +161,28 @@
                                     <span class="font-weight-bold">A new monthly report is ready to download!</span>
                                 </div>
                             </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="mr-3">
+                                    <div class="icon-circle bg-success">
+                                        <i class="fas fa-donate text-white"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="small text-gray-500">December 7, 2019</div>
+                                    $290.29 has been deposited into your account!
+                                </div>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="mr-3">
+                                    <div class="icon-circle bg-warning">
+                                        <i class="fas fa-exclamation-triangle text-white"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="small text-gray-500">December 2, 2019</div>
+                                    Spending Alert: We've noticed unusually high spending for your account.
+                                </div>
+                            </a>
                             <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                         </div>
                     </li>
@@ -201,6 +211,42 @@
                                     <div class="text-truncate">Hi there! I am wondering if you can help me with a
                                         problem I've been having.</div>
                                     <div class="small text-gray-500">Emily Fowler · 58m</div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="dropdown-list-image mr-3">
+                                    <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                                         alt="...">
+                                    <div class="status-indicator"></div>
+                                </div>
+                                <div>
+                                    <div class="text-truncate">I have the photos that you ordered last month, how
+                                        would you like them sent to you?</div>
+                                    <div class="small text-gray-500">Jae Chun · 1d</div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="dropdown-list-image mr-3">
+                                    <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                                         alt="...">
+                                    <div class="status-indicator bg-warning"></div>
+                                </div>
+                                <div>
+                                    <div class="text-truncate">Last month's report looks great, I am very happy with
+                                        the progress so far, keep up the good work!</div>
+                                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="dropdown-list-image mr-3">
+                                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
+                                         alt="...">
+                                    <div class="status-indicator bg-success"></div>
+                                </div>
+                                <div>
+                                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone
+                                        told me that people say this to all dogs, even if they aren't good...</div>
+                                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
                                 </div>
                             </a>
                             <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
@@ -248,76 +294,18 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
-                <!-- Page Heading and Add Department Button -->
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Departements</h1>
-                    <a href="ajouterDepartement" class="btn btn-primary btn-circle" title="nouveau département">
-                        <i class="fas fa-plus"></i>
-                    </a>
-                </div>
-
+                <!-- Basic Card Example -->
                 <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Ajouter un nouveau departement</h6>
+                    </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th>Departements</th>
-                                    <th>Enseignants</th>
-                                </tr>
-                                </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>Departements</th>
-                                    <th>Enseignants</th>
-                                </tr>
-                                </tfoot>
-                                <tbody>
-                                <% List<Departement> departements = (List<Departement>) request.getAttribute("departements"); %>
-
-                                <% for (Departement departement : departements) { %>
-                                <%
-                                    String nomDepartement = departement.getNomDepartement();
-                                    List<User> users = departement.getUsers();
-                                %>
-                                <tr>
-                                    <td>
-                                        <a href="#" onclick="showDepartmentUsers('<%= departement.getId() %>'); return false;">
-                                            <%= nomDepartement %>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <% if (users.size() == 1) { %>
-                                        <%= users.get(0).getFirst_name() %>
-                                        <%= users.get(0).getLast_name() %>
-                                        <% } else { %>
-                                            <% for (int i = 0; i < users.size(); i++) { %>
-                                                <%= users.get(i).getFirst_name() %>
-                                                <%= users.get(i).getLast_name() %>
-                                                <% if (i < users.size() - 1) { %>,
-                                                <% } %>
-                                            <% } %>
-                                        <% } %>
-                                    </td>
-
-                                </tr>
-                                <% } %>
-                                </tbody>
-                            </table>
-                        </div>
+                        
                     </div>
                 </div>
 
             </div>
             <!-- /.container-fluid -->
-            <!-- Modal -->
-            <div id="userModal" class="modal">
-                <div class="modal-content">
-                    <span class="close" onclick="closeModal()">&times;</span>
-                    <div id="userDetails"></div>
-                </div>
-            </div>
-
 
         </div>
         <!-- End of Main Content -->
@@ -362,59 +350,6 @@
         </div>
     </div>
 </div>
-<script>
-    function showDepartmentUsers(departmentId) {
-
-        var departmentUsers = getDepartmentUsers(departmentId); // Replace this with your actual data retrieval logic
-        departmentUsers.forEach(function (user){
-            console.log(user.first_name);
-        })
-        var modalContent = document.getElementById("userDetails");
-        modalContent.innerHTML = ""; // Clear previous content
-
-        // Populate modal with department users
-        for (var i = 0; i < departmentUsers.length; i++) {
-            var user = departmentUsers[i];
-            modalContent.innerHTML += "<p>" + user.first_name + " " + user.last_name + "</p>";
-        }
-
-        // Display the modal
-        var modal = document.getElementById("userModal");
-        modal.style.display = "block";
-    }
-
-    function closeModal() {
-        var modal = document.getElementById("userModal");
-        modal.style.display = "none";
-    }
-
-    // Replace this function with your actual data retrieval logic
-    function getDepartmentUsers(departmentId) {
-        var javaUsers=[]
-        <% for (Departement departement : departements) { %>
-        if(departmentId == <%= departement.getId() %>)
-        {
-            <% List<User> users1 = departement.getUsers(); %>
-            const javaUsers = [
-                <%
-                   if (users1 != null && !users1.isEmpty()) {
-                       for (int i = 0; i < users1.size(); i++) {
-                            User user = users1.get(i);
-                            %>
-                { "first_name": "<%= user.getFirst_name() %>", "last_name": "<%= user.getLast_name() %>", "login": "<%= user.getLogin()%>","role":"<%= user.getRole()%>" }
-                <% if (i < users1.size() - 1) { %>,<% } %>
-                <% }
-        } %>
-            ];
-
-
-
-            return javaUsers;
-        }
-        <%}%>
-        return javaUsers;
-    }
-</script>
 
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>
@@ -425,13 +360,6 @@
 
 <!-- Custom scripts for all pages-->
 <script src="js/sb-admin-2.min.js"></script>
-
-<!-- Page level plugins -->
-<script src="vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-<!-- Page level custom scripts -->
-<script src="js/demo/datatables-demo.js"></script>
 
 </body>
 
