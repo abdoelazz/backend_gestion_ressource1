@@ -55,7 +55,7 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                 </div>
-                                <form class="user" action="Login" method="post">
+                                <form class="user" action="login" method="post">
                                     <div class="form-group">
                                         <input class="form-control form-control-user"
                                                placeholder="Username" id="username" name="username" required>
