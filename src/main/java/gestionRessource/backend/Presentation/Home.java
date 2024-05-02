@@ -1,6 +1,9 @@
 package gestionRessource.backend.Presentation;
+import ch.qos.logback.core.model.Model;
 import gestionRessource.backend.controller.UserController;
 
+import gestionRessource.backend.model.Role;
+import gestionRessource.backend.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +24,18 @@ public class Home {
 
     @GetMapping("/home")
     public String showHomePage(HttpServletRequest request) {
-//        HttpSession session = request.getSession(false); // Retrieve existing session or null if no session exists
-//        if (session != null && session.getAttribute("user") != null) {
-//            // If a session exists and a user is logged in, redirect to the home page
-//            return "home";
-//        } else {
-//            // If no session exists or no user is logged in, return the login page
-//            return "redirect:/login";
-//        }
-        return "enseignant/homeEnseignant";
+
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("user") instanceof User) {
+            User currentUser = (User) session.getAttribute("user");
+            return determineRedirectByRole(currentUser.getRole());
+        } else {
+
+            return "redirect:/login";
+        }
+
     }
+
 
 
     @PostMapping("/home")
@@ -46,7 +51,22 @@ public class Home {
         return username;
     }
 
-
+    private String determineRedirectByRole(Role role) {
+        switch (role) {
+            case ChefDepartement:
+                return "chefDepartement/homeChefDepartement";
+            case Responsable:
+                return "responsable/homeResponsable";
+            case Enseignant:
+                return "enseignant/homeEnseignant";
+            case Fournisseur:
+                return "fournisseur/homeFournisseur";
+            case Technicien:
+                return "technicien/homeTechnicien";
+            default:
+                return "/login";
+        }
+    }
 
 
 
@@ -57,7 +77,7 @@ public class Home {
     @GetMapping("/")
     public String index() {
 
-        return "index";  // This will look for /WEB-INF/jsp/index.jsp
+        return "login";  // This will look for /WEB-INF/jsp/index.jsp
     }
     @ExceptionHandler(Exception.class)
     public String handleError() {
