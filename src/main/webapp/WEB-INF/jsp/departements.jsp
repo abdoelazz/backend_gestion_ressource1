@@ -30,6 +30,8 @@
 
 </head>
 
+
+
 <body id="page-top">
 
 <!-- Page Wrapper -->
@@ -323,8 +325,8 @@
                                 </tr>
                                 </tfoot>
                                 <tbody>
-                                <%-- Get the list of departments from the attribute and iterate over it --%>
                                 <% List<Departement> departements = (List<Departement>) request.getAttribute("departements"); %>
+
                                 <% for (Departement departement : departements) { %>
                                 <%
                                     String nomDepartement = departement.getNomDepartement();
@@ -332,10 +334,9 @@
                                 %>
                                 <tr>
                                     <td>
-                                        <a href="#" onclick="showDepartmentUsers(<%= users %>); return false;">
+                                        <a href="#" onclick="showDepartmentUsers('<%= departement.getId() %>'); return false;">
                                             <%= nomDepartement %>
                                         </a>
-
                                     </td>
                                     <td>
                                         <% if (users.size() == 1) { %>
@@ -413,16 +414,19 @@
         </div>
     </div>
 </div>
-
-
 <script>
-    function showDepartmentUsers(users) {
+    function showDepartmentUsers(departmentId) {
+
+        var departmentUsers = getDepartmentUsers(departmentId); // Replace this with your actual data retrieval logic
+        departmentUsers.forEach(function (user){
+            console.log(user.first_name);
+        })
         var modalContent = document.getElementById("userDetails");
         modalContent.innerHTML = ""; // Clear previous content
 
-        // Iterate over users and append their names to modal content
-        for (var i = 0; i < users.length; i++) {
-            var user = users[i];
+        // Populate modal with department users
+        for (var i = 0; i < departmentUsers.length; i++) {
+            var user = departmentUsers[i];
             modalContent.innerHTML += "<p>" + user.first_name + " " + user.last_name + "</p>";
         }
 
@@ -431,12 +435,37 @@
         modal.style.display = "block";
     }
 
-    // JavaScript function to close the modal
     function closeModal() {
         var modal = document.getElementById("userModal");
         modal.style.display = "none";
     }
 
+    // Replace this function with your actual data retrieval logic
+    function getDepartmentUsers(departmentId) {
+        var javaUsers=[]
+        <% for (Departement departement : departements) { %>
+        if(departmentId == <%= departement.getId() %>)
+        {
+            <% List<User> users1 = departement.getUsers(); %>
+            const javaUsers = [
+                <%
+                   if (users1 != null && !users1.isEmpty()) {
+                       for (int i = 0; i < users1.size(); i++) {
+                            User user = users1.get(i);
+                            %>
+                { "first_name": "<%= user.getFirst_name() %>", "last_name": "<%= user.getLast_name() %>", "login": "<%= user.getLogin()%>","role":"<%= user.getRole()%>" }
+                <% if (i < users1.size() - 1) { %>,<% } %>
+                <% }
+        } %>
+            ];
+
+
+
+            return javaUsers;
+        }
+        <%}%>
+        return javaUsers;
+    }
 </script>
 
 <!-- Bootstrap core JavaScript-->

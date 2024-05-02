@@ -14,10 +14,12 @@
 /* Modal content */
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: auto; /* Center horizontally */
+    margin-top: 10%; /* Add some top margin for centering */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 60%; /* Set width to 60% of the viewport */
+    max-width: 400px; /* Limit maximum width */
 }
 
 /* Close button */
