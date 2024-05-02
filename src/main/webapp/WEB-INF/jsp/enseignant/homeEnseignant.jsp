@@ -45,11 +45,16 @@
         </div>
 
         <li class="nav-item">
-            <a class="nav-link" href="ressources">
+            <a class="nav-link" href="ordinateurEnseignant">
                 <i class="fas fa-desktop"></i>
-                <span>Mes Ressouces</span></a>
+                <span>Mes Ordinateurs</span></a>
         </li>
 
+        <li class="nav-item">
+            <a class="nav-link" href="imprimanteEnseignant">
+                <i class="fas fa-print"></i>
+                <span>Mes Imprimantes</span></a>
+        </li>
         <li class="nav-item">
             <a class="nav-link" href="">
                 <i class="far fa-file-alt"></i>

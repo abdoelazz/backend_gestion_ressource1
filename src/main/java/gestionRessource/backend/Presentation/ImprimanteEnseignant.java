@@ -1,9 +1,7 @@
 package gestionRessource.backend.Presentation;
 
-import gestionRessource.backend.controller.DepartementController;
 import gestionRessource.backend.controller.RessourceController;
 import gestionRessource.backend.controller.UserController;
-import gestionRessource.backend.model.Departement;
 import gestionRessource.backend.model.Ressource;
 import gestionRessource.backend.model.User;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
-public class RessourcesEnseignant {
+public class ImprimanteEnseignant {
 
 
         @Autowired
@@ -28,15 +26,15 @@ public class RessourcesEnseignant {
         @Autowired
         private UserController userController;
 
-        @GetMapping("/ressources")
-        public String showRessourcesEnseignantPage(HttpServletRequest request) {
+        @GetMapping("/imprimanteEnseignant")
+        public String showImprimanteEnseignantPage(HttpServletRequest request) {
             HttpSession session = request.getSession(false); // Retrieve existing session or null if no session exists
             if (session != null && session.getAttribute("user") != null) {
                 User user= (User) session.getAttribute("user");
                 List<Ressource> ressources= ressourceController.getRessourcesByUserId(user.getId());
 
                 request.setAttribute("ressources", ressources);
-                return "enseignant/Ressources";
+                return "enseignant/Imprimantes";
             } else {
                 // If no session exists or no user is logged in, return the login page
                 return "redirect:/login";
@@ -45,8 +43,8 @@ public class RessourcesEnseignant {
         }
 
 
-        @PostMapping("/ressources")
-        public String handleRessourcesEnseignant(
+        @PostMapping("/imprimanteEnseignant")
+        public String handleImprimanteEnseignant(
                 @RequestParam("username") String username,
                 @RequestParam("password") String password,
                 RedirectAttributes redirectAttributes

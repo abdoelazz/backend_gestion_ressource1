@@ -68,7 +68,7 @@ public class Ressource {
 	@Column(name = "dateCreation")
 	private Date dateCreation;
 
-	Ressource() {
+	public Ressource() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

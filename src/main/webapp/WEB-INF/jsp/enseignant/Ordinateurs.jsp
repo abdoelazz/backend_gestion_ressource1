@@ -1,6 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="gestionRessource.backend.model.User" %>
 <%@ page import="gestionRessource.backend.model.Ressource" %>
+<%@ page import="gestionRessource.backend.model.Ordinateur" %>
+<%@ page import="gestionRessource.backend.model.EtatDemande" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,11 +57,16 @@
         </div>
 
         <li class="nav-item">
-            <a class="nav-link" href="ressources">
+            <a class="nav-link" href="ordinateurEnseignant">
                 <i class="fas fa-desktop"></i>
-                <span>Mes Ressouces</span></a>
+                <span>Mes Ordinateurs</span></a>
         </li>
 
+        <li class="nav-item">
+            <a class="nav-link" href="imprimanteEnseignant">
+                <i class="fas fa-print"></i>
+                <span>Mes Imprimantes</span></a>
+        </li>
         <li class="nav-item">
             <a class="nav-link" href="">
                 <i class="far fa-file-alt"></i>
@@ -237,10 +244,7 @@
 
                 <!-- Page Heading and Add Department Button -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Departements</h1>
-                    <a href="ajouterDepartement" class="btn btn-primary btn-circle" title="nouveau département">
-                        <i class="fas fa-plus"></i>
-                    </a>
+                    <h1 class="h3 mb-0 text-gray-800">Ordinateurs</h1>
                 </div>
 
                 <div class="card shadow mb-4">
@@ -249,32 +253,75 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>Departements</th>
-                                    <th>Enseignants</th>
+                                    <th>CPU</th>
+                                    <th>disque dur</th>
+                                    <th>ecran</th>
+                                    <th>ram</th>
+                                    <th>date de la demande</th>
+                                    <th>etat de la demande</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
-                                    <th>Departements</th>
-                                    <th>Enseignants</th>
+                                    <th>CPU</th>
+                                    <th>disque dur</th>
+                                    <th>ecran</th>
+                                    <th>ram</th>
+                                    <th>date de la demande</th>
+                                    <th>etat de la demande</th>
                                 </tr>
                                 </tfoot>
                                 <tbody>
                                 <% List<Ressource> ressources = (List<Ressource>) request.getAttribute("ressources"); %>
 
                                 <% for (Ressource ressource : ressources) { %>
-                                <%
-                                    String nomUser = ressource.getUser().getLast_name();
-                                %>
-                                <tr>
-                                    <td>
-                                            <%= nomUser %>
-                                    </td>
-                                    <td>
+                                    <% if(ressource.getTypeRessource().equals("Ordinateur")){
+                                    Ordinateur ordinateur = (Ordinateur) ressource;
+                                    %>
+                                        <tr>
+                                            <td>
+                                                <%= ordinateur.getCpu()%>
+                                            </td>
+                                            <td>
+                                                <%= ordinateur.getDisqueDur()%>
+                                            </td>
+                                            <td>
+                                                <%= ordinateur.getEcran()%>
+                                            </td>
+                                            <td>
+                                                <%= ordinateur.getRam()%>
+                                            </td>
+                                            <td>
+                                                <%= ordinateur.getDateCreation()%>
+                                            </td>
+                                            <td style="background-color:
+                                                <% if(ordinateur.getEtatDemande().equals(EtatDemande.Traité)) { %>
+                                                    green
+                                                <% } else if(ordinateur.getEtatDemande().equals(EtatDemande.En_Cours_De_Traitement)) { %>
+                                                    orange
+                                                <% } else if(ordinateur.getEtatDemande().equals(EtatDemande.créée)) { %>
+                                                    dodgerblue
+                                                <% } else { %>
+                                                    gray
+                                                <% } %>;
+                                                    color: white">
 
-                                    </td>
+                                                <% if(ordinateur.getEtatDemande().equals(EtatDemande.En_Cours_De_Traitement)) { %>
+                                                En cours de traitement
+                                                <% } else { %>
+                                                        <%= ordinateur.getEtatDemande() %>
+                                                <% }%>
 
-                                </tr>
+                                            </td>
+
+
+
+
+
+                                        </tr>
+
+                                   <% }%>
+
                                 <% } %>
                                 </tbody>
                             </table>
