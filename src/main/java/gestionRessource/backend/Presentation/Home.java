@@ -55,9 +55,15 @@ public class Home {
             case ChefDepartement:
                 return "chefDepartement/homeChefDepartement";
             case Responsable:
-                return "/responsable/homeResponsable";
+                return "responsable/homeResponsable";
+            case Enseignant:
+                return "enseignant/homeEnseignant";
+            case Fournisseur:
+                return "fournisseur/homeFournisseur";
+            case Technicien:
+                return "technicien/homeTechnicien";
             default:
-                return "/login"; // Default redirection
+                return "/login";
         }
     }
 
