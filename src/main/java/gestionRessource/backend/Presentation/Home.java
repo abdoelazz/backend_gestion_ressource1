@@ -29,7 +29,7 @@ public class Home {
 //            // If no session exists or no user is logged in, return the login page
 //            return "redirect:/login";
 //        }
-        return "chefDepartement/homeChefDepartement";
+        return "enseignant/homeEnseignant";
     }
 
 
