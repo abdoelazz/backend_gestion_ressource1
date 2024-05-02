@@ -68,19 +68,4 @@ public class Home {
         }
     }
 
-
-
-
-
-
-
-    @GetMapping("/")
-    public String index() {
-
-        return "login";  // This will look for /WEB-INF/jsp/index.jsp
-    }
-    @ExceptionHandler(Exception.class)
-    public String handleError() {
-        return "error";  // Redirect to the error JSP page
-    }
 }

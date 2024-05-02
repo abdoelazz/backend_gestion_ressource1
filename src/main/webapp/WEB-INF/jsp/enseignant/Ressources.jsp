@@ -1,3 +1,7 @@
+<%@ page import="java.util.List" %>
+<%@ page import="gestionRessource.backend.model.User" %>
+<%@ page import="gestionRessource.backend.model.Ressource" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,18 +13,24 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Blank</title>
+    <title>SB Admin 2 - Tables</title>
 
-    <!-- Custom fonts for this template-->
+    <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
 
-    <!-- Custom styles for this template-->
+    <link href="css/ours.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
 </head>
+
+
 
 <body id="page-top">
 
@@ -44,29 +54,16 @@
             Interface
         </div>
 
-        <!-- Nav Item - Charts -->
         <li class="nav-item">
-            <a class="nav-link" href="departements">
-                <i class="fas fa-building"></i>
-                <span>Departements</span></a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="">
-                <i class="fas fa-bullhorn"></i>
-                <span>Appels d'offre</span></a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="ressources">
                 <i class="fas fa-desktop"></i>
-                <span>Ordinateurs</span></a>
+                <span>Mes Ressouces</span></a>
         </li>
 
         <li class="nav-item">
             <a class="nav-link" href="">
-                <i class="fas fa-print"></i>
-                <span>imprimantes</span></a>
+                <i class="far fa-file-alt"></i>
+                <span>Mes Demandes</span></a>
         </li>
 
 
@@ -91,9 +88,11 @@
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                 <!-- Sidebar Toggle (Topbar) -->
-                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                    <i class="fa fa-bars"></i>
-                </button>
+                <form class="form-inline">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </form>
 
                 <!-- Topbar Search -->
                 <form
@@ -161,28 +160,6 @@
                                     <span class="font-weight-bold">A new monthly report is ready to download!</span>
                                 </div>
                             </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-success">
-                                        <i class="fas fa-donate text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 7, 2019</div>
-                                    $290.29 has been deposited into your account!
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-warning">
-                                        <i class="fas fa-exclamation-triangle text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 2, 2019</div>
-                                    Spending Alert: We've noticed unusually high spending for your account.
-                                </div>
-                            </a>
                             <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                         </div>
                     </li>
@@ -211,42 +188,6 @@
                                     <div class="text-truncate">Hi there! I am wondering if you can help me with a
                                         problem I've been having.</div>
                                     <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                         alt="...">
-                                    <div class="status-indicator"></div>
-                                </div>
-                                <div>
-                                    <div class="text-truncate">I have the photos that you ordered last month, how
-                                        would you like them sent to you?</div>
-                                    <div class="small text-gray-500">Jae Chun · 1d</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                         alt="...">
-                                    <div class="status-indicator bg-warning"></div>
-                                </div>
-                                <div>
-                                    <div class="text-truncate">Last month's report looks great, I am very happy with
-                                        the progress so far, keep up the good work!</div>
-                                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                         alt="...">
-                                    <div class="status-indicator bg-success"></div>
-                                </div>
-                                <div>
-                                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                        told me that people say this to all dogs, even if they aren't good...</div>
-                                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
                                 </div>
                             </a>
                             <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
@@ -294,48 +235,63 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
-                <!-- Basic Card Example -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Ajouter un nouveau departement</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="col-lg-7">
-                            <div class="p-5">
-                                <form class="user">
-                                    <div class="form-group row">
-                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                            <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                                   placeholder="First Name">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                                   placeholder="Last Name">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                               placeholder="Email Address">
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                            <input type="password" class="form-control form-control-user"
-                                                   id="exampleInputPassword" placeholder="Password">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input type="password" class="form-control form-control-user"
-                                                   id="exampleRepeatPassword" placeholder="Repeat Password">
-                                        </div>
-                                    </div>
-                                </form>
+                <!-- Page Heading and Add Department Button -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Departements</h1>
+                    <a href="ajouterDepartement" class="btn btn-primary btn-circle" title="nouveau département">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </div>
 
-                            </div>
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Departements</th>
+                                    <th>Enseignants</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>Departements</th>
+                                    <th>Enseignants</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                <% List<Ressource> ressources = (List<Ressource>) request.getAttribute("ressources"); %>
+
+                                <% for (Ressource ressource : ressources) { %>
+                                <%
+                                    String nomUser = ressource.getUser().getLast_name();
+                                %>
+                                <tr>
+                                    <td>
+                                            <%= nomUser %>
+                                    </td>
+                                    <td>
+
+                                    </td>
+
+                                </tr>
+                                <% } %>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
 
             </div>
             <!-- /.container-fluid -->
+            <!-- Modal -->
+            <div id="userModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <div id="userDetails"></div>
+                </div>
+            </div>
+
 
         </div>
         <!-- End of Main Content -->
@@ -391,6 +347,13 @@
 
 <!-- Custom scripts for all pages-->
 <script src="js/sb-admin-2.min.js"></script>
+
+<!-- Page level plugins -->
+<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="js/demo/datatables-demo.js"></script>
 
 </body>
 
