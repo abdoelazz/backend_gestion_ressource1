@@ -3,6 +3,7 @@ package gestionRessource.backend.Presentation;
 import gestionRessource.backend.model.*;
 import gestionRessource.backend.service.RessourceService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +18,21 @@ public class AjouterDemandeRessource {
     private RessourceService ressourceService;
 
     @GetMapping("/ajouterRessource")
-    public String showDemandeForm(Model model) {
-        return "chefDepartement/ajouterDemandeRessource"; // Return the view for adding resources
+    public String showDemandeForm(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("user") instanceof User) {
+            User currentUser = (User) session.getAttribute("user");
+            if(currentUser.getRole() == Role.ChefDepartement)
+            {
+                return "chefDepartement/ajouterDemandeRessource";
+            } else if (currentUser.getRole() == Role.Enseignant) {
+                return "enseignant/ajouterDemandeRessource";
+            }else {
+                return "error";
+            }
+        } else {
+            return "redirect:/login";
+        }
     }
 
     @PostMapping("/ajouterRessource")
@@ -34,7 +48,7 @@ public class AjouterDemandeRessource {
             HttpServletRequest request,
             RedirectAttributes redirectAttributes) {
         try {
-            Ressource ressource = createRessource(typeDeRess, cpu, ram, ecran, disqueDur, resolution, vitesseImpression);
+            Ressource ressource = createRessource(typeDeRess, cpu, ram, ecran, disqueDur, resolution, vitesseImpression,request);
             if (ressource != null) {
                 ressourceService.saveRessource(ressource);
                 redirectAttributes.addFlashAttribute("successMessage", "Demande créée avec succès.");
@@ -49,21 +63,26 @@ public class AjouterDemandeRessource {
         }
     }
 
-    private Ressource createRessource(String typeDeRess, String cpu, String ram, String ecran, String disqueDur, Integer resolution, Integer vitesseImpression) {
+    private Ressource createRessource(String typeDeRess, String cpu, String ram, String ecran, String disqueDur, Integer resolution, Integer vitesseImpression,HttpServletRequest request) {
         Ressource ressource = null;
         if ("Ordinateur".equals(typeDeRess)) {
             ressource = new Ordinateur();
+            ressource.setTypeRessource("Ordinateur");
             ((Ordinateur) ressource).setCpu(cpu);
             ((Ordinateur) ressource).setRam(ram);
             ((Ordinateur) ressource).setEcran(ecran);
             ((Ordinateur) ressource).setDisqueDur(disqueDur);
         } else if ("Imprimante".equals(typeDeRess)) {
             ressource = new Imprimante();
+            ressource.setTypeRessource("Imprimante");
             ((Imprimante) ressource).setResolution(resolution);
             ((Imprimante) ressource).setVitesseImpression(vitesseImpression);
         }
         if (ressource != null) {
             ressource.setDateCreation(new java.sql.Date(System.currentTimeMillis()));
+            HttpSession session = request.getSession(false);
+            User currentUser = (User) session.getAttribute("user");
+            ressource.setUser(currentUser);
             ressource.setEtatDemande(EtatDemande.créée);
         }
         return ressource;

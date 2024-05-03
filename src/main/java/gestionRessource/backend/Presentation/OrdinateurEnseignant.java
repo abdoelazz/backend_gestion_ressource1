@@ -34,7 +34,7 @@ public class OrdinateurEnseignant {
                 List<Ressource> ressources= ressourceController.getRessourcesByUserId(user.getId());
 
                 request.setAttribute("ressources", ressources);
-                return "enseignant/Ordinateurs";
+                return "enseignant/ordinateurs";
             } else {
                 // If no session exists or no user is logged in, return the login page
                 return "redirect:/login";

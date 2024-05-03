@@ -1,8 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="gestionRessource.backend.model.User" %>
-<%@ page import="gestionRessource.backend.model.Ressource" %>
-<%@ page import="gestionRessource.backend.model.Ordinateur" %>
-<%@ page import="gestionRessource.backend.model.EtatDemande" %>
+<%@ page import="gestionRessource.backend.model.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Tables</title>
+    <title>Imprimantes</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -63,14 +60,19 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="imprimanteEnseignant">
+            <a class="nav-link" href="imprimanteEnseignant" style="background-color: #0a53be;">
                 <i class="fas fa-print"></i>
                 <span>Mes Imprimantes</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="ajouterRessource">
                 <i class="far fa-file-alt"></i>
-                <span>Mes Demandes</span></a>
+                <span>Faire une Demande</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="declarerPanne">
+                <i class="far fa-file-alt"></i>
+                <span>Panne</span></a>
         </li>
 
 
@@ -205,31 +207,19 @@
 
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%User currentUser = (User) session.getAttribute("user");%><%=currentUser.getFirst_name()%> <%=currentUser.getLast_name()%></span>
                             <img class="img-profile rounded-circle"
-                                 src="img/undraw_profile.svg">
+                                 src="/images/portrait/small/avatar-s-7.jpg">
                         </a>
                         <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Profile
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Settings
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Activity Log
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#profileModal">
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
                             </a>
                         </div>
                     </li>
@@ -244,7 +234,7 @@
 
                 <!-- Page Heading and Add Department Button -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Ordinateurs</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Imprimantes</h1>
                 </div>
 
                 <div class="card shadow mb-4">
@@ -253,20 +243,16 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>CPU</th>
-                                    <th>disque dur</th>
-                                    <th>ecran</th>
-                                    <th>ram</th>
+                                    <th>vitesse d'impression</th>
+                                    <th>resolution</th>
                                     <th>date de la demande</th>
                                     <th>etat de la demande</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
-                                    <th>CPU</th>
-                                    <th>disque dur</th>
-                                    <th>ecran</th>
-                                    <th>ram</th>
+                                    <th>vitesse d'impression</th>
+                                    <th>resolution</th>
                                     <th>date de la demande</th>
                                     <th>etat de la demande</th>
                                 </tr>
@@ -275,52 +261,47 @@
                                 <% List<Ressource> ressources = (List<Ressource>) request.getAttribute("ressources"); %>
 
                                 <% for (Ressource ressource : ressources) { %>
-                                    <% if(ressource.getTypeRessource().equals("Ordinateur")){
-                                    Ordinateur ordinateur = (Ordinateur) ressource;
-                                    %>
-                                        <tr>
-                                            <td>
-                                                <%= ordinateur.getCpu()%>
-                                            </td>
-                                            <td>
-                                                <%= ordinateur.getDisqueDur()%>
-                                            </td>
-                                            <td>
-                                                <%= ordinateur.getEcran()%>
-                                            </td>
-                                            <td>
-                                                <%= ordinateur.getRam()%>
-                                            </td>
-                                            <td>
-                                                <%= ordinateur.getDateCreation()%>
-                                            </td>
-                                            <td style="background-color:
-                                                <% if(ordinateur.getEtatDemande().equals(EtatDemande.Traité)) { %>
-                                                    green
-                                                <% } else if(ordinateur.getEtatDemande().equals(EtatDemande.En_Cours_De_Traitement)) { %>
-                                                    orange
-                                                <% } else if(ordinateur.getEtatDemande().equals(EtatDemande.créée)) { %>
-                                                    dodgerblue
-                                                <% } else { %>
-                                                    gray
-                                                <% } %>;
-                                                    color: white">
+                                <% if(ressource.getTypeRessource().equals("Imprimante")){
+                                    Imprimante imprimante = (Imprimante) ressource;
+                                %>
+                                <tr>
+                                    <td>
+                                        <%= imprimante.getVitesseImpression()%>
+                                    </td>
+                                    <td>
+                                        <%= imprimante.getResolution()%>
+                                    </td>
 
-                                                <% if(ordinateur.getEtatDemande().equals(EtatDemande.En_Cours_De_Traitement)) { %>
-                                                En cours de traitement
-                                                <% } else { %>
-                                                        <%= ordinateur.getEtatDemande() %>
-                                                <% }%>
+                                    <td>
+                                        <%= imprimante.getDateCreation()%>
+                                    </td>
+                                    <td style="background-color:
+                                        <% if(imprimante.getEtatDemande().equals(EtatDemande.Traité)) { %>
+                                            green
+                                        <% } else if(imprimante.getEtatDemande().equals(EtatDemande.En_Cours_De_Traitement)) { %>
+                                            orange
+                                        <% } else if(imprimante.getEtatDemande().equals(EtatDemande.créée)) { %>
+                                            dodgerblue
+                                        <% } else { %>
+                                            gray
+                                        <% } %>;
+                                            color: white">
 
-                                            </td>
+                                        <% if(imprimante.getEtatDemande().equals(EtatDemande.En_Cours_De_Traitement)) { %>
+                                        En cours de traitement
+                                        <% } else { %>
+                                        <%= imprimante.getEtatDemande() %>
+                                        <% }%>
+
+                                    </td>
 
 
 
 
 
-                                        </tr>
+                                </tr>
 
-                                   <% }%>
+                                <% }%>
 
                                 <% } %>
                                 </tbody>
@@ -380,6 +361,51 @@
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                 <a class="btn btn-primary" href="logout">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Profile Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="profileModalLabel">Your Profile Information</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="firstName">Nom</label>
+                        <input type="text" class="form-control" id="firstName" name="firstName" value="<%=currentUser.getFirst_name()%>" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Prenom</label>
+                        <input type="text" class="form-control" id="lastName" name="lastName" value="<%=currentUser.getLast_name()%>" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="departement">Departement</label>
+                        <input type="text" class="form-control" id="departement" name="departement" value="<%=currentUser.getDepartement().getNomDepartement()%>" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" placeholder="Enter Password" >
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                <button class="btn btn-primary" id="saveProfileBtn">Save Changes</button>
             </div>
         </div>
     </div>

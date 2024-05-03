@@ -3,11 +3,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <meta charset="ISO-8859-1">
     <title>Acceuil</title>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
 </head>
 
 <body class="page-top">
@@ -30,15 +34,20 @@
         </div>
 
         <li class="nav-item">
-            <a class="nav-link" href="ressources">
+            <a class="nav-link" href="ordinateurEnseignant">
                 <i class="fas fa-desktop"></i>
-                <span>Mes Ressouces</span></a>
+                <span>Mes Ordinateurs</span></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="imprimanteEnseignant">
+                <i class="fas fa-print"></i>
+                <span>Mes Imprimantes</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="ajouterRessource">
                 <i class="far fa-file-alt"></i>
-                <span>Mes Demandes</span></a>
+                <span>Faire une Demande</span></a>
         </li>
 
 
@@ -58,13 +67,116 @@
         <div id="content">
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
                 <!-- Sidebar Toggle (Topbar) -->
-                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                    <i class="fa fa-bars"></i>
-                </button>
+                <form class="form-inline">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </form>
+
+                <!-- Topbar Search -->
+                <form
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                               aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
+
+                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                    <li class="nav-item dropdown no-arrow d-sm-none">
+                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <!-- Dropdown - Messages -->
+                        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                             aria-labelledby="searchDropdown">
+                            <form class="form-inline mr-auto w-100 navbar-search">
+                                <div class="input-group">
+                                    <input type="text" class="form-control bg-light border-0 small"
+                                           placeholder="Search for..." aria-label="Search"
+                                           aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button">
+                                            <i class="fas fa-search fa-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+
+                    <!-- Nav Item - Alerts -->
+                    <li class="nav-item dropdown no-arrow mx-1">
+                        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-bell fa-fw"></i>
+                            <!-- Counter - Alerts -->
+                            <span class="badge badge-danger badge-counter">3+</span>
+                        </a>
+                        <!-- Dropdown - Alerts -->
+                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="alertsDropdown">
+                            <h6 class="dropdown-header">
+                                Alerts Center
+                            </h6>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="mr-3">
+                                    <div class="icon-circle bg-primary">
+                                        <i class="fas fa-file-alt text-white"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="small text-gray-500">December 12, 2019</div>
+                                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                </div>
+                            </a>
+                            <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                        </div>
+                    </li>
+
+                    <!-- Nav Item - Messages -->
+                    <li class="nav-item dropdown no-arrow mx-1">
+                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-envelope fa-fw"></i>
+                            <!-- Counter - Messages -->
+                            <span class="badge badge-danger badge-counter">7</span>
+                        </a>
+                        <!-- Dropdown - Messages -->
+                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="messagesDropdown">
+                            <h6 class="dropdown-header">
+                                Message Center
+                            </h6>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="dropdown-list-image mr-3">
+                                    <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                                         alt="...">
+                                    <div class="status-indicator bg-success"></div>
+                                </div>
+                                <div class="font-weight-bold">
+                                    <div class="text-truncate">Hi there! I am wondering if you can help me with a
+                                        problem I've been having.</div>
+                                    <div class="small text-gray-500">Emily Fowler · 58m</div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                        </div>
+                    </li>
+
                     <div class="topbar-divider d-none d-sm-block"></div>
+
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -83,7 +195,9 @@
                             </a>
                         </div>
                     </li>
+
                 </ul>
+
             </nav>
             <!-- End of Topbar -->
             <!-- Begin Page Content -->
@@ -93,13 +207,13 @@
                     <h1 class="h3 mb-0 text-gray-800">Demandes</h1>
                 </div>
                 <!-- Content Row -->
-                <!-- Project Card Example -->
+                <!-- Demande Card Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Créer Nouvelle Demande</h6>
                     </div>
                     <div class="card-body">
-                        <form id="createProjectForm">
+                        <form  method="post" action="ajouterRessource">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
@@ -118,7 +232,10 @@
                                         <label for="cpu">CPU</label>
                                         <select class="form-control" id="cpu" name="cpu" required>
                                             <option value="">Choose...</option>
-                                            <!-- CPU options will be dynamically added here -->
+                                            <option value="Intel i5">Intel i5</option>
+                                            <option value="Intel i7">Intel i7</option>
+                                            <option value="AMD Ryzen 5">AMD Ryzen 5</option>
+                                            <option value="AMD Ryzen 7">AMD Ryzen 7</option>
                                         </select>
                                     </div>
                                 </div>
@@ -127,7 +244,9 @@
                                         <label for="ram">RAM</label>
                                         <select class="form-control" id="ram" name="ram" required>
                                             <option value="">Choose...</option>
-                                            <!-- RAM options will be dynamically added here -->
+                                            <option value="8GB">8GB</option>
+                                            <option value="16GB">16GB</option>
+                                            <option value="32GB">32GB</option>
                                         </select>
                                     </div>
                                 </div>
@@ -136,7 +255,9 @@
                                         <label for="ecran">Ecran</label>
                                         <select class="form-control" id="ecran" name="ecran" required>
                                             <option value="">Choose...</option>
-                                            <!-- Ecran options will be dynamically added here -->
+                                            <option value="15 inch">15 inch</option>
+                                            <option value="17 inch">17 inch</option>
+                                            <option value="21 inch">21 inch</option>
                                         </select>
                                     </div>
                                 </div>
@@ -145,7 +266,9 @@
                                         <label for="disqueDur">Disque Dur</label>
                                         <select class="form-control" id="disqueDur" name="disqueDur" required>
                                             <option value="">Choose...</option>
-                                            <!-- Disque Dur options will be dynamically added here -->
+                                            <option value="256GB SSD">256GB SSD</option>
+                                            <option value="512GB SSD">512GB SSD</option>
+                                            <option value="1TB HDD">1TB HDD</option>
                                         </select>
                                     </div>
                                 </div>
@@ -153,19 +276,23 @@
                             <div class="row" id="forTypeImprimante" style="display: none;">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="resolution">Resolution</label>
+                                        <label for="resolution">Resolution (dpi)</label>
                                         <select class="form-control" id="resolution" name="resolution" required>
                                             <option value="">Choose...</option>
-                                            <!-- Resolution options will be dynamically added here -->
+                                            <option value="600">600 dpi</option>
+                                            <option value="1200">1200 dpi</option>
+                                            <option value="2400">2400 dpi</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="vitesseimpression">Vitesse Impression</label>
+                                        <label for="vitesseimpression">Vitesse Impression (ppm)</label>
                                         <select class="form-control" id="vitesseimpression" name="vitesseimpression" required>
                                             <option value="">Choose...</option>
-                                            <!-- Vitesse Impression options will be dynamically added here -->
+                                            <option value="20">20 ppm</option>
+                                            <option value="35">35 ppm</option>
+                                            <option value="50">50 ppm</option>
                                         </select>
                                     </div>
                                 </div>
@@ -176,8 +303,6 @@
                                 </div>
                             </div>
                         </form>
-
-
 
                     </div>
                 </div>
@@ -231,15 +356,15 @@
                     <form id="profileForm">
                         <div class="form-group">
                             <label for="firstName">Nom</label>
-                            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter First Name" value="Unknown" disabled>
+                            <input type="text" class="form-control" id="firstName" name="firstName" value="<%=currentUser.getFirst_name()%>" disabled>
                         </div>
                         <div class="form-group">
                             <label for="lastName">Prenom</label>
-                            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter Last Name" value="Unknown" disabled>
+                            <input type="text" class="form-control" id="lastName" name="lastName" value="<%=currentUser.getLast_name()%>" disabled>
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" value="Unknown" disabled>
+                            <label for="departement">Departement</label>
+                            <input type="text" class="form-control" id="departement" name="departement" value="<%=currentUser.getDepartement().getNomDepartement()%>" disabled>
                         </div>
                         <div class="form-group">
                             <label for="password">Mot de passe</label>
@@ -262,6 +387,7 @@
         </div>
     </div>
 </div>
+
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -292,11 +418,10 @@
 <script type="text/javascript">$(document).ready(function() {
     $('#saveProfileBtn').on('click', function() {
         const newPassword = $('#password').val();
-        const email = $('#email').val();
         $.ajax({
             type: 'POST',
-            url: 'UpdatePassword',
-            data: { newPassword: newPassword, email: email },
+            url: 'updatePassword',
+            data: { password: newPassword},
             success: function(response) {
                 alert('Password updated successfully');
                 $('#profileModal').modal('hide');
@@ -308,92 +433,30 @@
     });
 });
 </script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#createProjectForm').submit(function(event) {
-            event.preventDefault();
-            var formData = $(this).serialize();
-            $.ajax({
-                type: 'POST',
-                url: 'CreateProject',
-                data: formData,
-                success: function(response) {
-                    if (response.trim() === "This project already exists") {
-                        $('#createProjectErrorModal').modal('show');
-                    } else {
-                        $('#assignProjectManagerModal').modal('show');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error creating project:', error);
-                    $('#createProjectErrorModal').modal('show');
-                }
-            });
-        });
-    });
-</script>
 <script>
-    $(document).ready(function() {
-        $('#startDate').on('change', function() {
-            var startDate = new Date($(this).val());
-            var endDate = new Date($('#endDate').val());
-            if (startDate > endDate) {
-                $(this).val('');
-            }
-        });
-        $('#endDate').on('change', function() {
-            var startDate = new Date($('#startDate').val());
-            var endDate = new Date($(this).val());
-            if (endDate < startDate) {
-                $(this).val('');
-            }
-        });
-    });
-</script>
-<script>
-    $(document).ready(function() {
-        $('#startDate, #endDate').on('change', function() {
-            var startDate = new Date($('#startDate').val());
-            var endDate = new Date($('#endDate').val());
-            if (startDate && endDate && startDate <= endDate) {
-                var timeDifference = Math.abs(endDate.getTime() - startDate.getTime()+1);
-                var durationDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
-                $('#duration').val(durationDays);
-            } else {
-                $('#duration').val('');
-            }
-        });
-    });
-</script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#assignProjectManagerBtn').click(function() {
-            var projectName =$('#projectName').val();
-            var selectedManagerId = $('#projectManager').val();
-            $.ajax({
-                type: 'POST',
-                url: 'AssignProject',
-                data: { managerId: selectedManagerId,projectName:  projectName},
-                success: function(response) {
-                    console.log('Project manager assigned successfully');
-                    $('#createProjectSuccessModal').modal('show');
-                    $('#assignProjectManagerModal').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error assigning project manager:', error);
-                }
-            });
-        });
-    });
-</script>
-<script>
-    // Here you might add JavaScript to handle showing/hiding of specific form sections based on the selected resource type.
     document.getElementById('typeDeRess').addEventListener('change', function() {
         var type = this.value;
         var ordinateurOptions = document.getElementById('forTypeOrdinateur');
         var imprimanteOptions = document.getElementById('forTypeImprimante');
-        ordinateurOptions.style.display = (type === 'Ordinateur') ? 'block' : 'none';
-        imprimanteOptions.style.display = (type === 'Imprimante') ? 'block' : 'none';
+        var cpu = document.getElementById('cpu');
+        var ram = document.getElementById('ram');
+        var ecran = document.getElementById('ecran');
+        var disqueDur = document.getElementById('disqueDur');
+        var resolution = document.getElementById('resolution');
+        var vitesseImpression = document.getElementById('vitesseimpression');
+
+        ordinateurOptions.style.display = 'none';
+        imprimanteOptions.style.display = 'none';
+        cpu.required = ram.required = ecran.required = disqueDur.required = false;
+        resolution.required = vitesseImpression.required = false;
+
+        if (type === 'Ordinateur') {
+            ordinateurOptions.style.display = 'block';
+            cpu.required = ram.required = ecran.required = disqueDur.required = true;
+        } else if (type === 'Imprimante') {
+            imprimanteOptions.style.display = 'block';
+            resolution.required = vitesseImpression.required = true;
+        }
     });
 </script>
 </body>

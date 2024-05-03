@@ -35,7 +35,7 @@ public class ImprimanteEnseignant {
                 List<Ressource> ressources= ressourceController.getRessourcesByUserId(user.getId());
 
                 request.setAttribute("ressources", ressources);
-                return "enseignant/Imprimantes";
+                return "enseignant/imprimantes";
             } else {
 
                 return "redirect:/login";
