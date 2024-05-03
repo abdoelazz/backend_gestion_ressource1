@@ -37,9 +37,10 @@ public class PanneController {
 	private UserService userService;
 
 	@PostMapping("/addPanneToRessource")
-	public Panne addPanneToRessource(@RequestParam Long ressource_id) {
+	public Panne addPanneToRessource(@RequestParam Long ressource_id,@RequestParam String detail) {
 		Ressource ressource = ressourceService.getRessourceById(ressource_id);
 		Panne panne = new Panne();
+		panne.setDetail(detail);
 		panne.setDateSignal(new Date(System.currentTimeMillis()));
 		panne.setEtatPanne(EtatPanne.NonRepare);
 		panne.setRessource(ressource);

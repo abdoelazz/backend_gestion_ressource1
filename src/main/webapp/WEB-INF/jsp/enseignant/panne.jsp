@@ -219,7 +219,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">Declarer une panne</h6>
                     </div>
                     <div class="card-body">
-                        <form  method="post" action="ajouterRessource">
+                        <form  method="post" action="declarerPanne">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
@@ -235,7 +235,7 @@
                             <div class="row" id="forTypeOrdinateur" style="display: none;">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="ordinateur">ordinateur</label>
+                                        <label for="ordinateur">Ordinateur</label>
                                         <select class="form-control" id="ordinateur" name="ordinateur" required>
                                             <option value="">Choose...</option>
                                             <% List<Ressource> ressources = (List<Ressource>) request.getAttribute("ressources"); %>
@@ -244,7 +244,7 @@
                                             <% if(ressource.getTypeRessource().equals("Ordinateur") && ressource.getEtatDemande()== EtatDemande.Traité){
                                                 Ordinateur ordinateur = (Ordinateur) ressource;
                                             %>
-                                            <option value="<%= ordinateur.getId()%>"><%=ordinateur.getCpu()%>,<%=ordinateur.getDisqueDur()%>,<%=ordinateur.getEcran()%>,<%=ordinateur.getRam()%>,<%=ordinateur.getDateCreation()%></option>
+                                            <option value="<%= ordinateur.getId()%>"><%=ordinateur.getCpu()%> , <%=ordinateur.getDisqueDur()%> , <%=ordinateur.getEcran()%> , <%=ordinateur.getRam()%> , <%=ordinateur.getDateCreation()%></option>
                                             <% }%>
 
                                             <% } %>
@@ -255,14 +255,14 @@
                             <div class="row" id="forTypeImprimante" style="display: none;">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="imprimante">imprimante</label>
+                                        <label for="imprimante">Imprimante</label>
                                         <select class="form-control" id="imprimante" name="imprimante" required>
                                             <option value="">Choose...</option>
                                             <% for (Ressource ressource : ressources) { %>
                                             <% if(ressource.getTypeRessource().equals("Imprimante") && ressource.getEtatDemande()== EtatDemande.Traité){
                                                 Imprimante imprimante = (Imprimante) ressource;
                                             %>
-                                            <option value="<%= imprimante.getId()%>"><%=imprimante.getResolution()%>,<%=imprimante.getVitesseImpression()%>,<%=imprimante.getDateCreation()%></option>
+                                            <option value="<%= imprimante.getId()%>"><%=imprimante.getResolution()%> , <%=imprimante.getVitesseImpression()%> , <%=imprimante.getDateCreation()%></option>
                                             <% }%>
 
                                             <% } %>
@@ -270,6 +270,15 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row" id="forRessource" style="display: none;">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="detail">Veuillez entrer le détail de la panne</label>
+                                        <textarea class="form-control" id="detail" name="detail" placeholder="Enter details of the panne" rows="3" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-lg-6">
                                     <button type="submit" class="btn btn-primary btn-block">Declarer panne</button>
@@ -426,6 +435,24 @@
             imprimanteOptions.style.display = 'block';
             imprimante.required = true;
         }
+    });
+
+    document.getElementById('ordinateur').addEventListener('change', function() {
+        var id = this.value;
+        var textAreaOptions = document.getElementById('forRessource');
+        var textArea = document.getElementById('detail');
+
+        textAreaOptions.style.display = 'block';
+        textArea.required = true;
+    });
+
+    document.getElementById('imprimante').addEventListener('change', function() {
+        var id = this.value;
+        var textAreaOptions = document.getElementById('forRessource');
+        var textArea = document.getElementById('detail');
+
+        textAreaOptions.style.display = 'block';
+        textArea.required = true;
     });
 </script>
 </body>

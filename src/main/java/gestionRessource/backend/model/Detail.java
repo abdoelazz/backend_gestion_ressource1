@@ -43,7 +43,7 @@ public class Detail {
 	}
 
 	public Detail(Long id, int dureeGarantie, String marque, double prix, Ressource ressource,
-			Proposition proposition) {
+			Proposition proposition,String detail) {
 		super();
 		this.id = id;
 		this.dureeGarantie = dureeGarantie;

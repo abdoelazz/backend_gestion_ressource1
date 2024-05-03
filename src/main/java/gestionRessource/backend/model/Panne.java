@@ -41,6 +41,9 @@ public class Panne {
 	@JsonIgnoreProperties({ "user", "details", "appelDoffre", "pannes" })
 	private Ressource ressource;
 
+	@Column(name = "detail")
+	private String detail;
+
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -51,7 +54,7 @@ public class Panne {
 	}
 
 	public Panne(Long id, Date dateSignal, EtatPanne etatPanne, List<Constat> constats, Ressource ressource,
-			User user) {
+			User user,String detail) {
 		super();
 		this.id = id;
 		this.dateSignal = dateSignal;
@@ -59,6 +62,7 @@ public class Panne {
 		this.constats = constats;
 		this.ressource = ressource;
 		this.user = user;
+		this.detail=detail;
 	}
 
 	public Long getId() {
@@ -109,4 +113,11 @@ public class Panne {
 		this.user = user;
 	}
 
+	public String getDetail() {
+		return detail;
+	}
+
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
 }

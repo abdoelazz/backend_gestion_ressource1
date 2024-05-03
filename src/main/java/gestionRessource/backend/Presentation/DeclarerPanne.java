@@ -1,6 +1,7 @@
 package gestionRessource.backend.Presentation;
 
 import gestionRessource.backend.controller.DepartementController;
+import gestionRessource.backend.controller.PanneController;
 import gestionRessource.backend.controller.RessourceController;
 import gestionRessource.backend.controller.UserController;
 import gestionRessource.backend.model.Departement;
@@ -11,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +25,8 @@ public class DeclarerPanne {
 
     @Autowired
     private RessourceController ressourceController;
+    @Autowired
+    private PanneController panneController;
     @GetMapping("/declarerPanne")
     public String showDeclarerPannePage(HttpServletRequest request) {
         HttpSession session = request.getSession(false); // Retrieve existing session or null if no session exists
@@ -46,16 +50,38 @@ public class DeclarerPanne {
     }
 
 
+
+
+
+
     @PostMapping("/declarerPanne")
     public String handleDeclarerPanne(
-            @RequestParam("username") String username,
-            @RequestParam("password") String password,
-            RedirectAttributes redirectAttributes
-
-
+            @RequestParam("typeDeRess") String typeDeRess,
+            @RequestParam(value = "ordinateur" , required = false) Long ressourceId1,
+            @RequestParam(value = "imprimante" , required = false) Long ressourceId2,
+            @RequestParam("detail") String detail,
+            RedirectAttributes redirectAttributes,
+            Model model
     ) {
+        System.out.println(typeDeRess);
+        try {
+            if(typeDeRess.equals("Ordinateur"))
+            {
+                panneController.addPanneToRessource(ressourceId1,detail);
+                redirectAttributes.addFlashAttribute("successMessage", "Declaration créée avec succès.");
+                return "redirect:/home"; // Redirect to resource list view or dashboard
+            } else if (typeDeRess.equals("Imprimante")) {
+                panneController.addPanneToRessource(ressourceId2,detail);
+                redirectAttributes.addFlashAttribute("successMessage", "Declaration créée avec succès.");
+                return "redirect:/home"; // Redirect to resource list view or dashboard
 
-
-        return username;
+            }
+            else
+            redirectAttributes.addFlashAttribute("errorMessage", "Une erreur est servenue.");
+            return "panne"; // Stay on the same page and show error
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "An error occurred: " + e.getMessage());
+            return "panne"; // Stay on the same page and show error
+        }
     }
 }
