@@ -27,7 +27,17 @@
             </div>
             <div class="sidebar-brand-text mx-3">Ressources</div>
         </a>
-
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item ">
+            <a class="nav-link" href="home">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Tableau De Bord</span>
+            </a>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider">
 
         <!-- Heading -->
         <div class="sidebar-heading">
@@ -55,7 +65,7 @@
                 <i class="far fa-file-alt"></i>
                 <span>Declarer Panne</span></a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link" href="declarationPannes" style="background-color: #0a53be;">
                 <i class="far fa-file-alt"></i>
                 <span>Mes Declarations de Panne</span></a>
@@ -394,8 +404,6 @@
         </div>
     </div>
 </div>
-
-
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -412,10 +420,6 @@
 
 <!-- Page level custom scripts -->
 <script src="js/demo/datatables-demo.js"></script>
-<!-- Custom scripts for all pages-->
-<script src="js/sb-admin-2.min.js"></script>
-<!-- Page level plugins -->
-<script src="vendor/chart.js/Chart.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $('#togglePassword').on('click', function() {

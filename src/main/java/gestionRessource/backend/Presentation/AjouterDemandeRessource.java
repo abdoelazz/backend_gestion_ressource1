@@ -52,14 +52,14 @@ public class AjouterDemandeRessource {
             if (ressource != null) {
                 ressourceService.saveRessource(ressource);
                 redirectAttributes.addFlashAttribute("successMessage", "Demande créée avec succès.");
-                return "redirect:/home"; // Redirect to resource list view or dashboard
+                return "redirect:/home";
             } else {
                 model.addAttribute("errorMessage", "Invalid resource type");
-                return "home"; // Stay on the same page and show error
+                return "home";
             }
         } catch (Exception e) {
             model.addAttribute("errorMessage", "An error occurred: " + e.getMessage());
-            return "home"; // Stay on the same page and show error
+            return "home";
         }
     }
 

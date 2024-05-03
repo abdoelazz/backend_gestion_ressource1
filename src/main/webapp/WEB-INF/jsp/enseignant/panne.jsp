@@ -27,7 +27,17 @@
             </div>
             <div class="sidebar-brand-text mx-3">Ressources</div>
         </a>
-
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item ">
+            <a class="nav-link" href="home">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Tableau De Bord</span>
+            </a>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider">
 
         <!-- Heading -->
         <div class="sidebar-heading">
@@ -50,12 +60,12 @@
                 <i class="far fa-file-alt"></i>
                 <span>Faire une Demande</span></a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link" href="declarerPanne" style="background-color: #0a53be;">
                 <i class="far fa-file-alt"></i>
                 <span>Declarer Panne</span></a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item ">
             <a class="nav-link" href="declarationPannes">
                 <i class="far fa-file-alt"></i>
                 <span>Mes Declarations de Panne</span></a>

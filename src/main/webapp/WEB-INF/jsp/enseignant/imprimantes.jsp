@@ -46,7 +46,17 @@
             </div>
             <div class="sidebar-brand-text mx-3">Ressources</div>
         </a>
-
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item ">
+            <a class="nav-link" href="home">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Tableau De Bord</span>
+            </a>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider">
 
         <!-- Heading -->
         <div class="sidebar-heading">
@@ -59,7 +69,7 @@
                 <span>Mes Ordinateurs</span></a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link" href="imprimanteEnseignant" style="background-color: #0a53be;">
                 <i class="fas fa-print"></i>
                 <span>Mes Imprimantes</span></a>
