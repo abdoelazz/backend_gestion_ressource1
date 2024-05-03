@@ -52,7 +52,12 @@
         <li class="nav-item">
             <a class="nav-link" href="declarerPanne">
                 <i class="far fa-file-alt"></i>
-                <span>Panne</span></a>
+                <span>Declarer Panne</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="declarationPannes">
+                <i class="far fa-file-alt"></i>
+                <span>Mes Declarations de Panne</span></a>
         </li>
 
 

@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta charset="ISO-8859-1">
-    <title>Panne</title>
+    <title>Demande</title>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -46,17 +46,17 @@
                 <span>Mes Imprimantes</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="ajouterRessource">
+            <a class="nav-link" href="ajouterRessource" >
                 <i class="far fa-file-alt"></i>
                 <span>Faire une Demande</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="declarerPanne" style="background-color: #0a53be;">
+            <a class="nav-link" href="declarerPanne">
                 <i class="far fa-file-alt"></i>
                 <span>Declarer Panne</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="declarationPannes">
+            <a class="nav-link" href="declarationPannes" style="background-color: #0a53be;">
                 <i class="far fa-file-alt"></i>
                 <span>Mes Declarations de Panne</span></a>
         </li>
@@ -212,87 +212,107 @@
             </nav>
             <!-- End of Topbar -->
             <!-- Begin Page Content -->
+            <!-- Begin Page Content -->
             <div class="container-fluid">
-                <!-- Page Heading -->
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Panne</h1>
-                </div>
-                <!-- Content Row -->
-                <!-- Demande Card Example -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Declarer une panne</h6>
-                    </div>
-                    <div class="card-body">
-                        <form  method="post" action="declarerPanne">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="typeDeRess">Type de ressource</label>
-                                        <select class="form-control" id="typeDeRess" name="typeDeRess" required>
-                                            <option value="" selected>Choose...</option>
-                                            <option value="Ordinateur">Ordinateur</option>
-                                            <option value="Imprimante">Imprimante</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" id="forTypeOrdinateur" style="display: none;">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="ordinateur">Ordinateur</label>
-                                        <select class="form-control" id="ordinateur" name="ordinateur" required>
-                                            <option value="">Choose...</option>
-                                            <% List<Ressource> ressources = (List<Ressource>) request.getAttribute("ressources"); %>
 
-                                            <% for (Ressource ressource : ressources) { %>
-                                            <% if(ressource.getTypeRessource().equals("Ordinateur") && ressource.getEtatDemande()== EtatDemande.Traité){
+                <!-- Page Heading and Add Department Button -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Ordinateurs</h1>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>type de ressource</th>
+                                    <th>detail de la ressource</th>
+                                    <th>date de la declaration</th>
+                                    <th>detail de la panne</th>
+                                    <th>etat de la panne</th>
+                                    <th ></th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>type de ressource</th>
+                                    <th>detail de la ressource</th>
+                                    <th>date de la declaration</th>
+                                    <th>detail de la panne</th>
+                                    <th>etat de la panne</th>
+                                    <th class=".o-hidden"></th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                <% List<Ressource> ressources = (List<Ressource>) request.getAttribute("ressources");
+                                for (Ressource ressource : ressources) {
+                                    if(!ressource.getPannes().isEmpty()){
+                                        for (Panne panne : ressource.getPannes()) { %>
+                                        <tr>
+
+                                            <td>
+                                                <%= ressource.getTypeRessource()%>
+                                            </td>
+                                            <td><% if(ressource.getTypeRessource().equals("Ordinateur")){
                                                 Ordinateur ordinateur = (Ordinateur) ressource;
                                             %>
-                                            <option value="<%= ordinateur.getId()%>"><%=ordinateur.getCpu()%> , <%=ordinateur.getDisqueDur()%> , <%=ordinateur.getEcran()%> , <%=ordinateur.getRam()%> , <%=ordinateur.getDateCreation()%></option>
-                                            <% }%>
+                                                <%=ordinateur.getCpu()%> , <%=ordinateur.getDisqueDur()%> , <%=ordinateur.getEcran()%> , <%=ordinateur.getRam()%> , <%=ordinateur.getDateCreation()%>
+                                                <%}else{
+                                                    Imprimante imprimante = (Imprimante) ressource;
+                                                %>
+                                                <%=imprimante.getResolution()%> , <%=imprimante.getVitesseImpression()%> , <%=imprimante.getDateCreation()%>
 
-                                            <% } %>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" id="forTypeImprimante" style="display: none;">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="imprimante">Imprimante</label>
-                                        <select class="form-control" id="imprimante" name="imprimante" required>
-                                            <option value="">Choose...</option>
-                                            <% for (Ressource ressource : ressources) { %>
-                                            <% if(ressource.getTypeRessource().equals("Imprimante") && ressource.getEtatDemande()== EtatDemande.Traité){
-                                                Imprimante imprimante = (Imprimante) ressource;
-                                            %>
-                                            <option value="<%= imprimante.getId()%>"><%=imprimante.getResolution()%> , <%=imprimante.getVitesseImpression()%> , <%=imprimante.getDateCreation()%></option>
-                                            <% }%>
+                                                <%}%>
 
-                                            <% } %>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" id="forRessource" style="display: none;">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="detail">Veuillez entrer le détail de la panne</label>
-                                        <textarea class="form-control" id="detail" name="detail" placeholder="Enter details of the panne" rows="3" required></textarea>
-                                    </div>
-                                </div>
-                            </div>
+                                            </td>
+                                            <td>
+                                                <%= panne.getDateSignal()%>
+                                            </td>
+                                            <td>
+                                                <%= panne.getDetail()%>
+                                            </td>
+                                            <td style="background-color:
+                                                <% if(panne.getEtatPanne().equals(EtatPanne.Repare)) { %>
+                                                    green
+                                                <% } else if(panne.getEtatPanne().equals(EtatPanne.EnCours)) { %>
+                                                    orange
+                                                <% } else if(panne.getEtatPanne().equals(EtatPanne.NonRepare)) { %>
+                                                    dodgerblue
+                                                <% } else if(panne.getEtatPanne().equals(EtatPanne.Severe)) { %>
+                                                    red
+                                                <% } else { %>
+                                                    gray
+                                                <% } %>;
+                                                    color: white">
 
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <button type="submit" class="btn btn-primary btn-block">Declarer panne</button>
-                                </div>
-                            </div>
-                        </form>
+                                                <% if(panne.getEtatPanne().equals(EtatPanne.NonRepare)) { %>
+                                                Non Traité
+                                                <% } else if(panne.getEtatPanne().equals(EtatPanne.EnCours)){ %>
+                                                En Cours de Traitement
+                                                <% } else if(panne.getEtatPanne().equals(EtatPanne.Severe)){ %>
+                                                Panne Severe
+                                                <% }else{%>
+                                                    <%= panne.getEtatPanne() %>
+                                                <%}%>
+                                            </td>
+                                            <% if(panne.getEtatPanne().equals(EtatPanne.NonRepare)){%>
+                                            <td>
+                                                <button type="button" class="btn btn-danger btn-circle" onclick="deletePanne('<%= panne.getId() %>')"><i class="fas fa-trash"></i></button>
+                                            </td>
+                                            <%}%>
+                                        </tr>
 
+                                <% }%>
+
+                                <% }
+                                } %>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
+
             </div>
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
@@ -375,18 +395,27 @@
     </div>
 </div>
 
+
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 <!-- Core plugin JavaScript-->
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin-2.min.js"></script>
+
+<!-- Page level plugins -->
+<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="js/demo/datatables-demo.js"></script>
 <!-- Custom scripts for all pages-->
 <script src="js/sb-admin-2.min.js"></script>
 <!-- Page level plugins -->
 <script src="vendor/chart.js/Chart.min.js"></script>
-<!-- Page level custom scripts -->
-<script src="js/demo/chart-area-demo.js"></script>
-<script src="js/demo/chart-pie-demo.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $('#togglePassword').on('click', function() {
@@ -420,45 +449,25 @@
     });
 });
 </script>
-<script>
-    document.getElementById('typeDeRess').addEventListener('change', function() {
-        var type = this.value;
-        var ordinateurOptions = document.getElementById('forTypeOrdinateur');
-        var imprimanteOptions = document.getElementById('forTypeImprimante');
-        var ordinateur = document.getElementById('ordinateur');
-        var imprimante = document.getElementById('imprimante');
 
-        ordinateurOptions.style.display = 'none';
-        imprimanteOptions.style.display = 'none';
-        ordinateur.required = false;
-        imprimante.required = false;
-
-        if (type === 'Ordinateur') {
-            ordinateurOptions.style.display = 'block';
-            ordinateur.required = true;
-        } else if (type === 'Imprimante') {
-            imprimanteOptions.style.display = 'block';
-            imprimante.required = true;
-        }
-    });
-
-    document.getElementById('ordinateur').addEventListener('change', function() {
-        var id = this.value;
-        var textAreaOptions = document.getElementById('forRessource');
-        var textArea = document.getElementById('detail');
-
-        textAreaOptions.style.display = 'block';
-        textArea.required = true;
-    });
-
-    document.getElementById('imprimante').addEventListener('change', function() {
-        var id = this.value;
-        var textAreaOptions = document.getElementById('forRessource');
-        var textArea = document.getElementById('detail');
-
-        textAreaOptions.style.display = 'block';
-        textArea.required = true;
-    });
+<script type="text/javascript">
+    function deletePanne(panneId) {
+        $.ajax({
+            type: 'POST',
+            url: 'deletePanne',
+            data: { panneId: panneId },
+            success: function(response) {
+                // Refresh the page or update the table after successful deletion
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error('Error deleting panne:', error);
+                // You can show an error message to the user if deletion fails
+            }
+        });
+    }
 </script>
+
+
 </body>
 </html>

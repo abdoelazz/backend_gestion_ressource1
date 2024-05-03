@@ -1,12 +1,11 @@
-<%@ page import="java.util.List" %>
-<%@ page import="gestionRessource.backend.model.*" %>
+<%@ page import="gestionRessource.backend.model.User" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta charset="ISO-8859-1">
-    <title>Panne</title>
+    <title>Demande</title>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -51,12 +50,12 @@
                 <span>Faire une Demande</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="declarerPanne" style="background-color: #0a53be;">
+            <a class="nav-link" href="declarerPanne">
                 <i class="far fa-file-alt"></i>
                 <span>Declarer Panne</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="declarationPannes">
+            <a class="nav-link" href="declarerPanne"  style="background-color: #0a53be;">
                 <i class="far fa-file-alt"></i>
                 <span>Mes Declarations de Panne</span></a>
         </li>
@@ -215,16 +214,16 @@
             <div class="container-fluid">
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Panne</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Demandes</h1>
                 </div>
                 <!-- Content Row -->
                 <!-- Demande Card Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Declarer une panne</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Créer Nouvelle Demande</h6>
                     </div>
                     <div class="card-body">
-                        <form  method="post" action="declarerPanne">
+                        <form  method="post" action="ajouterRessource">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
@@ -240,19 +239,46 @@
                             <div class="row" id="forTypeOrdinateur" style="display: none;">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="ordinateur">Ordinateur</label>
-                                        <select class="form-control" id="ordinateur" name="ordinateur" required>
+                                        <label for="cpu">CPU</label>
+                                        <select class="form-control" id="cpu" name="cpu" required>
                                             <option value="">Choose...</option>
-                                            <% List<Ressource> ressources = (List<Ressource>) request.getAttribute("ressources"); %>
-
-                                            <% for (Ressource ressource : ressources) { %>
-                                            <% if(ressource.getTypeRessource().equals("Ordinateur") && ressource.getEtatDemande()== EtatDemande.Traité){
-                                                Ordinateur ordinateur = (Ordinateur) ressource;
-                                            %>
-                                            <option value="<%= ordinateur.getId()%>"><%=ordinateur.getCpu()%> , <%=ordinateur.getDisqueDur()%> , <%=ordinateur.getEcran()%> , <%=ordinateur.getRam()%> , <%=ordinateur.getDateCreation()%></option>
-                                            <% }%>
-
-                                            <% } %>
+                                            <option value="Intel i5">Intel i5</option>
+                                            <option value="Intel i7">Intel i7</option>
+                                            <option value="AMD Ryzen 5">AMD Ryzen 5</option>
+                                            <option value="AMD Ryzen 7">AMD Ryzen 7</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="ram">RAM</label>
+                                        <select class="form-control" id="ram" name="ram" required>
+                                            <option value="">Choose...</option>
+                                            <option value="8GB">8GB</option>
+                                            <option value="16GB">16GB</option>
+                                            <option value="32GB">32GB</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="ecran">Ecran</label>
+                                        <select class="form-control" id="ecran" name="ecran" required>
+                                            <option value="">Choose...</option>
+                                            <option value="15 inch">15 inch</option>
+                                            <option value="17 inch">17 inch</option>
+                                            <option value="21 inch">21 inch</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="disqueDur">Disque Dur</label>
+                                        <select class="form-control" id="disqueDur" name="disqueDur" required>
+                                            <option value="">Choose...</option>
+                                            <option value="256GB SSD">256GB SSD</option>
+                                            <option value="512GB SSD">512GB SSD</option>
+                                            <option value="1TB HDD">1TB HDD</option>
                                         </select>
                                     </div>
                                 </div>
@@ -260,33 +286,30 @@
                             <div class="row" id="forTypeImprimante" style="display: none;">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="imprimante">Imprimante</label>
-                                        <select class="form-control" id="imprimante" name="imprimante" required>
+                                        <label for="resolution">Resolution (dpi)</label>
+                                        <select class="form-control" id="resolution" name="resolution" required>
                                             <option value="">Choose...</option>
-                                            <% for (Ressource ressource : ressources) { %>
-                                            <% if(ressource.getTypeRessource().equals("Imprimante") && ressource.getEtatDemande()== EtatDemande.Traité){
-                                                Imprimante imprimante = (Imprimante) ressource;
-                                            %>
-                                            <option value="<%= imprimante.getId()%>"><%=imprimante.getResolution()%> , <%=imprimante.getVitesseImpression()%> , <%=imprimante.getDateCreation()%></option>
-                                            <% }%>
-
-                                            <% } %>
+                                            <option value="600">600 dpi</option>
+                                            <option value="1200">1200 dpi</option>
+                                            <option value="2400">2400 dpi</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="vitesseimpression">Vitesse Impression (ppm)</label>
+                                        <select class="form-control" id="vitesseimpression" name="vitesseimpression" required>
+                                            <option value="">Choose...</option>
+                                            <option value="20">20 ppm</option>
+                                            <option value="35">35 ppm</option>
+                                            <option value="50">50 ppm</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" id="forRessource" style="display: none;">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="detail">Veuillez entrer le détail de la panne</label>
-                                        <textarea class="form-control" id="detail" name="detail" placeholder="Enter details of the panne" rows="3" required></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <button type="submit" class="btn btn-primary btn-block">Declarer panne</button>
+                                    <button type="submit" class="btn btn-primary btn-block">Ajouter</button>
                                 </div>
                             </div>
                         </form>
@@ -425,39 +448,25 @@
         var type = this.value;
         var ordinateurOptions = document.getElementById('forTypeOrdinateur');
         var imprimanteOptions = document.getElementById('forTypeImprimante');
-        var ordinateur = document.getElementById('ordinateur');
-        var imprimante = document.getElementById('imprimante');
+        var cpu = document.getElementById('cpu');
+        var ram = document.getElementById('ram');
+        var ecran = document.getElementById('ecran');
+        var disqueDur = document.getElementById('disqueDur');
+        var resolution = document.getElementById('resolution');
+        var vitesseImpression = document.getElementById('vitesseimpression');
 
         ordinateurOptions.style.display = 'none';
         imprimanteOptions.style.display = 'none';
-        ordinateur.required = false;
-        imprimante.required = false;
+        cpu.required = ram.required = ecran.required = disqueDur.required = false;
+        resolution.required = vitesseImpression.required = false;
 
         if (type === 'Ordinateur') {
             ordinateurOptions.style.display = 'block';
-            ordinateur.required = true;
+            cpu.required = ram.required = ecran.required = disqueDur.required = true;
         } else if (type === 'Imprimante') {
             imprimanteOptions.style.display = 'block';
-            imprimante.required = true;
+            resolution.required = vitesseImpression.required = true;
         }
-    });
-
-    document.getElementById('ordinateur').addEventListener('change', function() {
-        var id = this.value;
-        var textAreaOptions = document.getElementById('forRessource');
-        var textArea = document.getElementById('detail');
-
-        textAreaOptions.style.display = 'block';
-        textArea.required = true;
-    });
-
-    document.getElementById('imprimante').addEventListener('change', function() {
-        var id = this.value;
-        var textAreaOptions = document.getElementById('forRessource');
-        var textArea = document.getElementById('detail');
-
-        textAreaOptions.style.display = 'block';
-        textArea.required = true;
     });
 </script>
 </body>
