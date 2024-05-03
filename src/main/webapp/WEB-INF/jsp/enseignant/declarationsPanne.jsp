@@ -253,7 +253,6 @@
                                     <th>date de la declaration</th>
                                     <th>detail de la panne</th>
                                     <th>etat de la panne</th>
-                                    <th ></th>
                                 </tr>
                                 </thead>
                                 <tfoot>
@@ -263,7 +262,6 @@
                                     <th>date de la declaration</th>
                                     <th>detail de la panne</th>
                                     <th>etat de la panne</th>
-                                    <th class=".o-hidden"></th>
                                 </tr>
                                 </tfoot>
                                 <tbody>
@@ -316,11 +314,6 @@
                                         Panne Severe
                                         <% }else{%>
                                         <%= panne.getEtatPanne() %>
-                                        <%}%>
-                                    </td>
-                                    <td>
-                                        <% if(panne.getEtatPanne().equals(EtatPanne.NonRepare)){%>
-                                        <button type="button" class="btn btn-danger btn-circle" onclick="deletePanne('<%= panne.getId() %>')"><i class="fas fa-trash"></i></button>
                                         <%}%>
                                     </td>
                                 </tr>
