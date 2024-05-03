@@ -3,11 +3,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <meta charset="ISO-8859-1">
     <title>Acceuil</title>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
 </head>
 
 <body class="page-top">
@@ -95,13 +99,13 @@
                     <h1 class="h3 mb-0 text-gray-800">Demandes</h1>
                 </div>
                 <!-- Content Row -->
-                <!-- Project Card Example -->
+                <!-- Demande Card Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Créer Nouvelle Demande</h6>
                     </div>
                     <div class="card-body">
-                        <form id="createProjectForm">
+                        <form  method="post" action="ajouterRessource">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
@@ -120,7 +124,10 @@
                                         <label for="cpu">CPU</label>
                                         <select class="form-control" id="cpu" name="cpu" required>
                                             <option value="">Choose...</option>
-                                            <!-- CPU options will be dynamically added here -->
+                                            <option value="Intel i5">Intel i5</option>
+                                            <option value="Intel i7">Intel i7</option>
+                                            <option value="AMD Ryzen 5">AMD Ryzen 5</option>
+                                            <option value="AMD Ryzen 7">AMD Ryzen 7</option>
                                         </select>
                                     </div>
                                 </div>
@@ -129,7 +136,9 @@
                                         <label for="ram">RAM</label>
                                         <select class="form-control" id="ram" name="ram" required>
                                             <option value="">Choose...</option>
-                                            <!-- RAM options will be dynamically added here -->
+                                            <option value="8GB">8GB</option>
+                                            <option value="16GB">16GB</option>
+                                            <option value="32GB">32GB</option>
                                         </select>
                                     </div>
                                 </div>
@@ -138,7 +147,9 @@
                                         <label for="ecran">Ecran</label>
                                         <select class="form-control" id="ecran" name="ecran" required>
                                             <option value="">Choose...</option>
-                                            <!-- Ecran options will be dynamically added here -->
+                                            <option value="15 inch">15 inch</option>
+                                            <option value="17 inch">17 inch</option>
+                                            <option value="21 inch">21 inch</option>
                                         </select>
                                     </div>
                                 </div>
@@ -147,7 +158,9 @@
                                         <label for="disqueDur">Disque Dur</label>
                                         <select class="form-control" id="disqueDur" name="disqueDur" required>
                                             <option value="">Choose...</option>
-                                            <!-- Disque Dur options will be dynamically added here -->
+                                            <option value="256GB SSD">256GB SSD</option>
+                                            <option value="512GB SSD">512GB SSD</option>
+                                            <option value="1TB HDD">1TB HDD</option>
                                         </select>
                                     </div>
                                 </div>
@@ -155,19 +168,23 @@
                             <div class="row" id="forTypeImprimante" style="display: none;">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="resolution">Resolution</label>
+                                        <label for="resolution">Resolution (dpi)</label>
                                         <select class="form-control" id="resolution" name="resolution" required>
                                             <option value="">Choose...</option>
-                                            <!-- Resolution options will be dynamically added here -->
+                                            <option value="600">600 dpi</option>
+                                            <option value="1200">1200 dpi</option>
+                                            <option value="2400">2400 dpi</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="vitesseimpression">Vitesse Impression</label>
+                                        <label for="vitesseimpression">Vitesse Impression (ppm)</label>
                                         <select class="form-control" id="vitesseimpression" name="vitesseimpression" required>
                                             <option value="">Choose...</option>
-                                            <!-- Vitesse Impression options will be dynamically added here -->
+                                            <option value="20">20 ppm</option>
+                                            <option value="35">35 ppm</option>
+                                            <option value="50">50 ppm</option>
                                         </select>
                                     </div>
                                 </div>
@@ -178,8 +195,6 @@
                                 </div>
                             </div>
                         </form>
-
-
 
                     </div>
                 </div>
@@ -264,6 +279,7 @@
         </div>
     </div>
 </div>
+
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -310,92 +326,30 @@
     });
 });
 </script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#createProjectForm').submit(function(event) {
-            event.preventDefault();
-            var formData = $(this).serialize();
-            $.ajax({
-                type: 'POST',
-                url: 'CreateProject',
-                data: formData,
-                success: function(response) {
-                    if (response.trim() === "This project already exists") {
-                        $('#createProjectErrorModal').modal('show');
-                    } else {
-                        $('#assignProjectManagerModal').modal('show');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error creating project:', error);
-                    $('#createProjectErrorModal').modal('show');
-                }
-            });
-        });
-    });
-</script>
 <script>
-    $(document).ready(function() {
-        $('#startDate').on('change', function() {
-            var startDate = new Date($(this).val());
-            var endDate = new Date($('#endDate').val());
-            if (startDate > endDate) {
-                $(this).val('');
-            }
-        });
-        $('#endDate').on('change', function() {
-            var startDate = new Date($('#startDate').val());
-            var endDate = new Date($(this).val());
-            if (endDate < startDate) {
-                $(this).val('');
-            }
-        });
-    });
-</script>
-<script>
-    $(document).ready(function() {
-        $('#startDate, #endDate').on('change', function() {
-            var startDate = new Date($('#startDate').val());
-            var endDate = new Date($('#endDate').val());
-            if (startDate && endDate && startDate <= endDate) {
-                var timeDifference = Math.abs(endDate.getTime() - startDate.getTime()+1);
-                var durationDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
-                $('#duration').val(durationDays);
-            } else {
-                $('#duration').val('');
-            }
-        });
-    });
-</script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#assignProjectManagerBtn').click(function() {
-            var projectName =$('#projectName').val();
-            var selectedManagerId = $('#projectManager').val();
-            $.ajax({
-                type: 'POST',
-                url: 'AssignProject',
-                data: { managerId: selectedManagerId,projectName:  projectName},
-                success: function(response) {
-                    console.log('Project manager assigned successfully');
-                    $('#createProjectSuccessModal').modal('show');
-                    $('#assignProjectManagerModal').modal('hide');
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error assigning project manager:', error);
-                }
-            });
-        });
-    });
-</script>
-<script>
-    // Here you might add JavaScript to handle showing/hiding of specific form sections based on the selected resource type.
     document.getElementById('typeDeRess').addEventListener('change', function() {
         var type = this.value;
         var ordinateurOptions = document.getElementById('forTypeOrdinateur');
         var imprimanteOptions = document.getElementById('forTypeImprimante');
-        ordinateurOptions.style.display = (type === 'Ordinateur') ? 'block' : 'none';
-        imprimanteOptions.style.display = (type === 'Imprimante') ? 'block' : 'none';
+        var cpu = document.getElementById('cpu');
+        var ram = document.getElementById('ram');
+        var ecran = document.getElementById('ecran');
+        var disqueDur = document.getElementById('disqueDur');
+        var resolution = document.getElementById('resolution');
+        var vitesseImpression = document.getElementById('vitesseimpression');
+
+        ordinateurOptions.style.display = 'none';
+        imprimanteOptions.style.display = 'none';
+        cpu.required = ram.required = ecran.required = disqueDur.required = false;
+        resolution.required = vitesseImpression.required = false;
+
+        if (type === 'Ordinateur') {
+            ordinateurOptions.style.display = 'block';
+            cpu.required = ram.required = ecran.required = disqueDur.required = true;
+        } else if (type === 'Imprimante') {
+            imprimanteOptions.style.display = 'block';
+            resolution.required = vitesseImpression.required = true;
+        }
     });
 </script>
 </body>

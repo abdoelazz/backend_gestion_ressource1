@@ -90,6 +90,8 @@ public class Ressource {
 		this.dateCreation = dateCreation;
 	}
 
+
+
 	public String getCodeInventaire() {
 		return codeInventaire;
 	}

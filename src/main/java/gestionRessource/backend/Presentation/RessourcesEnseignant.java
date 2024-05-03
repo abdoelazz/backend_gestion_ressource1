@@ -30,7 +30,7 @@ public class RessourcesEnseignant {
 
         @GetMapping("/ressources")
         public String showRessourcesEnseignantPage(HttpServletRequest request) {
-            HttpSession session = request.getSession(false); // Retrieve existing session or null if no session exists
+            HttpSession session = request.getSession(false);
             if (session != null && session.getAttribute("user") != null) {
                 User user= (User) session.getAttribute("user");
                 List<Ressource> ressources= ressourceController.getRessourcesByUserId(user.getId());
@@ -38,7 +38,7 @@ public class RessourcesEnseignant {
                 request.setAttribute("ressources", ressources);
                 return "enseignant/Ressources";
             } else {
-                // If no session exists or no user is logged in, return the login page
+
                 return "redirect:/login";
             }
 

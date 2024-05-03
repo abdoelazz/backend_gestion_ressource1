@@ -16,11 +16,6 @@ import java.util.List;
 @Controller
 public class Departements {
 
-
-        @Autowired
-        private UserController userControler;
-
-
         @Autowired
         private DepartementController departementController;
 
