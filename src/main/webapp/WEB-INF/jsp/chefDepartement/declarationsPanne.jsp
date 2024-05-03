@@ -1,4 +1,5 @@
-<%@ page import="gestionRessource.backend.model.User" %>
+<%@ page import="java.util.List" %>
+<%@ page import="gestionRessource.backend.model.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,57 +19,57 @@
 <div id="wrapper">
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="Directeur">
             <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">Ressources</div>
+            <div class="sidebar-brand-text mx-3">Chef de Departement</div>
         </a>
-
-
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" href="home">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Tableau De Bord</span>
+            </a>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider">
         <!-- Heading -->
         <div class="sidebar-heading">
             Interface
         </div>
-
+        <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
-            <a class="nav-link" href="ordinateurEnseignant">
-                <i class="fas fa-desktop"></i>
-                <span>Mes Ordinateurs</span></a>
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-folder-open"></i>
+                <span>Ressources</span>
+            </a>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="/ajouterRessource">Créer</a>
+                    <a class="collapse-item" href="ConsulterProjets">Consulter</a>
+                </div>
+            </div>
         </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="imprimanteEnseignant">
-                <i class="fas fa-print"></i>
-                <span>Mes Imprimantes</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="ajouterRessource">
-                <i class="far fa-file-alt"></i>
-                <span>Faire une Demande</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="declarerPanne">
-                <i class="far fa-file-alt"></i>
-                <span>Declarer Panne</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="declarerPanne"  style="background-color: #0a53be;">
-                <i class="far fa-file-alt"></i>
-                <span>Mes Declarations de Panne</span></a>
-        </li>
-
-
-        <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
-
-        <!-- Sidebar Toggler (Sidebar) -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                <i class="fas fa-fw fa-folder-open"></i>
+                <span>Pannes</span>
+            </a>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="declarerPanne">Declarer Panne</a>
+                    <a class="collapse-item" href="declarationPannes">Consulter</a>
+                </div>
+            </div>
+        </li>
+        <hr class="sidebar-divider d-none d-md-block">
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
         </div>
-
     </ul>
     <!-- End of Sidebar -->
     <!-- Content Wrapper -->
@@ -211,111 +212,107 @@
             </nav>
             <!-- End of Topbar -->
             <!-- Begin Page Content -->
+            <!-- Begin Page Content -->
             <div class="container-fluid">
-                <!-- Page Heading -->
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Demandes</h1>
-                </div>
-                <!-- Content Row -->
-                <!-- Demande Card Example -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Créer Nouvelle Demande</h6>
-                    </div>
-                    <div class="card-body">
-                        <form  method="post" action="ajouterRessource">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="typeDeRess">Type de ressource</label>
-                                        <select class="form-control" id="typeDeRess" name="typeDeRess" required>
-                                            <option value="" selected>Choose...</option>
-                                            <option value="Ordinateur">Ordinateur</option>
-                                            <option value="Imprimante">Imprimante</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" id="forTypeOrdinateur" style="display: none;">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="cpu">CPU</label>
-                                        <select class="form-control" id="cpu" name="cpu" required>
-                                            <option value="">Choose...</option>
-                                            <option value="Intel i5">Intel i5</option>
-                                            <option value="Intel i7">Intel i7</option>
-                                            <option value="AMD Ryzen 5">AMD Ryzen 5</option>
-                                            <option value="AMD Ryzen 7">AMD Ryzen 7</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="ram">RAM</label>
-                                        <select class="form-control" id="ram" name="ram" required>
-                                            <option value="">Choose...</option>
-                                            <option value="8GB">8GB</option>
-                                            <option value="16GB">16GB</option>
-                                            <option value="32GB">32GB</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="ecran">Ecran</label>
-                                        <select class="form-control" id="ecran" name="ecran" required>
-                                            <option value="">Choose...</option>
-                                            <option value="15 inch">15 inch</option>
-                                            <option value="17 inch">17 inch</option>
-                                            <option value="21 inch">21 inch</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="disqueDur">Disque Dur</label>
-                                        <select class="form-control" id="disqueDur" name="disqueDur" required>
-                                            <option value="">Choose...</option>
-                                            <option value="256GB SSD">256GB SSD</option>
-                                            <option value="512GB SSD">512GB SSD</option>
-                                            <option value="1TB HDD">1TB HDD</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" id="forTypeImprimante" style="display: none;">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="resolution">Resolution (dpi)</label>
-                                        <select class="form-control" id="resolution" name="resolution" required>
-                                            <option value="">Choose...</option>
-                                            <option value="600">600 dpi</option>
-                                            <option value="1200">1200 dpi</option>
-                                            <option value="2400">2400 dpi</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="vitesseimpression">Vitesse Impression (ppm)</label>
-                                        <select class="form-control" id="vitesseimpression" name="vitesseimpression" required>
-                                            <option value="">Choose...</option>
-                                            <option value="20">20 ppm</option>
-                                            <option value="35">35 ppm</option>
-                                            <option value="50">50 ppm</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <button type="submit" class="btn btn-primary btn-block">Ajouter</button>
-                                </div>
-                            </div>
-                        </form>
 
+                <!-- Page Heading and Add Department Button -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Ordinateurs</h1>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>type de ressource</th>
+                                    <th>detail de la ressource</th>
+                                    <th>date de la declaration</th>
+                                    <th>detail de la panne</th>
+                                    <th>etat de la panne</th>
+                                    <th ></th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>type de ressource</th>
+                                    <th>detail de la ressource</th>
+                                    <th>date de la declaration</th>
+                                    <th>detail de la panne</th>
+                                    <th>etat de la panne</th>
+                                    <th class=".o-hidden"></th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                <% List<Ressource> ressources = (List<Ressource>) request.getAttribute("ressources");
+                                    for (Ressource ressource : ressources) {
+                                        if(!ressource.getPannes().isEmpty()){
+                                            for (Panne panne : ressource.getPannes()) { %>
+                                <tr>
+
+                                    <td>
+                                        <%= ressource.getTypeRessource()%>
+                                    </td>
+                                    <td><% if(ressource.getTypeRessource().equals("Ordinateur")){
+                                        Ordinateur ordinateur = (Ordinateur) ressource;
+                                    %>
+                                        <%=ordinateur.getCpu()%> , <%=ordinateur.getDisqueDur()%> , <%=ordinateur.getEcran()%> , <%=ordinateur.getRam()%> , <%=ordinateur.getDateCreation()%>
+                                        <%}else{
+                                            Imprimante imprimante = (Imprimante) ressource;
+                                        %>
+                                        <%=imprimante.getResolution()%> , <%=imprimante.getVitesseImpression()%> , <%=imprimante.getDateCreation()%>
+
+                                        <%}%>
+
+                                    </td>
+                                    <td>
+                                        <%= panne.getDateSignal()%>
+                                    </td>
+                                    <td>
+                                        <%= panne.getDetail()%>
+                                    </td>
+                                    <td style="background-color:
+                                        <% if(panne.getEtatPanne().equals(EtatPanne.Repare)) { %>
+                                            green
+                                        <% } else if(panne.getEtatPanne().equals(EtatPanne.EnCours)) { %>
+                                            orange
+                                        <% } else if(panne.getEtatPanne().equals(EtatPanne.NonRepare)) { %>
+                                            dodgerblue
+                                        <% } else if(panne.getEtatPanne().equals(EtatPanne.Severe)) { %>
+                                            red
+                                        <% } else { %>
+                                            gray
+                                        <% } %>;
+                                            color: white">
+
+                                        <% if(panne.getEtatPanne().equals(EtatPanne.NonRepare)) { %>
+                                        Non Traité
+                                        <% } else if(panne.getEtatPanne().equals(EtatPanne.EnCours)){ %>
+                                        En Cours de Traitement
+                                        <% } else if(panne.getEtatPanne().equals(EtatPanne.Severe)){ %>
+                                        Panne Severe
+                                        <% }else{%>
+                                        <%= panne.getEtatPanne() %>
+                                        <%}%>
+                                    </td>
+                                    <% if(panne.getEtatPanne().equals(EtatPanne.NonRepare)){%>
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-circle" onclick="deletePanne('<%= panne.getId() %>')"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                    <%}%>
+                                </tr>
+
+                                <% }%>
+
+                                <% }
+                                } %>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
+
             </div>
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
@@ -397,19 +394,22 @@
         </div>
     </div>
 </div>
-
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 <!-- Core plugin JavaScript-->
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
 <!-- Custom scripts for all pages-->
 <script src="js/sb-admin-2.min.js"></script>
+
 <!-- Page level plugins -->
-<script src="vendor/chart.js/Chart.min.js"></script>
+<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
 <!-- Page level custom scripts -->
-<script src="js/demo/chart-area-demo.js"></script>
-<script src="js/demo/chart-pie-demo.js"></script>
+<script src="js/demo/datatables-demo.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $('#togglePassword').on('click', function() {
@@ -443,31 +443,25 @@
     });
 });
 </script>
-<script>
-    document.getElementById('typeDeRess').addEventListener('change', function() {
-        var type = this.value;
-        var ordinateurOptions = document.getElementById('forTypeOrdinateur');
-        var imprimanteOptions = document.getElementById('forTypeImprimante');
-        var cpu = document.getElementById('cpu');
-        var ram = document.getElementById('ram');
-        var ecran = document.getElementById('ecran');
-        var disqueDur = document.getElementById('disqueDur');
-        var resolution = document.getElementById('resolution');
-        var vitesseImpression = document.getElementById('vitesseimpression');
 
-        ordinateurOptions.style.display = 'none';
-        imprimanteOptions.style.display = 'none';
-        cpu.required = ram.required = ecran.required = disqueDur.required = false;
-        resolution.required = vitesseImpression.required = false;
-
-        if (type === 'Ordinateur') {
-            ordinateurOptions.style.display = 'block';
-            cpu.required = ram.required = ecran.required = disqueDur.required = true;
-        } else if (type === 'Imprimante') {
-            imprimanteOptions.style.display = 'block';
-            resolution.required = vitesseImpression.required = true;
-        }
-    });
+<script type="text/javascript">
+    function deletePanne(panneId) {
+        $.ajax({
+            type: 'POST',
+            url: 'deletePanne',
+            data: { panneId: panneId },
+            success: function(response) {
+                // Refresh the page or update the table after successful deletion
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error('Error deleting panne:', error);
+                // You can show an error message to the user if deletion fails
+            }
+        });
+    }
 </script>
+
+
 </body>
 </html>
