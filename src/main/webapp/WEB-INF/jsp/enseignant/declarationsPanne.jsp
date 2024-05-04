@@ -214,7 +214,6 @@
                                     <th>date de la declaration</th>
                                     <th>detail de la panne</th>
                                     <th>etat de la panne</th>
-                                    <th ></th>
                                 </tr>
                                 </thead>
                                 <tfoot>
@@ -224,7 +223,6 @@
                                     <th>date de la declaration</th>
                                     <th>detail de la panne</th>
                                     <th>etat de la panne</th>
-                                    <th class=".o-hidden"></th>
                                 </tr>
                                 </tfoot>
                                 <tbody>
@@ -241,11 +239,10 @@
                                                 Ordinateur ordinateur = (Ordinateur) ressource;
                                             %>
                                                 <%=ordinateur.getCpu()%> , <%=ordinateur.getDisqueDur()%> , <%=ordinateur.getEcran()%> , <%=ordinateur.getRam()%> , <%=ordinateur.getDateCreation()%>
-                                                <%}else{
+                                                <%} else if (ressource.getTypeRessource().equals("Imprimante")) {
                                                     Imprimante imprimante = (Imprimante) ressource;
                                                 %>
                                                 <%=imprimante.getResolution()%> , <%=imprimante.getVitesseImpression()%> , <%=imprimante.getDateCreation()%>
-
                                                 <%}%>
 
                                             </td>
@@ -279,11 +276,6 @@
                                                     <%= panne.getEtatPanne() %>
                                                 <%}%>
                                             </td>
-                                            <% if(panne.getEtatPanne().equals(EtatPanne.NonRepare)){%>
-                                            <td>
-                                                <button type="button" class="btn btn-danger btn-circle" onclick="deletePanne('<%= panne.getId() %>')"><i class="fas fa-trash"></i></button>
-                                            </td>
-                                            <%}%>
                                         </tr>
 
                                 <% }%>
@@ -425,24 +417,6 @@
         });
     });
 });
-</script>
-
-<script type="text/javascript">
-    function deletePanne(panneId) {
-        $.ajax({
-            type: 'POST',
-            url: 'deletePanne',
-            data: { panneId: panneId },
-            success: function(response) {
-                // Refresh the page or update the table after successful deletion
-                location.reload();
-            },
-            error: function(xhr, status, error) {
-                console.error('Error deleting panne:', error);
-                // You can show an error message to the user if deletion fails
-            }
-        });
-    }
 </script>
 
 

@@ -52,6 +52,7 @@ public class PanneController {
 	public Panne affectPanneToTechnicien(@RequestParam Long panneId, @RequestParam Long userId) {
 		User user = userService.getUserById(userId);
 		Panne panne = panneService.getPanneById(panneId);
+		panne.setEtatPanne(EtatPanne.EnCours);
 		panne.setUser(user);
 		return panneService.savePanne(panne);
 

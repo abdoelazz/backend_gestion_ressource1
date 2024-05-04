@@ -19,11 +19,13 @@
 <div id="wrapper">
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="Directeur">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
             <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">Chef de Departement</div>
+            <div class="sidebar-brand-text mx-3">Ressources</div>
         </a>
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
@@ -36,42 +38,27 @@
         </li>
         <!-- Divider -->
         <hr class="sidebar-divider">
+
         <!-- Heading -->
         <div class="sidebar-heading">
             Interface
         </div>
-        <!-- Nav Item - Pages Collapse Menu -->
+
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-folder-open"></i>
-                <span>Ressources</span>
-            </a>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="ajouterRessource">Créer Demande</a>
-                    <a class="collapse-item" href="consulterDemandes">Consulter Demandes</a>
-                    <a class="collapse-item" href="ordinateurEnseignant">Mes Ordinateurs</a>
-                    <a class="collapse-item" href="imprimanteEnseignant">Mes Imprimantes</a>
-                </div>
-            </div>
+            <a class="nav-link" href="resoudrePannes">
+                <i class="fas fa-bug"></i>
+                <span>Pannes</span></a>
         </li>
+
+
+        <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
-        <li class="nav-item active">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                <i class="fas fa-fw fa-folder-open"></i>
-                <span>Pannes</span>
-            </a>
-            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="declarerPanne">Déclarer Panne</a>
-                    <a class="collapse-item" href="declarationPannes">Mes declarations</a>
-                </div>
-            </div>
-        </li>
-        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
         </div>
+
     </ul>
     <!-- End of Sidebar -->
     <!-- Content Wrapper -->
@@ -187,6 +174,7 @@
             </nav>
             <!-- End of Topbar -->
             <!-- Begin Page Content -->
+            <!-- Begin Page Content -->
             <div class="container-fluid">
 
                 <!-- Page Heading and Add Department Button -->
@@ -205,7 +193,9 @@
                                     <th>date de la declaration</th>
                                     <th>detail de la panne</th>
                                     <th>etat de la panne</th>
-                                    <th ></th>
+                                    <th>technicien en charge</th>
+                                    <th>modifier panne</th>
+                                    <th>constat</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
@@ -215,67 +205,174 @@
                                     <th>date de la declaration</th>
                                     <th>detail de la panne</th>
                                     <th>etat de la panne</th>
-                                    <th class=".o-hidden"></th>
+                                    <th>technicien en charge</th>
+                                    <th>modifier panne</th>
+                                    <th>constat</th>
                                 </tr>
                                 </tfoot>
                                 <tbody>
                                 <% List<Ressource> ressources = (List<Ressource>) request.getAttribute("ressources");
-                                    for (Ressource ressource : ressources) {
-                                        if(!ressource.getPannes().isEmpty()){
-                                            for (Panne panne : ressource.getPannes()) { %>
-                                <tr>
+                                for (Ressource ressource : ressources) {
+                                    if(!ressource.getPannes().isEmpty()){
+                                        for (Panne panne : ressource.getPannes()) { %>
+                                        <tr>
 
-                                    <td>
-                                        <%= ressource.getTypeRessource()%>
-                                    </td>
-                                    <td><% if(ressource.getTypeRessource().equals("Ordinateur")){
-                                        Ordinateur ordinateur = (Ordinateur) ressource;
-                                    %>
-                                        <%=ordinateur.getCpu()%> , <%=ordinateur.getDisqueDur()%> , <%=ordinateur.getEcran()%> , <%=ordinateur.getRam()%> , <%=ordinateur.getDateCreation()%>
-                                        <%}else{
-                                            Imprimante imprimante = (Imprimante) ressource;
-                                        %>
-                                        <%=imprimante.getResolution()%> , <%=imprimante.getVitesseImpression()%> , <%=imprimante.getDateCreation()%>
+                                            <td>
+                                                <%= ressource.getTypeRessource()%>
+                                            </td>
+                                            <td><% if(ressource.getTypeRessource().equals("Ordinateur")){
+                                                Ordinateur ordinateur = (Ordinateur) ressource;
+                                            %>
+                                                <%=ordinateur.getCpu()%> , <%=ordinateur.getDisqueDur()%> , <%=ordinateur.getEcran()%> , <%=ordinateur.getRam()%> , <%=ordinateur.getDateCreation()%>
+                                                <%}else{
+                                                    Imprimante imprimante = (Imprimante) ressource;
+                                                %>
+                                                <%=imprimante.getResolution()%> , <%=imprimante.getVitesseImpression()%> , <%=imprimante.getDateCreation()%>
 
-                                        <%}%>
+                                                <%}%>
 
-                                    </td>
-                                    <td>
-                                        <%= panne.getDateSignal()%>
-                                    </td>
-                                    <td>
-                                        <%= panne.getDetail()%>
-                                    </td>
-                                    <td style="background-color:
-                                        <% if(panne.getEtatPanne().equals(EtatPanne.Repare)) { %>
-                                            green
-                                        <% } else if(panne.getEtatPanne().equals(EtatPanne.EnCours)) { %>
-                                            orange
-                                        <% } else if(panne.getEtatPanne().equals(EtatPanne.NonRepare)) { %>
-                                            dodgerblue
-                                        <% } else if(panne.getEtatPanne().equals(EtatPanne.Severe)) { %>
-                                            red
-                                        <% } else { %>
-                                            gray
-                                        <% } %>;
-                                            color: white">
+                                            </td>
+                                            <td>
+                                                <%= panne.getDateSignal()%>
+                                            </td>
+                                            <td>
+                                                <%= panne.getDetail()%>
+                                            </td>
+                                            <td style="background-color:
+                                                <% if(panne.getEtatPanne().equals(EtatPanne.Repare)) { %>
+                                                    green
+                                                <% } else if(panne.getEtatPanne().equals(EtatPanne.EnCours)) { %>
+                                                    orange
+                                                <% } else if(panne.getEtatPanne().equals(EtatPanne.NonRepare)) { %>
+                                                    dodgerblue
+                                                <% } else if(panne.getEtatPanne().equals(EtatPanne.Severe)) { %>
+                                                    red
+                                                <% } else { %>
+                                                    gray
+                                                <% } %>;
+                                                    color: white">
 
-                                        <% if(panne.getEtatPanne().equals(EtatPanne.NonRepare)) { %>
-                                        Non Traité
-                                        <% } else if(panne.getEtatPanne().equals(EtatPanne.EnCours)){ %>
-                                        En Cours de Traitement
-                                        <% } else if(panne.getEtatPanne().equals(EtatPanne.Severe)){ %>
-                                        Panne Severe
-                                        <% }else{%>
-                                        <%= panne.getEtatPanne() %>
-                                        <%}%>
-                                    </td>
-                                    <% if(panne.getEtatPanne().equals(EtatPanne.NonRepare)){%>
-                                    <td>
-                                        <button type="button" class="btn btn-danger btn-circle" onclick="affecterPanne('<%= panne.getId() %>')"><i class="fas fa-trash"></i></button>
-                                    </td>
-                                    <%}%>
-                                </tr>
+                                                <% if(panne.getEtatPanne().equals(EtatPanne.NonRepare)) { %>
+                                                Non Traité
+                                                <% } else if(panne.getEtatPanne().equals(EtatPanne.EnCours)){ %>
+                                                En Cours de Traitement
+                                                <% } else if(panne.getEtatPanne().equals(EtatPanne.Severe)){ %>
+                                                Panne Severe
+                                                <% }else{%>
+                                                    <%= panne.getEtatPanne() %>
+                                                <%}%>
+                                            </td>
+                                            <td>
+                                                <% if(panne.getEtatPanne().equals(EtatPanne.NonRepare)){%>
+                                                    <button type="button" class="btn btn-success" onclick="affecterPanne('<%= panne.getId() %>')">
+                                                        <span class="text">Traiter</span>
+                                                    </button>
+                                                <%}else{
+                                                        if(currentUser.getId() == panne.getUser().getId()){%>
+                                                            vous
+                                                        <%}else {%>
+                                                            <%= panne.getUser().getFirst_name() %> <%= panne.getUser().getLast_name() %>
+                                                        <%}%>
+                                                <%}%>
+                                            </td>
+                                            <td>
+                                            <% if(panne.getUser() != null && currentUser.getId() == panne.getUser().getId()){%>
+                                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#panneModal<%= panne.getId() %>">
+                                                    <i class="fas fa-edit"></i> Modifier
+                                                </button>
+                                                <%}%>
+                                            </td>
+                                            <td>
+                                                <% if(panne.getUser() != null && currentUser.getId() == panne.getUser().getId() && panne.getEtatPanne()==EtatPanne.Severe){%>
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#constatModal<%= panne.getId() %>">
+                                                        <i class="fas fa-pencil-alt"></i> <!-- Icône de crayon de Font Awesome -->
+                                                    </button>
+                                                <%} else if (panne.getUser() != null && currentUser.getId() == panne.getUser().getId() && panne.getEtatPanne() != EtatPanne.Severe) {%>
+                                                    pour rediger constat vous devez d'abord changer l etat de panne a severe
+                                                <%}%>
+                                            </td>
+                                        </tr>
+                                        <!-- Panne modal -->
+                                        <div class="modal fade" id="panneModal<%= panne.getId() %>" tabindex="-1" role="dialog" aria-labelledby="panneModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="panneModalLabel">Détails de la Panne</h5>
+                                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Type de ressource: <%= panne.getRessource().getTypeRessource() %></p>
+                                                        <p>Date de déclaration: <%= panne.getDateSignal() %></p>
+                                                        <p>Détails de la panne: <%= panne.getDetail() %></p>
+                                                        <p>État de la panne:
+                                                            <select id="etatPanne<%= panne.getId() %>" class="form-control">
+                                                                <option value="EnCours">En Cours de Traitement</option>
+                                                                <option value="Severe">Panne Sévère</option>
+                                                                <option value="Repare">Réparée</option>
+                                                            </select>
+                                                        </p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Fermer</button>
+                                                        <button class="btn btn-primary" onclick="changerEtatPanne('<%= panne.getId() %>')">Enregistrer</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                <!-- Constat modal -->
+                                <div class="modal fade" id="constatModal<%= panne.getId() %>" tabindex="-1" role="dialog" aria-labelledby="constatModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="constatModalLabel">Détails du constat</h5>
+                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="constatForm<%= panne.getId() %>">
+                                                    <div class="form-group">
+                                                        <label for="explication<%= panne.getId() %>">Explication:</label>
+                                                        <textarea class="form-control" id="explication<%= panne.getId() %>" placeholder="Explication" required></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="frequenceConstat<%= panne.getId() %>">Fréquence du constat:</label>
+                                                        <select class="form-control" id="frequenceConstat<%= panne.getId() %>" required>
+                                                            <option value="rare">rare</option>
+                                                            <option value="frequente">frequente</option>
+                                                            <option value="permanente">permanente</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="ordre<%= panne.getId() %>">Ordre de la panne:</label>
+                                                        <% if (ressource.getTypeRessource().equals("Ordinateur")) { %>
+                                                        <select class="form-control" id="ordre<%= panne.getId() %>" required>
+                                                            <option value="défaut_système">Défaut système</option>
+                                                            <option value="logiciel_utilitaire">Logiciel utilitaire</option>
+                                                            <option value="matériel">Matériel</option>
+                                                        </select>
+                                                        <% } else if (ressource.getTypeRessource().equals("Imprimante")) { %>
+                                                        <input type="text" class="form-control" id="explication<%= panne.getId() %>" placeholder="Explication" value="matériel" disabled>
+                                                        <% } %>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="dateApparition<%= panne.getId() %>">Date d'apparition:</label>
+                                                        <input type="date" class="form-control" id="dateApparition<%= panne.getId() %>" required>
+                                                    </div>
+                                                    <!-- You can add more fields here if needed -->
+                                                    <input type="hidden" id="panneId<%= panne.getId() %>" value="<%= panne.getId() %>">
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Fermer</button>
+                                                <button class="btn btn-primary" onclick="enregistrerConstat(<%= panne.getId() %>)">Enregistrer</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                 <% }%>
 
@@ -344,10 +441,6 @@
                             <input type="text" class="form-control" id="lastName" name="lastName" value="<%=currentUser.getLast_name()%>" disabled>
                         </div>
                         <div class="form-group">
-                            <label for="departement">Departement</label>
-                            <input type="text" class="form-control" id="departement" name="departement" value="<%=currentUser.getDepartement().getNomDepartement()%>" disabled>
-                        </div>
-                        <div class="form-group">
                             <label for="password">Mot de passe</label>
                             <div class="input-group">
                                 <input type="password" class="form-control" id="password" placeholder="Enter Password" >
@@ -367,6 +460,7 @@
             </div>
         </div>
     </div>
+
 </div>
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>
@@ -419,17 +513,55 @@
 </script>
 
 <script type="text/javascript">
-    function deletePanne(panneId) {
+    function affecterPanne(panneId) {
         $.ajax({
             type: 'POST',
-            url: 'deletePanne',
+            url: 'affecterPanne',
             data: { panneId: panneId },
             success: function(response) {
                 // Refresh the page or update the table after successful deletion
                 location.reload();
             },
             error: function(xhr, status, error) {
-                console.error('Error deleting panne:', error);
+                console.error('Error affecting panne:', error);
+                // You can show an error message to the user if deletion fails
+            }
+        });
+    }
+</script>
+<script type="text/javascript">
+    function changerEtatPanne(panneId) {
+        var nouvelEtat = $("#etatPanne" + panneId).val();
+        $.ajax({
+            type: 'POST',
+            url: 'changerEtatPanne',
+            data: { panneId: panneId, nouvelEtat: nouvelEtat },
+            success: function(response) {
+                // Rafraîchir la page ou mettre à jour la table après modification réussie
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error('Erreur lors du changement d\'état de la panne:', error);
+                // Vous pouvez afficher un message d'erreur à l'utilisateur si la modification échoue
+            }
+        });
+    }
+
+
+</script>
+
+
+<script type="text/javascript">
+    function redigerConstat(panneId) {
+        $.ajax({
+            type: 'POST',
+            url: 'constat',
+            data: { panneId: panneId },
+            success: function(response) {
+                r
+            },
+            error: function(xhr, status, error) {
+                console.error('Error affecting panne:', error);
                 // You can show an error message to the user if deletion fails
             }
         });

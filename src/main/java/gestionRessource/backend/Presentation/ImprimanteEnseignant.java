@@ -3,6 +3,7 @@ package gestionRessource.backend.Presentation;
 import gestionRessource.backend.controller.RessourceController;
 import gestionRessource.backend.controller.UserController;
 import gestionRessource.backend.model.Ressource;
+import gestionRessource.backend.model.Role;
 import gestionRessource.backend.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -33,11 +34,16 @@ public class ImprimanteEnseignant {
             if (session != null && session.getAttribute("user") != null) {
                 User user= (User) session.getAttribute("user");
                 List<Ressource> ressources= ressourceController.getRessourcesByUserId(user.getId());
-
-                request.setAttribute("ressources", ressources);
-                return "enseignant/imprimantes";
+                if(user.getRole() == Role.Enseignant)
+                {
+                    request.setAttribute("ressources", ressources);
+                    return "enseignant/imprimantes";
+                } else if (user.getRole() == Role.ChefDepartement) {
+                    request.setAttribute("ressources", ressources);
+                    return "chefDepartement/imprimantes";
+                }
+                return "redirect:/login";
             } else {
-
                 return "redirect:/login";
             }
 
@@ -49,8 +55,7 @@ public class ImprimanteEnseignant {
                 @RequestParam("username") String username,
                 @RequestParam("password") String password,
                 RedirectAttributes redirectAttributes
-
-
+                
         ) {
 
 

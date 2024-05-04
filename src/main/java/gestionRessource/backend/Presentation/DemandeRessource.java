@@ -38,11 +38,9 @@ public class DemandeRessource {
     @DeleteMapping("/deleteRessource")
     public ResponseEntity<String> deleteRessource(@RequestParam Long id) {
         try {
-            System.out.println("Ranniii mra hna ");
             ressourceService.deleteRessource(id);
             return new ResponseEntity<>("Resource deleted successfully.", HttpStatus.OK);
         } catch (Exception e) {
-            System.out.println("Mraaaa lhihat ");
             return new ResponseEntity<>("Error deleting resource: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -63,7 +61,6 @@ public class DemandeRessource {
             ((Imprimante) oldRessource).setResolution(ressourceDto.getResolution());
             ((Imprimante) oldRessource).setVitesseImpression(ressourceDto.getVitesseImpression());
         } else {
-            System.out.println("Les données modifiées ne sont pas compatibles");
             return ResponseEntity.badRequest().build();
         }
 

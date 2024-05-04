@@ -64,6 +64,8 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="ajouterRessource">Créer Demande</a>
                     <a class="collapse-item" href="consulterDemandes">Consulter Demandes</a>
+                    <a class="collapse-item" href="ordinateurEnseignant">Mes Ordinateurs</a>
+                    <a class="collapse-item" href="imprimanteEnseignant">Mes Imprimantes</a>
                 </div>
             </div>
         </li>

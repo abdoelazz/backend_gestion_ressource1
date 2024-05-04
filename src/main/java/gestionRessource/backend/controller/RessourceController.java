@@ -93,7 +93,6 @@ public class RessourceController {
 
 	@PostMapping("/addRessource")
 	public Ressource addRessource(@RequestBody RessourceDTO ressourceDto) {
-		System.out.println("svsvsdvsvds");
 		User user = userService.getUserById(ressourceDto.getUserId());
 		Departement departement = null;
 		if (ressourceDto.getDepartementId() != 0L) {

@@ -3,15 +3,16 @@ package gestionRessource.backend.dto;
 import java.sql.Date;
 
 import gestionRessource.backend.model.FrequenceConstat;
+import gestionRessource.backend.model.Ordre;
 
 public class ConstatDTO {
 	private String explication;
 	private FrequenceConstat frequenceConstat;
-	private String ordre;
+	private Ordre ordre;
 	private Long panne_id;
 	private Date dateApparition;
 
-	public ConstatDTO(String explication, FrequenceConstat frequenceConstat, String ordre, Long panne_id,
+	public ConstatDTO(String explication, FrequenceConstat frequenceConstat, Ordre ordre, Long panne_id,
 			Date dateApparition) {
 		super();
 		this.explication = explication;
@@ -37,11 +38,11 @@ public class ConstatDTO {
 		this.frequenceConstat = frequenceConstat;
 	}
 
-	public String getOrdre() {
+	public Ordre getOrdre() {
 		return ordre;
 	}
 
-	public void setOrdre(String ordre) {
+	public void setOrdre(Ordre ordre) {
 		this.ordre = ordre;
 	}
 

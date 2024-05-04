@@ -62,6 +62,8 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="declarerPanne">Declarer Panne</a>
                     <a class="collapse-item" href="declarationPannes">Consulter</a>
+                    <a class="collapse-item" href="ordinateurEnseignant">Mes Ordinateurs</a>
+                    <a class="collapse-item" href="imprimanteEnseignant">Mes Imprimantes</a>
                 </div>
             </div>
         </li>

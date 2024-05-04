@@ -70,7 +70,6 @@ public class DeclarationPannes {
             RedirectAttributes redirectAttributes,
             Model model
     ) {
-        System.out.println(typeDeRess);
         try {
             if(typeDeRess.equals("Ordinateur"))
             {

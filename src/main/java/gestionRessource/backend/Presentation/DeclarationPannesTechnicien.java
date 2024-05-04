@@ -1,7 +1,13 @@
 package gestionRessource.backend.Presentation;
 
-import gestionRessource.backend.controller.*;
-import gestionRessource.backend.model.*;
+
+import gestionRessource.backend.controller.NotificationController;
+import gestionRessource.backend.controller.PanneController;
+import gestionRessource.backend.controller.RessourceController;
+import gestionRessource.backend.model.Notification;
+import gestionRessource.backend.model.Ressource;
+import gestionRessource.backend.model.Role;
+import gestionRessource.backend.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +22,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Controller
-public class DeclarerPanne {
+public class DeclarationPannesTechnicien {
 
     @Autowired
     private RessourceController ressourceController;
@@ -24,25 +30,17 @@ public class DeclarerPanne {
     private PanneController panneController;
     @Autowired
     private NotificationController notificationController;
-    @GetMapping("/declarerPanne")
-    public String showDeclarerPannePage(HttpServletRequest request) {
+    @GetMapping("/resoudrePannes")
+    public String showResoudrePannesPage(HttpServletRequest request) {
         HttpSession session = request.getSession(false); // Retrieve existing session or null if no session exists
         if (session != null && session.getAttribute("user") instanceof User) {
             User currentUser = (User) session.getAttribute("user");
-            List<Notification> notifications = notificationController.getNotificationByUser(currentUser.getId());
-            if (Objects.nonNull(notifications)) {
-                session.setAttribute("notifications", notifications);
-            }
-            User user = (User) session.getAttribute("user");
-            List<Ressource> ressources= ressourceController.getRessourcesByUserId(user.getId());
+            List<Ressource> ressources= ressourceController.getAllRessources();
 
             request.setAttribute("ressources", ressources);
-            if(user.getRole() == Role.Enseignant)
+            if(currentUser.getRole() == Role.Technicien)
             {
-                return "enseignant/panne";
-            } else if (user.getRole() == Role.ChefDepartement) {
-
-                return "chefDepartement/panne";
+                return "technicien/declarationsPanne";
             }else {
                 return "redirect:/login";
             }
@@ -56,8 +54,8 @@ public class DeclarerPanne {
 
 
 
-    @PostMapping("/declarerPanne")
-    public String handleDeclarerPanne(
+    @PostMapping("/resoudrePannes")
+    public String handleResoudrePannes(
             @RequestParam("typeDeRess") String typeDeRess,
             @RequestParam(value = "ordinateur" , required = false) Long ressourceId1,
             @RequestParam(value = "imprimante" , required = false) Long ressourceId2,
@@ -78,7 +76,7 @@ public class DeclarerPanne {
 
             }
             else
-            redirectAttributes.addFlashAttribute("errorMessage", "Une erreur est servenue.");
+                redirectAttributes.addFlashAttribute("errorMessage", "Une erreur est servenue.");
             return "panne"; // Stay on the same page and show error
         } catch (Exception e) {
             model.addAttribute("errorMessage", "An error occurred: " + e.getMessage());

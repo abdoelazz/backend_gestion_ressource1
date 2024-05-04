@@ -28,8 +28,8 @@ public class Constat {
 	@Enumerated(EnumType.STRING)
 	private FrequenceConstat frequenceConstat;
 
-	@Column(name = "ordre")
-	private String ordre;
+	@Enumerated(EnumType.STRING)
+	private Ordre ordre;
 
 	@Column(name = "dateApparition")
 	private Date dateApparition;
@@ -44,7 +44,7 @@ public class Constat {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Constat(Long id, String explication, FrequenceConstat frequenceConstat, String ordre, Date dateApparition,
+	public Constat(Long id, String explication, FrequenceConstat frequenceConstat, Ordre ordre, Date dateApparition,
 			Panne panne) {
 		super();
 		this.id = id;
@@ -79,11 +79,11 @@ public class Constat {
 		this.frequenceConstat = frequenceConstat;
 	}
 
-	public String getOrdre() {
+	public Ordre getOrdre() {
 		return ordre;
 	}
 
-	public void setOrdre(String ordre) {
+	public void setOrdre(Ordre ordre) {
 		this.ordre = ordre;
 	}
 

@@ -34,7 +34,7 @@ public class DemandeDepartement {
             }
             User user= (User) session.getAttribute("user");
             Long departmentId = user.getDepartement().getId();
-            List<Ressource> ressources = ressourceService.getRessourcesByDep(departmentId);
+            List<Ressource> ressources = ressourceService.getRessourcesEnseignantsByDepartement(departmentId);
             for (Ressource ressource:ressources
                  ) {
                 ressource.getTypeRessource();
