@@ -1,8 +1,10 @@
 package gestionRessource.backend.Presentation;
 
 
+import gestionRessource.backend.controller.NotificationController;
 import gestionRessource.backend.controller.PanneController;
 import gestionRessource.backend.controller.RessourceController;
+import gestionRessource.backend.model.Notification;
 import gestionRessource.backend.model.Ressource;
 import gestionRessource.backend.model.Role;
 import gestionRessource.backend.model.User;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class DeclarationPannes {
@@ -25,18 +28,24 @@ public class DeclarationPannes {
     private RessourceController ressourceController;
     @Autowired
     private PanneController panneController;
+    @Autowired
+    private NotificationController notificationController;
     @GetMapping("/declarationPannes")
     public String showDeclarationPannesPage(HttpServletRequest request) {
         HttpSession session = request.getSession(false); // Retrieve existing session or null if no session exists
-        if (session != null && session.getAttribute("user") != null) {
-            User user = (User) session.getAttribute("user");
-            List<Ressource> ressources= ressourceController.getRessourcesByUserId(user.getId());
+        if (session != null && session.getAttribute("user") instanceof User) {
+            User currentUser = (User) session.getAttribute("user");
+            List<Notification> notifications = notificationController.getNotificationByUser(currentUser.getId());
+            if (Objects.nonNull(notifications)) {
+                session.setAttribute("notifications", notifications);
+            }
+            List<Ressource> ressources= ressourceController.getRessourcesByUserId(currentUser.getId());
 
             request.setAttribute("ressources", ressources);
-            if(user.getRole() == Role.Enseignant)
+            if(currentUser.getRole() == Role.Enseignant)
             {
                 return "enseignant/declarationsPanne";
-            } else if (user.getRole() == Role.ChefDepartement) {
+            } else if (currentUser.getRole() == Role.ChefDepartement) {
 
                 return "chefDepartement/declarationsPanne";
             }else {

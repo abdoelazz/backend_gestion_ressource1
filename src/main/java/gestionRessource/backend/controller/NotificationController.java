@@ -32,7 +32,7 @@ public class NotificationController {
 	private UserService userService;
 
 	@PostMapping("/addNotificationForDepartement")
-	private List<Notification> addNotificationForDepartement(@RequestBody NotificationDTO notificationDto) {
+	public List<Notification> addNotificationForDepartement(@RequestBody NotificationDTO notificationDto) {
 		List<Notification> notifList = new ArrayList<Notification>();
 		List<User> userList = userService.getUsersByRoleAndDep(Role.Enseignant, notificationDto.getDepId());
 		User emetteur = userService.getUserById(notificationDto.getEmetteur_id());
@@ -53,7 +53,7 @@ public class NotificationController {
 	}
 
 	@PostMapping("/addNotificationForUser")
-	private Notification addNotificationForUser(@RequestBody NotificationDTO notificationDto) {
+	public Notification addNotificationForUser(@RequestBody NotificationDTO notificationDto) {
 		User user = userService.getUserById(notificationDto.getUserId());
 		User emetteur = userService.getUserById(notificationDto.getEmetteur_id());
 		if (user != null) {
@@ -71,7 +71,7 @@ public class NotificationController {
 	}
 
 	@PostMapping("/addNotificationForListUser")
-	private List<Notification> addNotificationForListUser(@RequestBody NotificationDTO notificationDto) {
+	public List<Notification> addNotificationForListUser(@RequestBody NotificationDTO notificationDto) {
 		List<Notification> notifList = new ArrayList<Notification>();
 		User emetteur = userService.getUserById(notificationDto.getEmetteur_id());
 		if (notificationDto.getListeUserId() != null && !notificationDto.getListeUserId().isEmpty()) {
@@ -94,7 +94,7 @@ public class NotificationController {
 	}
 
 	@GetMapping("/getNotificationByUser")
-	private List<Notification> getNotificationByUser(@RequestParam Long user_id) {
+	public List<Notification> getNotificationByUser(@RequestParam Long user_id) {
 		return notificationService.getNotificationByUser(user_id);
 	}
 
