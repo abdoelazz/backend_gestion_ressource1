@@ -1,13 +1,7 @@
 package gestionRessource.backend.Presentation;
 
-import gestionRessource.backend.controller.DepartementController;
-import gestionRessource.backend.controller.PanneController;
-import gestionRessource.backend.controller.RessourceController;
-import gestionRessource.backend.controller.UserController;
-import gestionRessource.backend.model.Departement;
-import gestionRessource.backend.model.Ressource;
-import gestionRessource.backend.model.Role;
-import gestionRessource.backend.model.User;
+import gestionRessource.backend.controller.*;
+import gestionRessource.backend.model.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class DeclarerPanne {
@@ -27,10 +22,17 @@ public class DeclarerPanne {
     private RessourceController ressourceController;
     @Autowired
     private PanneController panneController;
+    @Autowired
+    private NotificationController notificationController;
     @GetMapping("/declarerPanne")
     public String showDeclarerPannePage(HttpServletRequest request) {
         HttpSession session = request.getSession(false); // Retrieve existing session or null if no session exists
-        if (session != null && session.getAttribute("user") != null) {
+        if (session != null && session.getAttribute("user") instanceof User) {
+            User currentUser = (User) session.getAttribute("user");
+            List<Notification> notifications = notificationController.getNotificationByUser(currentUser.getId());
+            if (Objects.nonNull(notifications)) {
+                session.setAttribute("notifications", notifications);
+            }
             User user = (User) session.getAttribute("user");
             List<Ressource> ressources= ressourceController.getRessourcesByUserId(user.getId());
 
