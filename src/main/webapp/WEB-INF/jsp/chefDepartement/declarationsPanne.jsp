@@ -28,7 +28,7 @@
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
+        <li class="nav-item ">
             <a class="nav-link" href="home">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Tableau De Bord</span>
@@ -48,20 +48,20 @@
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="/ajouterRessource">Créer</a>
-                    <a class="collapse-item" href="ConsulterProjets">Consulter</a>
+                    <a class="collapse-item" href="ajouterRessource">Créer Demande</a>
+                    <a class="collapse-item" href="consulterDemandes">Consulter Demandes</a>
                 </div>
             </div>
         </li>
         <hr class="sidebar-divider d-none d-md-block">
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
                 <i class="fas fa-fw fa-folder-open"></i>
                 <span>Pannes</span>
             </a>
             <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="declarerPanne">Declarer Panne</a>
+                    <a class="collapse-item" href="declarerPanne">Déclarer Panne</a>
                     <a class="collapse-item" href="declarationPannes">Consulter</a>
                 </div>
             </div>
@@ -211,7 +211,6 @@
 
             </nav>
             <!-- End of Topbar -->
-            <!-- Begin Page Content -->
             <!-- Begin Page Content -->
             <div class="container-fluid">
 

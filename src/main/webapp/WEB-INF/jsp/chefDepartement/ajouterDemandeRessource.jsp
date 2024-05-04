@@ -11,7 +11,7 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body class="page-top">
@@ -27,8 +27,8 @@
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
-            <a class="nav-link" href="Directeur">
+        <li class="nav-item ">
+            <a class="nav-link" href="home">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Tableau De Bord</span>
             </a>
@@ -40,15 +40,28 @@
             Interface
         </div>
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-folder-open"></i>
-                <span>Demandes</span>
+                <span>Ressources</span>
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="CreateProject">Créer</a>
-                    <a class="collapse-item" href="ConsulterProjets">Consulter</a>
+                    <a class="collapse-item" href="ajouterRessource">Créer Demande</a>
+                    <a class="collapse-item" href="consulterDemandes">Consulter Demandes</a>
+                </div>
+            </div>
+        </li>
+        <hr class="sidebar-divider d-none d-md-block">
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                <i class="fas fa-fw fa-folder-open"></i>
+                <span>Pannes</span>
+            </a>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="declarerPanne">Declarer Panne</a>
+                    <a class="collapse-item" href="declarationPannes">Consulter</a>
                 </div>
             </div>
         </li>
@@ -191,7 +204,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <button type="submit" class="btn btn-primary btn-block">Ajouter</button>
+                                    <button  class="btn btn-primary btn-block" type="submit">Ajouter</button>
                                 </div>
                             </div>
                         </form>
@@ -235,7 +248,7 @@
         </div>
     </div>
     <!-- Profile Modal -->
-    <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel"  aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -279,6 +292,27 @@
         </div>
     </div>
 </div>
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Success</h5>
+                <button type="button" id="closeSuccessModal" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                La demande est envoyée avec succée.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>
@@ -350,6 +384,49 @@
             imprimanteOptions.style.display = 'block';
             resolution.required = vitesseImpression.required = true;
         }
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('form').submit(function(e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: formData,
+                success: function(response) {
+                    $('#successModal').modal('show');
+                },
+                error: function() {
+                    alert('Error submitting the form');
+                }
+            });
+        });
+
+        $('#closeSuccessModal').click(function() {
+            window.location.href = 'home';
+        });
+        $('#typeDeRess').change(function() {
+            var type = $(this).val();
+            var ordinateurOptions = $('#forTypeOrdinateur');
+            var imprimanteOptions = $('#forTypeImprimante');
+            $('#cpu, #ram, #ecran, #disqueDur, #resolution, #vitesseimpression').prop('required', false);
+
+            if (type === 'Ordinateur') {
+                ordinateurOptions.show();
+                imprimanteOptions.hide();
+                $('#cpu, #ram, #ecran, #disqueDur').prop('required', true);
+            } else if (type === 'Imprimante') {
+                imprimanteOptions.show();
+                ordinateurOptions.hide();
+                $('#resolution, #vitesseimpression').prop('required', true);
+            } else {
+                ordinateurOptions.hide();
+                imprimanteOptions.hide();
+            }
+        }).trigger('change');
     });
 </script>
 </body>
