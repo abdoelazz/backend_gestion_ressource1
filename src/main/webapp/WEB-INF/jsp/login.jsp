@@ -71,7 +71,7 @@
                                     <button type="submit" class="btn btn-primary btn-user btn-block">
                                         Login
                                     </button>
-                                    <a href="index.html" class="btn btn-google btn-user btn-block">
+                                    <a href="appelsDoffre" class="btn btn-google btn-user btn-block">
                                         <i class="fab fa-fw"></i> Appel d'Offres
                                     </a>
                                 </form>
