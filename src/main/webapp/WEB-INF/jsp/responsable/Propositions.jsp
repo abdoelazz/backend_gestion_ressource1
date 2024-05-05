@@ -1,6 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="gestionRessource.backend.model.User" %>
 <%@ page import="gestionRessource.backend.model.Role" %>
+<%@ page import="gestionRessource.backend.model.Panne" %>
+<%@ page import="gestionRessource.backend.model.Proposition" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -257,14 +259,13 @@
             <div class="container-fluid">
 
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3>liste des personnels</h3>
+                    <h3>liste des propositions</h3>
 
-                    <div class="d-flex align-items-center">
-                        <form action="/newPersonnels" class="mr-2">
-                            <button class="btn btn-primary" type="submit">Add User</button>
-                        </form>
-                        <i class="fas fa-filter"></i>
-                    </div>
+                    <form>
+                        <div class="form-input">
+                            <button class="btn btn-primary" type="submit">Add Proposition</button>
+                        </div>
+                    </form>
                 </div>
 
 
@@ -274,49 +275,42 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>nom</th>
-                                    <th>departement</th>
-                                    <th>Role</th>
-                                    <th></th>
+                                    <th style ="width:40px">ID</th>
+                                    <th>Date de Proposition</th>
+                                    <th>Date de Livraison</th>
+                                    <th>Montant Total</th>
+                                    <th>État de la Proposition</th>
+                                    <th>Actions</th>
                                 </tr>
                                 </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>nom</th>
-                                    <th>departement</th>
-                                    <th>Role</th>
-                                    <th></th>
-                                </tr>
-                                </tfoot>
-                                <tbody><%
-                                    List<User> users= (List<User>) session.getAttribute("Users");
-                                    if (users != null && !users.isEmpty()) {
-                                        for (User use : users) {
-                                            if(!use.getRole().equals(Role.Fournisseur)){
-                                                if(!use.getRole().equals(Role.Responsable))
-                                                {
+                                <tbody>
+                                <%
+                                    List<Proposition> propositions = (List<Proposition>) session.getAttribute("propositions");
+                                    if (propositions != null && !propositions.isEmpty()) {
+                                        for (Proposition proposition : propositions) {
                                 %>
-
-                                <tr onclick="detailProfil('<%= use.getLogin() %>')">
-
+                                <tr onclick="window.location.href='/propositions/<%= proposition.getId() %>'">
+                                    <td><%= proposition.getId() %></td>
+                                    <td><%= proposition.getDateProposition() %></td>
+                                    <td><%= proposition.getDateLivraison() %></td>
+                                    <td><%= proposition.getMontantTotal() %></td>
+                                    <td><%= proposition.getEtatProposition() %></td>
                                     <td>
-                                        <p><%=use.getFirst_name()%>  <%=use.getLast_name()%></p></a>
-                                    </td>
-                                    <td><%if(use.getDepartement()!=null ){%><%=use.getDepartement().getNomDepartement()%><%}%></td>
-                                    <td>
-                                        <span class="status <% if(!use.getRole().equals(Role.Enseignant)){%> pending <%}else if(!use.getRole().equals(Role.ChefDepartement)){%>completed<%}else if(!use.getRole().equals(Role.Technicien)){%>pending<%}%>"><%=use.getRole()%></span>
-                                    </td>
-                                    <td>
-                                        <form action="/deletePerso/<%= use.getLogin() %>"  >
-                                            <div class="form-input">
-                                                <button class="btn btn-primary " type="submit" style="background:#e63c3c" >delete</button>
-
-                                            </div>
+                                        <form action="/api/proposition/delete/<%= proposition.getId() %>" method="POST">
+                                            <button class="btn btn-danger" type="submit">Delete</button>
                                         </form>
                                     </td>
                                 </tr>
-                                <%}}}}%>
-
+                                <%
+                                    }
+                                } else {
+                                %>
+                                <tr>
+                                    <td colspan="6">No propositions found</td>
+                                </tr>
+                                <%
+                                    }
+                                %>
                                 </tbody>
                             </table>
                         </div>

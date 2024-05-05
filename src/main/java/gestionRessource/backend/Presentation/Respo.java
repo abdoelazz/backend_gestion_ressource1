@@ -1,9 +1,8 @@
 package gestionRessource.backend.Presentation;
 
-
 import gestionRessource.backend.controller.*;
 import gestionRessource.backend.model.*;
-import gestionRessource.backend.service.Impl.*;
+import gestionRessource.backend.service.Impl.FournisseurServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+
 
 import java.util.*;
 
@@ -93,37 +94,15 @@ public class Respo {
         return "redirect:/login";
 
 
-    } // Name of the }
+    }
     @GetMapping("/Personnels/{login}")
     public String Personnel(@PathVariable("login") String login, HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            User user = (User) session.getAttribute("user");
-            // Redirect to a secure page, or set user in session, etc.
-
-            if (user != null) {
-                // Print the attribute to the console
-                if (Objects.equals(user.getRole().toString(),"Responsable"))
-                {
-                    User use = userController.getUserByLogin(login);
-                    session.setAttribute("user1", use);
-                    if(use != null)
-                    {
-                        System.out.println("dkhelt");
-                        return "responsable/Personnel";}
-                    return "redirect:/Personnels";
-                }
-            } else {
-
-            }
-        }
-        model.addAttribute("error", "Invalid username or password");
-        return "redirect:/login";
+        return "responsable/Personnels";
+    }
 
 
-    } // Name of the }
-    @GetMapping("/deletePerso/{login}")
-    public String delete(@PathVariable("login") String login, HttpServletRequest request, Model model) {
+        @GetMapping("/deletePerso/{login}")
+        public String delete(@PathVariable("login") String login, HttpServletRequest request, Model model) {
         HttpSession session = request.getSession(false);
         if (session != null) {
             User user = (User) session.getAttribute("user");
@@ -218,7 +197,7 @@ public class Respo {
                     session.setAttribute("panne", panne);
                     if(panne != null)
                     {
-
+                        System.out.println("dkhelt");
                         return "responsable/Panne";}
                     return "redirect:/Pannes";
                 }
@@ -359,8 +338,8 @@ public class Respo {
                     session.setAttribute("Users", users);
                     List<Fournisseur> Fournisseurs= new ArrayList<Fournisseur>();
                     for(User use :users){
-                        if(fournisseurController.getFournisseurById((use.getId().toString()))!=null)
-                            Fournisseurs.add(fournisseurController.getFournisseurById((use.getId().toString())));
+                        if(use.getRole()==Role.Fournisseur)
+                            Fournisseurs.add(fournisseurController.getFournisseurById(use.getId()));
                     }
                     session.setAttribute("Users", Fournisseurs);
                     return "responsable/Fournisseurs";}

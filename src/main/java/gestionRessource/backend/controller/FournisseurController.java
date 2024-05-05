@@ -1,13 +1,7 @@
 package gestionRessource.backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import gestionRessource.backend.dto.FournisseurDTO;
 import gestionRessource.backend.model.Fournisseur;
@@ -55,9 +49,9 @@ public class FournisseurController {
 
 		return fournisseurService.ajouterFournisseur(oldFournisseur);
 	}
-
-	public Fournisseur 	getFournisseurById(@RequestParam String fournisseur_id) {
-		Fournisseur oldFournisseur = fournisseurService.getFournisseurById(Long.parseLong(fournisseur_id));
+	@GetMapping("/getFournisseurById")
+	public Fournisseur 	getFournisseurById(@RequestParam Long fournisseur_id) {
+		Fournisseur oldFournisseur = fournisseurService.getFournisseurById(fournisseur_id);
 
 		return oldFournisseur;
 	}

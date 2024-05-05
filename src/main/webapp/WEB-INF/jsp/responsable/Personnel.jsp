@@ -15,7 +15,9 @@
     <meta name="author" content="">
 
     <title>SB Admin 2 - Tables</title>
-
+    <script>
+        tag = "Personnels"; // Optional JavaScript variable for context or tracking
+    </script>
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link

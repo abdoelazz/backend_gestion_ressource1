@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="gestionRessource.backend.model.User" %>
 <%@ page import="gestionRessource.backend.model.Role" %>
+<%@ page import="gestionRessource.backend.model.Fournisseur" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -257,12 +258,9 @@
             <div class="container-fluid">
 
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3>liste des personnels</h3>
+                    <h3>liste des fournisseurs</h3>
 
                     <div class="d-flex align-items-center">
-                        <form action="/newPersonnels" class="mr-2">
-                            <button class="btn btn-primary" type="submit">Add User</button>
-                        </form>
                         <i class="fas fa-filter"></i>
                     </div>
                 </div>
@@ -274,48 +272,42 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
+                                    <th></th>
                                     <th>nom</th>
-                                    <th>departement</th>
-                                    <th>Role</th>
+                                    <th>Etat</th>
                                     <th></th>
                                 </tr>
                                 </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>nom</th>
-                                    <th>departement</th>
-                                    <th>Role</th>
-                                    <th></th>
-                                </tr>
-                                </tfoot>
                                 <tbody><%
-                                    List<User> users= (List<User>) session.getAttribute("Users");
+                                    List<Fournisseur> users= (List<Fournisseur>) session.getAttribute("Users");
                                     if (users != null && !users.isEmpty()) {
-                                        for (User use : users) {
-                                            if(!use.getRole().equals(Role.Fournisseur)){
-                                                if(!use.getRole().equals(Role.Responsable))
-                                                {
+                                        for (Fournisseur use : users) {
+                                            if(use.getRole().equals(Role.Fournisseur)){
+
                                 %>
 
-                                <tr onclick="detailProfil('<%= use.getLogin() %>')">
+                                <tr >
 
+                                    <td>
+                                        <img src="images/portrait/small/avatar-s-1.jpg" style="width: 50px; height: 50px; border-radius: 50%;">
+                                    </td>
                                     <td>
                                         <p><%=use.getFirst_name()%>  <%=use.getLast_name()%></p></a>
                                     </td>
-                                    <td><%if(use.getDepartement()!=null ){%><%=use.getDepartement().getNomDepartement()%><%}%></td>
                                     <td>
-                                        <span class="status <% if(!use.getRole().equals(Role.Enseignant)){%> pending <%}else if(!use.getRole().equals(Role.ChefDepartement)){%>completed<%}else if(!use.getRole().equals(Role.Technicien)){%>pending<%}%>"><%=use.getRole()%></span>
+                                        <span class="status <% if(use.getEtatFournisseur() !=  null) out.print( "pending"); else out.print("completed");%>"><%if(use.getEtatFournisseur() !=  null) out.print(use.getEtatFournisseur());%></span>
                                     </td>
                                     <td>
-                                        <form action="/deletePerso/<%= use.getLogin() %>"  >
+                                        <form action="/api/fournisseur/addFournisseurToBlackList"  onsubmit="handleFormSubmission(event)" >
                                             <div class="form-input">
-                                                <button class="btn btn-primary " type="submit" style="background:#e63c3c" >delete</button>
+                                                <input type="hidden" name="fournisseur_id" value="<%= use.getId() %>">
+                                                <button class="btn btn-primary " type="submit" style="background:#e63c3c" >Blacklist</button>
 
                                             </div>
                                         </form>
                                     </td>
                                 </tr>
-                                <%}}}}%>
+                                <%}}}%>
 
                                 </tbody>
                             </table>

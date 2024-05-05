@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="gestionRessource.backend.model.User" %>
 <%@ page import="gestionRessource.backend.model.Role" %>
+<%@ page import="gestionRessource.backend.model.Panne" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -257,12 +258,9 @@
             <div class="container-fluid">
 
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3>liste des personnels</h3>
+                    <h3>liste des pannes</h3>
 
                     <div class="d-flex align-items-center">
-                        <form action="/newPersonnels" class="mr-2">
-                            <button class="btn btn-primary" type="submit">Add User</button>
-                        </form>
                         <i class="fas fa-filter"></i>
                     </div>
                 </div>
@@ -274,49 +272,33 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>nom</th>
-                                    <th>departement</th>
-                                    <th>Role</th>
-                                    <th></th>
+                                    <th>#</th>
+                                    <th>Code Inventaire</th>
+                                    <th>Type Ressouce</th>
+                                    <th>Etat Panne</th>
+                                    <th>Date Signalisation</th>
+                                    <th>Actions</th>
                                 </tr>
                                 </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>nom</th>
-                                    <th>departement</th>
-                                    <th>Role</th>
-                                    <th></th>
-                                </tr>
-                                </tfoot>
-                                <tbody><%
-                                    List<User> users= (List<User>) session.getAttribute("Users");
-                                    if (users != null && !users.isEmpty()) {
-                                        for (User use : users) {
-                                            if(!use.getRole().equals(Role.Fournisseur)){
-                                                if(!use.getRole().equals(Role.Responsable))
-                                                {
+                                <tbody>
+                                <%
+                                    List<Panne> pannes = (List<Panne>) session.getAttribute("list-pannes");
+                                    for (Panne panne : pannes) {
                                 %>
-
-                                <tr onclick="detailProfil('<%= use.getLogin() %>')">
-
-                                    <td>
-                                        <p><%=use.getFirst_name()%>  <%=use.getLast_name()%></p></a>
-                                    </td>
-                                    <td><%if(use.getDepartement()!=null ){%><%=use.getDepartement().getNomDepartement()%><%}%></td>
-                                    <td>
-                                        <span class="status <% if(!use.getRole().equals(Role.Enseignant)){%> pending <%}else if(!use.getRole().equals(Role.ChefDepartement)){%>completed<%}else if(!use.getRole().equals(Role.Technicien)){%>pending<%}%>"><%=use.getRole()%></span>
-                                    </td>
-                                    <td>
-                                        <form action="/deletePerso/<%= use.getLogin() %>"  >
-                                            <div class="form-input">
-                                                <button class="btn btn-primary " type="submit" style="background:#e63c3c" >delete</button>
-
-                                            </div>
-                                        </form>
-                                    </td>
+                                <tr>
+                                    <td>${status.index}</td>
+                                    <td><%=panne.getRessource().getCodeInventaire()%></td>
+                                    <td><%=panne.getRessource().getTypeRessource()%></td>
+                                    <td>Non Repare</td>
+                                    <td><%=panne.getDateSignal()%></td>
+                                    <td><a
+                                            href="/Panne=<%=panne.getId()%>">view </a></td>
                                 </tr>
-                                <%}}}}%>
 
+                                <%
+                                    }
+                                %>
+                                </tbody>
                                 </tbody>
                             </table>
                         </div>

@@ -33,34 +33,34 @@
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
-            <a class="nav-link" href="Respo\Propositions" style="background-color: #0a53be;">
+            <a class="nav-link" href="\Propositions" style="background-color: #0a53be;">
                 <i class="fas fa-users"></i>
                 <span>Personnels</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="Respo\AppelDoffres">
+            <a class="nav-link" href="\AppelDoffres">
                 <i class="fas fa-bullhorn"></i>
                 <span>Proposition</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="Respo\AppelDoffres">
+            <a class="nav-link" href="\AppelDoffres">
                 <i class="fas fa-bullhorn"></i>
                 <span>Appels d'offre</span></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/Respo/Ressources">
+            <a class="nav-link" href="/Ressources">
                 <i class="fas fa-desktop"></i>
                 <span>Ressources</span></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="Respo\Pannes">
+            <a class="nav-link" href="\Pannes">
                 <i class="fas fa-bug"></i>
                 <span>Pannes</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="Respo\Fournisseurs" style="background-color: #0a53be;">
+            <a class="nav-link" href="\Fournisseurs" style="background-color: #0a53be;">
                 <i class="fas fa-users"></i>
                 <span>Fournisseurs</span></a>
         </li>

@@ -1,6 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="gestionRessource.backend.model.User" %>
 <%@ page import="gestionRessource.backend.model.Role" %>
+<%@ page import="gestionRessource.backend.model.Panne" %>
+<%@ page import="gestionRessource.backend.model.Constat" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -254,77 +256,81 @@
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
-            <div class="container-fluid">
+            <%    Panne panne = (Panne) session.getAttribute("panne");
+            %>
+            <!-- Container with border and rounded corners for better visual appeal -->
+            <div class="container mt-5">
+                <div class="row">
+                    <!-- Border box for Panne information -->
+                    <div class="col-md-12 border rounded p-4 shadow-sm"> <!-- Border, rounded corners, and shadow -->
+                        <h4 class="text-center mb-4">Panne Details</h4> <!-- Header for the section -->
 
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3>liste des personnels</h3>
-
-                    <div class="d-flex align-items-center">
-                        <form action="/newPersonnels" class="mr-2">
-                            <button class="btn btn-primary" type="submit">Add User</button>
-                        </form>
-                        <i class="fas fa-filter"></i>
-                    </div>
-                </div>
-
-
-                <div class="card shadow mb-4">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th>nom</th>
-                                    <th>departement</th>
-                                    <th>Role</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>nom</th>
-                                    <th>departement</th>
-                                    <th>Role</th>
-                                    <th></th>
-                                </tr>
-                                </tfoot>
-                                <tbody><%
-                                    List<User> users= (List<User>) session.getAttribute("Users");
-                                    if (users != null && !users.isEmpty()) {
-                                        for (User use : users) {
-                                            if(!use.getRole().equals(Role.Fournisseur)){
-                                                if(!use.getRole().equals(Role.Responsable))
-                                                {
-                                %>
-
-                                <tr onclick="detailProfil('<%= use.getLogin() %>')">
-
-                                    <td>
-                                        <p><%=use.getFirst_name()%>  <%=use.getLast_name()%></p></a>
-                                    </td>
-                                    <td><%if(use.getDepartement()!=null ){%><%=use.getDepartement().getNomDepartement()%><%}%></td>
-                                    <td>
-                                        <span class="status <% if(!use.getRole().equals(Role.Enseignant)){%> pending <%}else if(!use.getRole().equals(Role.ChefDepartement)){%>completed<%}else if(!use.getRole().equals(Role.Technicien)){%>pending<%}%>"><%=use.getRole()%></span>
-                                    </td>
-                                    <td>
-                                        <form action="/deletePerso/<%= use.getLogin() %>"  >
-                                            <div class="form-input">
-                                                <button class="btn btn-primary " type="submit" style="background:#e63c3c" >delete</button>
-
-                                            </div>
-                                        </form>
-                                    </td>
-                                </tr>
-                                <%}}}}%>
-
-                                </tbody>
-                            </table>
+                        <!-- Display information about Panne -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="labels">Date Signal:</label>
+                                <span><%= panne.getDateSignal() %></span> <!-- Display the dateSignal -->
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels">Date Panne:</label>
+                                <span><%= panne.getDateSignal() %></span> <!-- Display the datePanne -->
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-            </div>
-            <!-- /.container-fluid -->
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label class="labels">Etat Panne:</label>
+                                <span><%= panne.getEtatPanne().name() %></span> <!-- Display the etatPanne -->
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels">Ressource:</label>
+                                <span><%= panne.getRessource().getId() %></span> <!-- Display the related Ressource's name -->
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label class="labels">User:</label>
+                                <a href="/Personnels/<%=panne.getUser().getLogin()%>"><span><%= panne.getUser().getFirst_name() %> <%= panne.getUser().getLast_name() %></span> </a><!-- Display the associated User -->
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels">Fournisseur:</label>
+                                <a href="home"><span><%= panne.getRessource().getDetail().getProposition().getFournisseur().getSociete() %></span></a> <!-- Display the related Ressource's name -->
+                            </div>
+
+
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <label class="labels">Constats:</label>
+                                <%
+                                    List<Constat> constats = panne.getConstats();
+                                    if (constats != null && !constats.isEmpty()) {
+                                %>
+                                <ul>
+                                    <%
+                                        for (Constat constat : constats) {
+                                    %>
+                                    <li><%= constat.getExplication() %></li>
+                                    <%
+                                        }
+                                    %>
+                                </ul>
+                                <%
+                                } else {
+                                %>
+                                <p>No Constats found.</p> <!-- Display message if there are no constats -->
+                                <%
+                                    }
+                                %>
+                            </div>
+                        </div>
+                    </div> <!-- End of bordered box -->
+                </div> <!-- End of row -->
+            </div> <!-- End of container -->
+
             <!-- Modal -->
             <div id="userModal" class="modal">
                 <div class="modal-content">

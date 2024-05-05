@@ -1,6 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="gestionRessource.backend.model.User" %>
 <%@ page import="gestionRessource.backend.model.Role" %>
+<%@ page import="gestionRessource.backend.model.Panne" %>
+<%@ page import="gestionRessource.backend.model.Constat" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -254,77 +256,97 @@
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
-            <div class="container-fluid">
+            <%
+                Optional<Proposition> optionalProposition = (Optional<Proposition>) session.getAttribute("proposition");
+                Proposition proposition = null;
+                if (optionalProposition.isPresent()) {
+                    proposition = optionalProposition.get();
+                }
 
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3>liste des personnels</h3>
+                List<Detail> propositionDetails = (List<Detail>) session.getAttribute("propositionDetails");
+            %>
 
-                    <div class="d-flex align-items-center">
-                        <form action="/newPersonnels" class="mr-2">
-                            <button class="btn btn-primary" type="submit">Add User</button>
-                        </form>
-                        <i class="fas fa-filter"></i>
-                    </div>
-                </div>
+            <!-- Container with border and rounded corners for better visual appeal -->
+            <div class="container mt-5">
+                <div class="row">
+                    <!-- Border box for Proposition information -->
+                    <div class="col-md-12 border rounded p-4 shadow-sm"> <!-- Border, rounded corners, and shadow -->
+                        <h4 class="text-center mb-4">Proposition Details</h4> <!-- Header for the section -->
 
-
-                <div class="card shadow mb-4">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th>nom</th>
-                                    <th>departement</th>
-                                    <th>Role</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>nom</th>
-                                    <th>departement</th>
-                                    <th>Role</th>
-                                    <th></th>
-                                </tr>
-                                </tfoot>
-                                <tbody><%
-                                    List<User> users= (List<User>) session.getAttribute("Users");
-                                    if (users != null && !users.isEmpty()) {
-                                        for (User use : users) {
-                                            if(!use.getRole().equals(Role.Fournisseur)){
-                                                if(!use.getRole().equals(Role.Responsable))
-                                                {
-                                %>
-
-                                <tr onclick="detailProfil('<%= use.getLogin() %>')">
-
-                                    <td>
-                                        <p><%=use.getFirst_name()%>  <%=use.getLast_name()%></p></a>
-                                    </td>
-                                    <td><%if(use.getDepartement()!=null ){%><%=use.getDepartement().getNomDepartement()%><%}%></td>
-                                    <td>
-                                        <span class="status <% if(!use.getRole().equals(Role.Enseignant)){%> pending <%}else if(!use.getRole().equals(Role.ChefDepartement)){%>completed<%}else if(!use.getRole().equals(Role.Technicien)){%>pending<%}%>"><%=use.getRole()%></span>
-                                    </td>
-                                    <td>
-                                        <form action="/deletePerso/<%= use.getLogin() %>"  >
-                                            <div class="form-input">
-                                                <button class="btn btn-primary " type="submit" style="background:#e63c3c" >delete</button>
-
-                                            </div>
-                                        </form>
-                                    </td>
-                                </tr>
-                                <%}}}}%>
-
-                                </tbody>
-                            </table>
+                        <% if (proposition != null) { %>
+                        <!-- Display information about the Proposition -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="labels">Date of Proposition:</label>
+                                <span><%= proposition.getDateProposition() %></span> <!-- Display the date of the proposition -->
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels">Date of Delivery:</label>
+                                <span><%= proposition.getDateLivraison() %></span> <!-- Display the delivery date -->
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-            </div>
-            <!-- /.container-fluid -->
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label class="labels">Total Amount:</label>
+                                <span><%= proposition.getMontantTotal() %></span> <!-- Display the total amount -->
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels">Proposition Status:</label>
+                                <span><%= proposition.getEtatProposition().name() %></span> <!-- Display the proposition status -->
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label class="labels">Appel D'offre:</label>
+                                <span><%= proposition.getAppelDoffre().getId() %></span> <!-- Display related Appel D'offre -->
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels">Fournisseur:</label>
+                                <span><%= proposition.getFournisseur().getSociete() %></span> <!-- Display related Fournisseur -->
+                            </div>
+                        </div>
+
+                        <!-- Display Details associated with the Proposition -->
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <h5>Proposition Details:</h5>
+                                <% if (propositionDetails != null && !propositionDetails.isEmpty()) { %>
+                                <ul>
+                                    <% for (Detail detail : propositionDetails) { %>
+                                    <li>
+                                        <strong>Ressource ID:</strong> <%= detail.getRessource().getId() %> <br>
+                                        <strong>Marque:</strong> <%= detail.getMarque() %> <br>
+                                        <strong>Price:</strong> <%= detail.getPrix() %> <br>
+                                        <strong>Warranty Duration:</strong> <%= detail.getDureeGarantie() %> years
+                                    </li>
+                                    <% } %>
+                                </ul>
+                                <% } else { %>
+                                <p>No details found for this proposition.</p>
+                                <% } %>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <!-- Buttons to Accept or Refuse the Proposition -->
+                                <form action="/api/proposition/refuse/<%= proposition.getId() %>" method="POST" style="display:inline-block;" onsubmit="navigateTo('/Propositions')">
+                                    <button type="submit" class="btn btn-danger">Refuse</button> <!-- Button to refuse -->
+                                </form>
+                                <form action="/api/proposition/accepte/<%= proposition.getId() %>" method="POST" style="display:inline-block;" onsubmit="navigateTo('/Propositions')">
+                                    <button type="submit" class="btn btn-success">Accepte</button> <!-- Button to accept -->
+                                </form>
+                            </div>
+                        </div>
+                        <% } else { %>
+                        <p>No Proposition found.</p> <!-- Message if Proposition not found -->
+                        <% } %>
+                    </div> <!-- End of bordered box -->
+                </div> <!-- End of row -->
+            </div> <!-- End of container -->
+
             <!-- Modal -->
             <div id="userModal" class="modal">
                 <div class="modal-content">

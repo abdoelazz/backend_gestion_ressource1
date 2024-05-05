@@ -1,6 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="gestionRessource.backend.model.User" %>
-<%@ page import="gestionRessource.backend.model.Role" %>
+<%@ page import="gestionRessource.backend.model.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -254,77 +253,111 @@
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
-            <div class="container-fluid">
 
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3>liste des personnels</h3>
+            <%
+                AppelDoffre appelDoffre = (AppelDoffre) session.getAttribute("appelDoffre");
+                List<Ressource> ressources = (List<Ressource>) session.getAttribute("ressources");
+                List<Ressource> Ressources = (List<Ressource>) session.getAttribute("Ressources");
 
-                    <div class="d-flex align-items-center">
-                        <form action="/newPersonnels" class="mr-2">
-                            <button class="btn btn-primary" type="submit">Add User</button>
-                        </form>
-                        <i class="fas fa-filter"></i>
-                    </div>
-                </div>
+            %>
 
+            <div class="container mt-5">
+                <div class="row">
+                    <!-- Border box for Appel D'offres information -->
+                    <div class="col-md-12 border rounded p-4 shadow-sm">
+                        <h4 class="text-center mb-4">Appel D'offres Details</h4>
 
-                <div class="card shadow mb-4">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th>nom</th>
-                                    <th>departement</th>
-                                    <th>Role</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>nom</th>
-                                    <th>departement</th>
-                                    <th>Role</th>
-                                    <th></th>
-                                </tr>
-                                </tfoot>
-                                <tbody><%
-                                    List<User> users= (List<User>) session.getAttribute("Users");
-                                    if (users != null && !users.isEmpty()) {
-                                        for (User use : users) {
-                                            if(!use.getRole().equals(Role.Fournisseur)){
-                                                if(!use.getRole().equals(Role.Responsable))
-                                                {
-                                %>
+                        <!-- Display information about the Appel D'offre -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="labels">Date Debut:</label>
+                                <span><%= appelDoffre.getDateDebut() %></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels">Date Fin:</label>
+                                <span><%= appelDoffre.getDateFin() %></span>
+                            </div>
+                        </div>
 
-                                <tr onclick="detailProfil('<%= use.getLogin() %>')">
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label class="labels">Etat Disponibilite:</label>
+                                <span><%= appelDoffre.isEtatDisponibilite() ? "Disponible" : "Indisponible" %></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels">Ressources Associees:</label>
+                                <span><%= ressources != null ? ressources.size() : 0 %> Ressources</span>
+                            </div>
+                        </div>
 
-                                    <td>
-                                        <p><%=use.getFirst_name()%>  <%=use.getLast_name()%></p></a>
-                                    </td>
-                                    <td><%if(use.getDepartement()!=null ){%><%=use.getDepartement().getNomDepartement()%><%}%></td>
-                                    <td>
-                                        <span class="status <% if(!use.getRole().equals(Role.Enseignant)){%> pending <%}else if(!use.getRole().equals(Role.ChefDepartement)){%>completed<%}else if(!use.getRole().equals(Role.Technicien)){%>pending<%}%>"><%=use.getRole()%></span>
-                                    </td>
-                                    <td>
-                                        <form action="/deletePerso/<%= use.getLogin() %>"  >
-                                            <div class="form-input">
-                                                <button class="btn btn-primary " type="submit" style="background:#e63c3c" >delete</button>
+                        <!-- Form to add a new Ressource to the Appel D'offres -->
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <h5>Add Ressource to Appel D'offres</h5>
+                                <form action="/api/ressource/addRessourcetoAppelDOffre" method="POST" onsubmit="handleFormSubmission(event,<%=appelDoffre.getId()%>)">
+                                    <div class="form-group">
+                                        <label for="ressourceId">Ressource ID:</label>
+                                        <select class="form-control" id="ressourceId" name="ressourceId" required>
+                                            <%
+                                                if (Ressources != null && !Ressources.isEmpty()) {
+                                                    for (Ressource ressource : Ressources) {
+                                                        if(!ressource.getEtatDemande().toString().equals("Traité")){
+                                            %>
+                                            <option value="<%= ressource.getId() %>"><%= ressource.getCodeInventaire() %> - <%= ressource.getTypeRessource() %></option>
+                                            <%
+                                                        }
+                                                    }}
+                                            %>
+                                        </select>
+                                    </div>
+                                    <input type="hidden" name="appelId" value="<%= appelDoffre.getId() %>"> <!-- ID of the Appel D'offre -->
+                                    <button type="submit" class="btn btn-primary">Add Ressource</button>
+                                </form>
+                            </div>
+                        </div>
 
-                                            </div>
-                                        </form>
-                                    </td>
-                                </tr>
-                                <%}}}}%>
-
-                                </tbody>
-                            </table>
+                        <!-- Table to list resources associated with the Appel D'offres -->
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <h5>Associated Resources</h5>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Ressource ID</th>
+                                        <th>Type Ressource</th>
+                                        <th>Code Inventaire</th>
+                                        <th>Etat Demande</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <%
+                                        if (ressources != null && !ressources.isEmpty()) {
+                                            for (Ressource ressource : ressources) {
+                                    %>
+                                    <tr>
+                                        <td><%= ressource.getId() %></td>
+                                        <td><%= ressource.getTypeRessource() %></td>
+                                        <td><%= ressource.getCodeInventaire() %></td>
+                                        <td><%= ressource.getEtatDemande().name() %></td>
+                                    </tr>
+                                    <%
+                                        }
+                                    } else {
+                                    %>
+                                    <tr>
+                                        <td colspan="4">No Resources associated.</td>
+                                    </tr>
+                                    <%
+                                        }
+                                    %>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-            <!-- /.container-fluid -->
+
             <!-- Modal -->
             <div id="userModal" class="modal">
                 <div class="modal-content">
@@ -385,7 +418,26 @@
 
 </script>
 
+<script>
+    function handleFormSubmission(event, appelId) {
+        event.preventDefault();
+        const form = event.target;
 
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Navigate to a specified URL
+                    window.location.href = '/AppelDoffre='+appelId;
+                } else {
+                    console.error("Error adding resource to Appel D'offres");
+                }
+            });
+    }
+
+</script>
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

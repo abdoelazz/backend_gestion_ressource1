@@ -1,6 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="gestionRessource.backend.model.User" %>
 <%@ page import="gestionRessource.backend.model.Role" %>
+<%@ page import="gestionRessource.backend.model.Fournisseur" %>
+<%@ page import="gestionRessource.backend.model.Ressource" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -257,12 +259,9 @@
             <div class="container-fluid">
 
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3>liste des personnels</h3>
+                    <h3>liste des ressources</h3>
 
                     <div class="d-flex align-items-center">
-                        <form action="/newPersonnels" class="mr-2">
-                            <button class="btn btn-primary" type="submit">Add User</button>
-                        </form>
                         <i class="fas fa-filter"></i>
                     </div>
                 </div>
@@ -274,49 +273,43 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>nom</th>
-                                    <th>departement</th>
-                                    <th>Role</th>
-                                    <th></th>
+                                    <th>#</th>
+                                    <th>Code Inventaire</th>
+                                    <th>Type Ressource</th>
+                                    <th>État Demande</th>
+                                    <th>Date de Création</th>
+                                    <th>Actions</th>
                                 </tr>
                                 </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>nom</th>
-                                    <th>departement</th>
-                                    <th>Role</th>
-                                    <th></th>
-                                </tr>
-                                </tfoot>
-                                <tbody><%
-                                    List<User> users= (List<User>) session.getAttribute("Users");
-                                    if (users != null && !users.isEmpty()) {
-                                        for (User use : users) {
-                                            if(!use.getRole().equals(Role.Fournisseur)){
-                                                if(!use.getRole().equals(Role.Responsable))
-                                                {
+                                <tbody>
+                                <%
+                                    List<Ressource> ressources = (List<Ressource>) session.getAttribute("ressources");
+                                    if (ressources != null && !ressources.isEmpty()) {
+                                        int index = 1;
+                                        for (Ressource ressource : ressources) {
                                 %>
-
-                                <tr onclick="detailProfil('<%= use.getLogin() %>')">
-
+                                <tr>
+                                    <td><%= index %></td>
+                                    <td><%= ressource.getCodeInventaire() != null ? ressource.getCodeInventaire() : " " %></td>
+                                    <td><%= ressource.getTypeRessource() != null ? ressource.getTypeRessource() : " " %></td>
+                                    <td><%= ressource.getEtatDemande() != null ? ressource.getEtatDemande().name() : " " %></td>
+                                    <td><%= ressource.getDateCreation() != null ? ressource.getDateCreation().toString() : " " %></td>
                                     <td>
-                                        <p><%=use.getFirst_name()%>  <%=use.getLast_name()%></p></a>
-                                    </td>
-                                    <td><%if(use.getDepartement()!=null ){%><%=use.getDepartement().getNomDepartement()%><%}%></td>
-                                    <td>
-                                        <span class="status <% if(!use.getRole().equals(Role.Enseignant)){%> pending <%}else if(!use.getRole().equals(Role.ChefDepartement)){%>completed<%}else if(!use.getRole().equals(Role.Technicien)){%>pending<%}%>"><%=use.getRole()%></span>
-                                    </td>
-                                    <td>
-                                        <form action="/deletePerso/<%= use.getLogin() %>"  >
-                                            <div class="form-input">
-                                                <button class="btn btn-primary " type="submit" style="background:#e63c3c" >delete</button>
-
-                                            </div>
-                                        </form>
+                                        <a href="<c:url value='/Ressource=<%= ressource.getId() != null ? ressource.getId() : "" %>' />">Voir</a>
+                                        | <a href="<c:url value='/EditRessource=<%= ressource.getId() != null ? ressource.getId() : "" %>' />">Modifier</a>
                                     </td>
                                 </tr>
-                                <%}}}}%>
-
+                                <%
+                                        index++;
+                                    }
+                                } else {
+                                %>
+                                <tr>
+                                    <td colspan="6">Aucune ressource trouvée</td>
+                                </tr>
+                                <%
+                                    }
+                                %>
                                 </tbody>
                             </table>
                         </div>
