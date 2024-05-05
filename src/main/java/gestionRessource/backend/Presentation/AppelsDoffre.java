@@ -23,6 +23,7 @@ public class AppelsDoffre {
             return "appelsDoffre";
         }
 
+
         @PostMapping("/appelsDoffre")
         public String handleAppelsDoffre(
                 @RequestParam("username") String username,
