@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class FournisseurCompte {
-
+	//fournisseur
 	@GetMapping("/fournisseur/compte")
 	public String showFournisseurCompte(HttpServletRequest request) {
 		// Testing if the user has a sessoin

@@ -324,8 +324,9 @@ public class Respo {
                     session.setAttribute("Users", users);
                     List<Fournisseur> Fournisseurs= new ArrayList<Fournisseur>();
                     for(User use :users){
-                        if(fournisseurController.getFournisseurById(use.getId())!=null)
-                            Fournisseurs.add(fournisseurController.getFournisseurById(use.getId()));
+
+                        if(fournisseurController.getFournisseurById((use.getId()))!=null)
+                            Fournisseurs.add(fournisseurController.getFournisseurById((use.getId())));
                     }
                     session.setAttribute("Users", Fournisseurs);
                     return "responsable/Fournisseurs";}
@@ -338,6 +339,7 @@ public class Respo {
 
 
     }
+    //Ressources
     @GetMapping("/Ressources")
     public String Ressources(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession(false);

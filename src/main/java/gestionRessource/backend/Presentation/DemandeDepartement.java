@@ -23,6 +23,7 @@ public class DemandeDepartement {
     private RessourceService ressourceService;
     @Autowired
     private NotificationController notificationController;
+    //consulterDemandes
     @GetMapping("/consulterDemandes")
     public String showDemandeDepartement(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession(false);

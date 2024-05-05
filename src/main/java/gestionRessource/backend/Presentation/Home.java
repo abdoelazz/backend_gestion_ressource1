@@ -25,7 +25,7 @@ public class Home {
     private NotificationController notificationController;
     @Autowired
     private UserController userController;
-
+    //home
     @GetMapping("/home")
     public String showHomePage(HttpServletRequest request) {
 

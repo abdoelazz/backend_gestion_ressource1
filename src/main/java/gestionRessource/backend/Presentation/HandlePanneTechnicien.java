@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class HandlePanneTechnicien {
         @Autowired
         private PanneController panneController;
+        //affecterPanne
         @PostMapping("/affecterPanne")
         public String handleAffecterPanneTechnicien(
                 @RequestParam("panneId") Long panneId,

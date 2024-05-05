@@ -34,7 +34,7 @@ public class FournisseurPropositionController {
 	
 	@Autowired
 	private DetailController detailController;
-
+	//fournisseur
 	@GetMapping("/fournisseur/propositions")
 	public String showMyPropositions(HttpServletRequest request, Model model) {
 		

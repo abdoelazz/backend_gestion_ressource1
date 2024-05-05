@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UpdatePassword {
         @Autowired
         private UserController userController;
+        //updatePassword
         @PostMapping("/updatePassword")
         public String handleUpdatePassword(
                 @RequestParam("password") String password,

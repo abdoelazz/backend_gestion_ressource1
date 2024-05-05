@@ -27,7 +27,7 @@ public class ImprimanteEnseignant {
         @Autowired
         private UserController userController;
 
-
+        //imprimanteEnseignant
         @GetMapping("/imprimanteEnseignant")
         public String showImprimanteEnseignantPage(HttpServletRequest request) {
             HttpSession session = request.getSession(false);

@@ -16,14 +16,14 @@ import java.util.List;
 public class AppelsDoffre {
         @Autowired
         AppelDoffreController appelDoffreController;
+        //appelsDoffre
         @GetMapping("/appelsDoffre")
         public String showAppelsDoffrePage(HttpServletRequest request) {
             List<AppelDoffre> appelDoffres= appelDoffreController.getAppelDoffresNew();
             request.setAttribute("appelDoffres", appelDoffres);
             return "appelsDoffre";
         }
-
-
+        //appelsDoffre
         @PostMapping("/appelsDoffre")
         public String handleAppelsDoffre(
                 @RequestParam("username") String username,

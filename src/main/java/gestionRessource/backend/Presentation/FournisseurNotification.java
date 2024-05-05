@@ -20,7 +20,7 @@ public class FournisseurNotification {
 	
 	@Autowired
 	private NotificationController notificationController;
-	
+	//fournisseur
 	@GetMapping("/fournisseur/notifications")
 	public String showMyNotifications(HttpServletRequest request, Model model) {
 		

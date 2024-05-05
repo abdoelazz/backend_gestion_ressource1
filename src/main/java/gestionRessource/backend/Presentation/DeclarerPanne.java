@@ -24,6 +24,7 @@ public class DeclarerPanne {
     private PanneController panneController;
     @Autowired
     private NotificationController notificationController;
+    //declarerPanne
     @GetMapping("/declarerPanne")
     public String showDeclarerPannePage(HttpServletRequest request) {
         HttpSession session = request.getSession(false);

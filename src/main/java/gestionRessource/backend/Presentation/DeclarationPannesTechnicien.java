@@ -30,6 +30,7 @@ public class DeclarationPannesTechnicien {
     private PanneController panneController;
     @Autowired
     private NotificationController notificationController;
+    //resoudrePannes
     @GetMapping("/resoudrePannes")
     public String showResoudrePannesPage(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
