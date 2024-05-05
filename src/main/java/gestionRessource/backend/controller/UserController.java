@@ -79,13 +79,14 @@ public class UserController {
 	}
 
 	@PutMapping("/modifyUser")
-	public User modifyUser(@RequestParam Long id, @RequestBody UserDTO userdto) {
+	public User modifyUser(@RequestParam Long id, @RequestBody String login , @RequestBody String firstname, @RequestBody String lastname, @RequestBody Long departementId, @RequestBody Role role) {
 		User oldUser = userService.getUserById(id);
-		Departement departement = departementService.getDepartementById(userdto.getDepartementId());
+		Departement departement = departementService.getDepartementById(departementId);
 		oldUser.setDepartement(departement);
-		oldUser.setFirst_name(userdto.getFirst_name());
-		oldUser.setLast_name(userdto.getLast_name());
-		oldUser.setLogin(userdto.getLogin());
+		oldUser.setFirst_name(firstname);
+		oldUser.setLast_name(lastname);
+		oldUser.setLogin(login);
+		oldUser.setRole(role);
 		User userModified = userService.saveUser(oldUser);
 		if (userModified != null) {
 			return userModified;
@@ -111,5 +112,10 @@ public class UserController {
 	public List<User> getUsersByRoleAndDep(@RequestBody UserDTO userDTO) {
 		return userService.getUsersByRoleAndDep(userDTO.getRole(), userDTO.getDepartementId());
 	}
+	@PutMapping("/DeleteUser")
+	public void DeleteUser( @RequestBody String login ) {
+		userService.deleteUser(login);
+	}
+
 
 }

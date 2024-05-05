@@ -46,29 +46,37 @@
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
-            <a class="nav-link" href="departements">
-                <i class="fas fa-building"></i>
-                <span>Departements</span></a>
+            <a class="nav-link" href="Personnels" style="background-color: #0a53be;">
+                <i class="fas fa-users"></i>
+                <span>Personnels</span></a>
         </li>
-
         <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="Respo\AppelDoffres">
+                <i class="fas fa-bullhorn"></i>
+                <span>Proposition</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="Respo\AppelDoffres">
                 <i class="fas fa-bullhorn"></i>
                 <span>Appels d'offre</span></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="/Respo/Ressources">
                 <i class="fas fa-desktop"></i>
-                <span>Ordinateurs</span></a>
+                <span>Ressources</span></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="">
-                <i class="fas fa-print"></i>
-                <span>imprimantes</span></a>
+            <a class="nav-link" href="Respo\Pannes">
+                <i class="fas fa-bug"></i>
+                <span>Pannes</span></a>
         </li>
-
+        <li class="nav-item">
+            <a class="nav-link" href="Respo\Fournisseurs" style="background-color: #0a53be;">
+                <i class="fas fa-users"></i>
+                <span>Fournisseurs</span></a>
+        </li>
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">

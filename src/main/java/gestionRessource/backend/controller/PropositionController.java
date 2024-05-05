@@ -1,14 +1,10 @@
 package gestionRessource.backend.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import gestionRessource.backend.dto.DetailRessourceDTO;
 import gestionRessource.backend.dto.PropositionDTO;
@@ -55,6 +51,7 @@ public class PropositionController {
 		proposition.setEtatProposition(EtatProposition.NonTraite);
 		proposition.setMontantTotal(propositionDto.getMontantTotal());
 		proposition.setFournisseur(fournisseur);
+		propositionService.saveProposition(proposition);
 		if (propositionDto.getDetailRessourceDto() != null && !propositionDto.getDetailRessourceDto().isEmpty()) {
 			for (DetailRessourceDTO detailRessourceDto : propositionDto.getDetailRessourceDto()) {
 				Ressource ressource = ressourceService.getRessourceById(detailRessourceDto.getIdRessource());
@@ -63,6 +60,7 @@ public class PropositionController {
 				detail.setMarque(detailRessourceDto.getMarque());
 				detail.setPrix(detailRessourceDto.getPrix());
 				detail.setRessource(ressource);
+				detail.setProposition(proposition);
 				ressource.setDetail(detail);
 				detailService.saveDetail(detail);
 				ressourceService.saveRessource(ressource);
@@ -76,5 +74,45 @@ public class PropositionController {
 	@GetMapping("/getPropositionOrderByMoinsDisant")
 	public List<Proposition> getPropositionOrderByMoinsDisant() {
 		return propositionService.getPropositionOrderByMoinsDisant();
+	}
+
+	@GetMapping("/getPropositionForFournisseur")
+	public List<Proposition> getPropositionForFournisseur(@RequestParam Long fournisseurId) {
+		List<Proposition> propositions = propositionService.getPropositionByFournisseur(fournisseurId);
+		return propositions;
+	}
+
+	@GetMapping("/checkPropositionForFournisseur")
+	public Proposition checkPropositionForFournisseur(@RequestParam Long fournisseurId,
+													  @RequestParam Long appelDoffreId) {
+		Proposition proposition = propositionService.getPropositionByFournisseurAndAppelDoffre(fournisseurId,
+				appelDoffreId);
+		return proposition;
+	}
+
+	@GetMapping("/getAllPropositions")
+	public List<Proposition> getAllPropositions() {
+		List<Proposition> proposition = propositionService.getAllPropositions();
+		return proposition;
+	}
+
+	@GetMapping("/Propositionbyid")
+	public Optional<Proposition> getPropositionById(Long id) {
+		Optional<Proposition> proposition = propositionService.PropositionbyID(id);
+		return proposition;
+	}
+
+	@PutMapping("/refuse")
+	public Proposition RefuserProposition(@RequestParam Long proposition_id) {
+		Proposition oldProposition = propositionService.getPropositionbyId(proposition_id);
+		oldProposition.setEtatProposition(EtatProposition.refuse);
+		return propositionService.saveProposition(oldProposition);
+	}
+
+	@PutMapping("/accepte")
+	public Proposition AccepterProposition(@RequestParam Long proposition_id) {
+		Proposition oldProposition = propositionService.getPropositionbyId(proposition_id);
+		oldProposition.setEtatProposition(EtatProposition.accepte);
+		return propositionService.saveProposition(oldProposition);
 	}
 }

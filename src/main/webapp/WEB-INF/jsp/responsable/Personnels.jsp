@@ -1,6 +1,6 @@
-<%@ page import="gestionRessource.backend.model.Departement" %>
 <%@ page import="java.util.List" %>
 <%@ page import="gestionRessource.backend.model.User" %>
+<%@ page import="gestionRessource.backend.model.Role" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,29 +56,37 @@
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
-            <a class="nav-link" href="departements" style="background-color: #0a53be;">
-                <i class="fas fa-building"></i>
-                <span>Departements</span></a>
+            <a class="nav-link" href="/Personnels" style="background-color: #0a53be;">
+                <i class="fas fa-users"></i>
+                <span>Personnels</span></a>
         </li>
-
         <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="/AppelDoffres">
+                <i class="fas fa-bullhorn"></i>
+                <span>Proposition</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/AppelDoffres">
                 <i class="fas fa-bullhorn"></i>
                 <span>Appels d'offre</span></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="/Ressources">
                 <i class="fas fa-desktop"></i>
-                <span>Ordinateurs</span></a>
+                <span>Ressources</span></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="">
-                <i class="fas fa-print"></i>
-                <span>imprimantes</span></a>
+            <a class="nav-link" href="/Pannes">
+                <i class="fas fa-bug"></i>
+                <span>Pannes</span></a>
         </li>
-
+        <li class="nav-item">
+            <a class="nav-link" href="/Fournisseurs" style="background-color: #0a53be;">
+                <i class="fas fa-users"></i>
+                <span>Fournisseurs</span></a>
+        </li>
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
@@ -248,13 +256,17 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
-                <!-- Page Heading and Add Department Button -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Departements</h1>
-                    <a href="ajouterDepartement" class="btn btn-primary btn-circle" title="nouveau département">
-                        <i class="fas fa-plus"></i>
-                    </a>
+                    <h3>liste des personnels</h3>
+
+                    <div class="d-flex align-items-center">
+                        <form action="/newPersonnels" class="mr-2">
+                            <button class="btn btn-primary" type="submit">Add User</button>
+                        </form>
+                        <i class="fas fa-filter"></i>
+                    </div>
                 </div>
+
 
                 <div class="card shadow mb-4">
                     <div class="card-body">
@@ -262,46 +274,49 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>Departements</th>
-                                    <th>Enseignants</th>
+                                    <th>nom</th>
+                                    <th>departement</th>
+                                    <th>Role</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
-                                    <th>Departements</th>
-                                    <th>Enseignants</th>
+                                    <th>nom</th>
+                                    <th>departement</th>
+                                    <th>Role</th>
+                                    <th></th>
                                 </tr>
                                 </tfoot>
-                                <tbody>
-                                <% List<Departement> departements = (List<Departement>) request.getAttribute("departements"); %>
-
-                                <% for (Departement departement : departements) { %>
-                                <%
-                                    String nomDepartement = departement.getNomDepartement();
-                                    List<User> users = departement.getUsers();
+                                <tbody><%
+                                    List<User> users= (List<User>) session.getAttribute("Users");
+                                    if (users != null && !users.isEmpty()) {
+                                        for (User use : users) {
+                                            if(!use.getRole().equals(Role.Fournisseur)){
+                                                if(!use.getRole().equals(Role.Responsable))
+                                                {
                                 %>
-                                <tr>
-                                    <td>
-                                        <a href="#" onclick="showDepartmentUsers('<%= departement.getId() %>'); return false;">
-                                            <%= nomDepartement %>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <% if (users.size() == 1) { %>
-                                        <%= users.get(0).getFirst_name() %>
-                                        <%= users.get(0).getLast_name() %>
-                                        <% } else { %>
-                                            <% for (int i = 0; i < users.size(); i++) { %>
-                                                <%= users.get(i).getFirst_name() %>
-                                                <%= users.get(i).getLast_name() %>
-                                                <% if (i < users.size() - 1) { %>,
-                                                <% } %>
-                                            <% } %>
-                                        <% } %>
-                                    </td>
 
+                                <tr onclick="detailProfil('<%= use.getLogin() %>')">
+
+                                    <td>
+                                        <p><%=use.getFirst_name()%>  <%=use.getLast_name()%></p></a>
+                                    </td>
+                                    <td><%if(use.getDepartement()!=null ){%><%=use.getDepartement().getNomDepartement()%><%}%></td>
+                                    <td>
+                                        <span class="status <% if(!use.getRole().equals(Role.Enseignant)){%> pending <%}else if(!use.getRole().equals(Role.ChefDepartement)){%>completed<%}else if(!use.getRole().equals(Role.Technicien)){%>pending<%}%>"><%=use.getRole()%></span>
+                                    </td>
+                                    <td>
+                                        <form action="/deletePerso/<%= use.getLogin() %>"  >
+                                            <div class="form-input">
+                                                <button class="btn btn-primary " type="submit" style="background:#e63c3c" >delete</button>
+
+                                            </div>
+                                        </form>
+                                    </td>
                                 </tr>
-                                <% } %>
+                                <%}}}}%>
+
                                 </tbody>
                             </table>
                         </div>
@@ -364,58 +379,12 @@
     </div>
 </div>
 <script>
-    function showDepartmentUsers(departmentId) {
-
-        var departmentUsers = getDepartmentUsers(departmentId); // Replace this with your actual data retrieval logic
-        departmentUsers.forEach(function (user){
-            console.log(user.first_name);
-        })
-        var modalContent = document.getElementById("userDetails");
-        modalContent.innerHTML = ""; // Clear previous content
-
-        // Populate modal with department users
-        for (var i = 0; i < departmentUsers.length; i++) {
-            var user = departmentUsers[i];
-            modalContent.innerHTML += "<p>" + user.first_name + " " + user.last_name + "</p>";
-        }
-
-        // Display the modal
-        var modal = document.getElementById("userModal");
-        modal.style.display = "block";
+    function detailProfil(login) {
+        window.location.href = '/Personnels/{login}';
     }
 
-    function closeModal() {
-        var modal = document.getElementById("userModal");
-        modal.style.display = "none";
-    }
-
-    // Replace this function with your actual data retrieval logic
-    function getDepartmentUsers(departmentId) {
-        var javaUsers=[]
-        <% for (Departement departement : departements) { %>
-        if(departmentId == <%= departement.getId() %>)
-        {
-            <% List<User> users1 = departement.getUsers(); %>
-            const javaUsers = [
-                <%
-                   if (users1 != null && !users1.isEmpty()) {
-                       for (int i = 0; i < users1.size(); i++) {
-                            User user = users1.get(i);
-                            %>
-                { "first_name": "<%= user.getFirst_name() %>", "last_name": "<%= user.getLast_name() %>", "login": "<%= user.getLogin()%>","role":"<%= user.getRole()%>" }
-                <% if (i < users1.size() - 1) { %>,<% } %>
-                <% }
-        } %>
-            ];
-
-
-
-            return javaUsers;
-        }
-        <%}%>
-        return javaUsers;
-    }
 </script>
+
 
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>

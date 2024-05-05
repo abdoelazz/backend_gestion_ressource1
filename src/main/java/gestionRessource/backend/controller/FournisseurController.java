@@ -36,7 +36,7 @@ public class FournisseurController {
 
 	@PutMapping("/modifyFournisseur")
 	public Fournisseur modifyFournisseur(@RequestParam Long fournisseur_id,
-			@RequestBody FournisseurDTO fournisseurDto) {
+										 @RequestBody FournisseurDTO fournisseurDto) {
 		Fournisseur oldFournisseur = fournisseurService.getFournisseurById(fournisseur_id);
 		oldFournisseur.setAdresse(fournisseurDto.getAdresse());
 		oldFournisseur.setGerant(fournisseurDto.getGerant());
@@ -46,5 +46,19 @@ public class FournisseurController {
 		oldFournisseur.setEtatFournisseur(fournisseurDto.getEtatFournisseur());
 
 		return fournisseurService.ajouterFournisseur(oldFournisseur);
+	}
+
+	@PostMapping("/addFournisseurToBlackList")
+	public Fournisseur addFournisseurToBlackList(@RequestParam String fournisseur_id) {
+		Fournisseur oldFournisseur = fournisseurService.getFournisseurById(Long.parseLong(fournisseur_id));
+		oldFournisseur.setEtatFournisseur("BlackList");
+
+		return fournisseurService.ajouterFournisseur(oldFournisseur);
+	}
+
+	public Fournisseur 	getFournisseurById(@RequestParam String fournisseur_id) {
+		Fournisseur oldFournisseur = fournisseurService.getFournisseurById(Long.parseLong(fournisseur_id));
+
+		return oldFournisseur;
 	}
 }
