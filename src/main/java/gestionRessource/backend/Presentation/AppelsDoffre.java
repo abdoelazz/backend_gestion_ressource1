@@ -22,6 +22,7 @@ public class AppelsDoffre {
             request.setAttribute("appelDoffres", appelDoffres);
             return "appelsDoffre";
         }
+
         @PostMapping("/appelsDoffre")
         public String handleAppelsDoffre(
                 @RequestParam("username") String username,
