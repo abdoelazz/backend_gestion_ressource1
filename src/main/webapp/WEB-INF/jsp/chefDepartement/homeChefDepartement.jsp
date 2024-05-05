@@ -1,5 +1,5 @@
-<%@ page import="gestionRessource.backend.model.User" %>
-<%@ page import="gestionRessource.backend.model.Notification" %>
+<%@ page import="model.User" %>
+<%@ page import="model.Notification" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>

@@ -1,8 +1,8 @@
 <%@ page import="java.util.List" %>
-<%@ page import="gestionRessource.backend.model.User" %>
-<%@ page import="gestionRessource.backend.model.Ressource" %>
-<%@ page import="gestionRessource.backend.model.Ordinateur" %>
-<%@ page import="gestionRessource.backend.model.EtatDemande" %>
+<%@ page import="model.User" %>
+<%@ page import="model.Ressource" %>
+<%@ page import="model.Ordinateur" %>
+<%@ page import="model.EtatDemande" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
