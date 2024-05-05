@@ -255,10 +255,6 @@
                                 <input type="text" class="form-control" id="lastName" name="lastName" value="<%=currentUser.getLast_name()%>" disabled>
                             </div>
                             <div class="form-group">
-                                <label for="departement">Departement</label>
-                                <input type="text" class="form-control" id="departement" name="departement" value="<%=currentUser.getDepartement().getNomDepartement()%>" disabled>
-                            </div>
-                            <div class="form-group">
                                 <label for="password">Mot de passe</label>
                                 <div class="input-group">
                                     <input type="password" class="form-control" id="password" placeholder="Enter Password" >

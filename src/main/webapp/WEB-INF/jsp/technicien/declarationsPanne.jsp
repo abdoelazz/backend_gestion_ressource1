@@ -324,7 +324,7 @@
                                                             <option value="matériel">Matériel</option>
                                                         </select>
                                                         <% } else if (ressource.getTypeRessource().equals("Imprimante")) { %>
-                                                        <input type="text" class="form-control" id="explication<%= panne.getId() %>" placeholder="Explication" value="matériel" disabled>
+                                                        <input type="text" class="form-control" id="ordre<%= panne.getId() %>" placeholder="ordre" value="matériel" disabled>
                                                         <% } %>
                                                     </div>
                                                     <div class="form-group">
@@ -337,7 +337,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Fermer</button>
-                                                <button class="btn btn-primary" onclick="enregistrerConstat(<%= panne.getId() %>)">Enregistrer</button>
+                                                <button class="btn btn-primary" onclick="redigerConstat(<%= panne.getId() %>)">Enregistrer</button>
                                             </div>
                                         </div>
                                     </div>
@@ -517,26 +517,29 @@
         });
     }
 
-
-</script>
-
-
-<script type="text/javascript">
     function redigerConstat(panneId) {
+        var explication = $("#explication" + panneId).val();
+        var frequenceConstat = $("#frequenceConstat" + panneId).val();
+        var ordre = $("#ordre" + panneId).val();
+        var dateApparition = $("#dateApparition" + panneId).val();
         $.ajax({
             type: 'POST',
-            url: 'constat',
-            data: { panneId: panneId },
+            url: 'declarerConstat',
+            data: { panneId: panneId , explication : explication , frequenceConstat : frequenceConstat , ordre : ordre,dateApparition : dateApparition},
             success: function(response) {
-                r
+                // Rafraîchir la page ou mettre à jour la table après modification réussie
+                location.reload();
             },
             error: function(xhr, status, error) {
-                console.error('Error affecting panne:', error);
-                // You can show an error message to the user if deletion fails
+                console.error('Erreur lors du changement d\'état de la panne:', error);
+                // Vous pouvez afficher un message d'erreur à l'utilisateur si la modification échoue
             }
         });
     }
+
+
 </script>
+
 
 
 </body>
