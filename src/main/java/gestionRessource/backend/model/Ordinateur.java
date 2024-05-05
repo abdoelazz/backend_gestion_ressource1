@@ -31,7 +31,6 @@ public class Ordinateur extends Ressource {
 			Date dateCreation) {
 		super(id, codeInventaire, etatDemande, user, enseignant, appelDoffre, detail, departement, pannes,
 				typeRessource, dateCreation);
-		// TODO Auto-generated constructor stub
 	}
 
 	public Ordinateur(String cpu, String ram, String disqueDur, String ecran) {

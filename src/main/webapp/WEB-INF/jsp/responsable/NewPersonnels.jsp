@@ -21,49 +21,55 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home">
             <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
+
             </div>
             <div class="sidebar-brand-text mx-3">Ressources</div>
         </a>
-
-
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item ">
+            <a class="nav-link" href="home">
+                <i class="fas fa-fw fa-home"></i>
+                <span>Accueil</span>
+            </a>
+        </li>
+        <hr class="sidebar-divider">
         <!-- Heading -->
         <div class="sidebar-heading">
             Interface
         </div>
 
         <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="/Personnels" style="background-color: #0a53be;">
+        <li class="nav-item active">
+            <a class="nav-link" href="personnels" >
                 <i class="fas fa-users"></i>
                 <span>Personnels</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/AppelDoffres">
+            <a class="nav-link" href="AppelDoffres">
                 <i class="fas fa-bullhorn"></i>
                 <span>Proposition</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/AppelDoffres">
+            <a class="nav-link" href="AppelDoffres">
                 <i class="fas fa-bullhorn"></i>
                 <span>Appels d'offre</span></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/Ressources">
+            <a class="nav-link" href="Ressources">
                 <i class="fas fa-desktop"></i>
                 <span>Ressources</span></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/Pannes">
+            <a class="nav-link" href="Pannes">
                 <i class="fas fa-bug"></i>
                 <span>Pannes</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/Fournisseurs" style="background-color: #0a53be;">
+            <a class="nav-link" href="Fournisseurs" >
                 <i class="fas fa-users"></i>
                 <span>Fournisseurs</span></a>
         </li>

@@ -26,7 +26,7 @@ public class DeclarerPanne {
     private NotificationController notificationController;
     @GetMapping("/declarerPanne")
     public String showDeclarerPannePage(HttpServletRequest request) {
-        HttpSession session = request.getSession(false); // Retrieve existing session or null if no session exists
+        HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("user") instanceof User) {
             User currentUser = (User) session.getAttribute("user");
             List<Notification> notifications = notificationController.getNotificationByUser(currentUser.getId());
@@ -51,11 +51,6 @@ public class DeclarerPanne {
         }
     }
 
-
-
-
-
-
     @PostMapping("/declarerPanne")
     public String handleDeclarerPanne(
             @RequestParam("typeDeRess") String typeDeRess,
@@ -70,19 +65,19 @@ public class DeclarerPanne {
             {
                 panneController.addPanneToRessource(ressourceId1,detail);
                 redirectAttributes.addFlashAttribute("successMessage", "Declaration créée avec succès.");
-                return "redirect:/home"; // Redirect to resource list view or dashboard
+                return "redirect:/home";
             } else if (typeDeRess.equals("Imprimante")) {
                 panneController.addPanneToRessource(ressourceId2,detail);
                 redirectAttributes.addFlashAttribute("successMessage", "Declaration créée avec succès.");
-                return "redirect:/home"; // Redirect to resource list view or dashboard
+                return "redirect:/home";
 
             }
             else
             redirectAttributes.addFlashAttribute("errorMessage", "Une erreur est servenue.");
-            return "panne"; // Stay on the same page and show error
+            return "panne";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "An error occurred: " + e.getMessage());
-            return "panne"; // Stay on the same page and show error
+            return "panne";
         }
     }
 }

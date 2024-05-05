@@ -41,7 +41,6 @@ public class Constat {
 
 	public Constat() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Constat(Long id, String explication, FrequenceConstat frequenceConstat, Ordre ordre, Date dateApparition,

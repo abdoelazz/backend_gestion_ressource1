@@ -29,7 +29,7 @@ public class OrdinateurEnseignant {
 
         @GetMapping("/ordinateurEnseignant")
         public String showOrdinateurEnseignantPage(HttpServletRequest request) {
-            HttpSession session = request.getSession(false); // Retrieve existing session or null if no session exists
+            HttpSession session = request.getSession(false);
             if (session != null && session.getAttribute("user") != null) {
                 User user= (User) session.getAttribute("user");
                 List<Ressource> ressources= ressourceController.getRessourcesByUserId(user.getId());
@@ -43,7 +43,6 @@ public class OrdinateurEnseignant {
                 }
                 return "redirect:/login";
             } else {
-                // If no session exists or no user is logged in, return the login page
                 return "redirect:/login";
             }
 

@@ -41,7 +41,6 @@ public class Notification {
 
 	public Notification() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Notification(Long id, String contenu, Date date_envoi, boolean etat_lu, User user, User emetteur) {

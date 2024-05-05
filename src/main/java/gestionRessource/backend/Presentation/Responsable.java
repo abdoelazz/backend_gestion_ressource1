@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class Responsable {
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
-        // Add model attributes needed for the dashboard
-        return "responsable/dashboard"; // points to /WEB-INF/jsp/dashboard.jsp
+
+        return "responsable/dashboard";
     }
 }

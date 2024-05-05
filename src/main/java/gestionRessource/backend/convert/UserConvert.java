@@ -31,8 +31,6 @@ public class UserConvert {
 		if (user.getNotifications() != null && !user.getNotifications().isEmpty()) {
 			Comparator<Notification> comparator = Comparator.comparing(Notification::isEtat_lu)
 					.thenComparing(Notification::getDate_envoi, Comparator.reverseOrder());
-
-			// Tri de la liste de notifications en utilisant le comparator
 			List<Notification> sortedNotifications = user.getNotifications().stream().sorted(comparator)
 					.collect(Collectors.toList());
 			userDto.setNotificationList(sortedNotifications);
