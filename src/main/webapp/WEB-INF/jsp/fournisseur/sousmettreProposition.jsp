@@ -1,3 +1,5 @@
+<%@ page import="model.AppelDoffre" %>
+<%@ page import="model.Ressource" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +40,7 @@
             <div class="sidebar-brand-text mx-3">Ressources</div>
         </a>
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
+        <li class="nav-item ">
             <a class="nav-link" href="home">
                 <i class="fas fa-fw fa-home"></i>
                 <span>Accueil</span>
@@ -51,7 +53,7 @@
         </div>
 
         <!-- Nav Item - Charts -->
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link" href="myPropositions" >
                 <i class="fas fa-users"></i>
                 <span>Propositions</span></a>
@@ -162,7 +164,7 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Accueil</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Proposition</h1>
                     <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                             class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                 </div>
@@ -172,12 +174,131 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Bienvenue sur votre espace de gestion des ressources</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Proposition</h1>
                     </div>
+                    <div class="separator" style="margin-top: 100px;"></div>
+                    <form action="sousmettreProposition" method="POST">
+                        <div class="soumettre-proposition">
+                            <h1 class=".h1">Soumettre Votre Propositions</h1>
+                            <p class=".p">Veuillez remplir les champs correspondants à chaque ressource et choisir la date de livraison.</p>
+
+                            <div class="ressources-proposition-container">
+                                <%
+                                    AppelDoffre appelDoffre = (AppelDoffre) request.getAttribute("appelDoffre");
+                                    if (appelDoffre != null) {
+                                        List<Ressource> ressources = appelDoffre.getRessources();
+                                        for (Ressource ressource : ressources) {
+                                            if ("Ordinateur".equals(ressource.getTypeRessource())) {
+                                %>
+                                <div class="ressource-container">
+                                    <div class="ressource">
+                                        <h3>Ressource</h3>
+                                        <hr>
+                                        <div>
+                                            <label>Type Ressource</label>
+                                            <input type="text" class="input" value="Ordinateur" disabled />
+                                        </div>
+                                        <div>
+                                            <label>CPU</label>
+                                            <input type="text" class="input" value="" disabled />
+                                        </div>
+                                        <div>
+                                            <label>RAM</label>
+                                            <input type="text" class="input" value="" disabled />
+                                        </div>
+                                        <div>
+                                            <label>Disque Dur</label>
+                                            <input type="text" class="input" value="" disabled />
+                                        </div>
+                                        <div>
+                                            <label>Ecran</label>
+                                            <input type="text" class="input" value="" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="proposition">
+                                        <h3>Sa Proposition</h3>
+                                        <hr>
+                                        <div>
+                                            <label>Marque</label>
+                                            <input type="text" name="marque[]" class="input" placeholder="Marque X" required />
+                                        </div>
+                                        <div>
+                                            <label>Durée Garantie</label>
+                                            <input type="text" name="dureeGarantie[]" class="input" placeholder="En mois" required />
+                                        </div>
+                                        <div>
+                                            <label>Prix</label>
+                                            <input type="text" name="prix[]" class="input prix" placeholder="En dhs" required />
+                                        </div>
+                                        <input type="hidden" name="idRessource[]" value="<%= ressource.getId() %>">
+                                    </div>
+                                </div>
+                                <hr>
+                                <%      } else { // Handle non-computer resources such as printers
+                                %>
+                                <div class="ressource-container">
+                                    <div class="ressource">
+                                        <h3>Ressource</h3>
+                                        <hr>
+                                        <div>
+                                            <label>Type Ressource</label>
+                                            <input type="text" class="input" value="Imprimante" disabled />
+                                        </div>
+                                        <div>
+                                            <label>Résolution</label>
+                                            <input type="text" class="input" value="" disabled />
+                                        </div>
+                                        <div>
+                                            <label>Vitesse</label>
+                                            <input type="text" class="input" value="" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="proposition">
+                                        <h3>Sa Proposition</h3>
+                                        <hr>
+                                        <div>
+                                            <label>Marque</label>
+                                            <input type="text" name="marque[]" class="input" placeholder="Marque X" required />
+                                        </div>
+                                        <div>
+                                            <label>Durée Garantie</label>
+                                            <input type="text" name="dureeGarantie[]" class="input" placeholder="En mois" required />
+                                        </div>
+                                        <div>
+                                            <label>Prix</label>
+                                            <input type="text" name="prix[]" class="input prix" placeholder="En dhs" required />
+                                        </div>
+                                        <input type="hidden" name="idRessource[]" value="<%= ressource.getId() %>">
+                                    </div>
+                                </div>
+                                <hr>
+                                <%      }
+                                }
+                                }
+                                %>
+                            </div>
+                            <div class="proposition-down-elements">
+                                <div class="total-amount-container">
+                                    <label>Montant Total (DHs)</label>
+                                    <input type="text" name="montantTotal" class="input" id="prix-total" value="0.0" disabled />
+                                </div>
+                                <div>
+                                    <label>Date Livraison</label>
+                                    <input type="date" name="dateLivraison" class="input" id="dateInput" required />
+                                </div>
+                                <div class="btn-container">
+                                    <button class="custom-btn btn-5">
+                                        <span>Envoyer Proposition</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
 
 
-                    <!-- Footer -->
+                <!-- Footer -->
                     <footer class="sticky-footer bg-white">
                         <div class="container my-auto">
                             <div class="copyright text-center my-auto">
@@ -190,33 +311,33 @@
                 </div>
                 <!-- End of Content Wrapper -->
 
-</div>
-<!-- End of Page Wrapper -->
-
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
-
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
             </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="logout">Logout</a>
+            <!-- End of Page Wrapper -->
+
+            <!-- Scroll to Top Button-->
+            <a class="scroll-to-top rounded" href="#page-top">
+                <i class="fas fa-angle-up"></i>
+            </a>
+
+            <!-- Logout Modal-->
+            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                            <a class="btn btn-primary" href="logout">Logout</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
             <!-- Profile Modal -->
             <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -263,22 +384,22 @@
             </div>
         </div>
 
-<!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-<!-- Custom scripts for all pages-->
-<script src="js/sb-admin-2.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
 
-<!-- Page level plugins -->
-<script src="vendor/chart.js/Chart.min.js"></script>
+        <!-- Page level plugins -->
+        <script src="vendor/chart.js/Chart.min.js"></script>
 
-<!-- Page level custom scripts -->
-<script src="js/demo/chart-area-demo.js"></script>
-<script src="js/demo/chart-pie-demo.js"></script>
+        <!-- Page level custom scripts -->
+        <script src="js/demo/chart-area-demo.js"></script>
+        <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
 

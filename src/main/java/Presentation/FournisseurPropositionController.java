@@ -47,7 +47,7 @@ public class FournisseurPropositionController {
 			model.addAttribute("propositions", propositions);
 	    	return "Fournisseur/myPropositions";
 	    } else {
-	    	return "redirect:/fournisseur/login";
+	    	return "redirect:login";
 	    }
 	}
 	
@@ -63,15 +63,15 @@ public class FournisseurPropositionController {
 				AppelDoffre appelDoffre = this.appelDoffreController.getAppelDoffreById(appelID);
 				model.addAttribute("appelDoffre", appelDoffre);
 							
-				return "Fournisseur/soumettreProposition";
+				return "fournisseur/sousmettreProposition";
 			} else {
 				// un message d'erreur
 				redirectAttributes.addFlashAttribute("warningMessage", "Vous avez déjà ajouté votre proposition pour cette appel d'offre.");
-				return "redirect:/appels-d-offres";
+				return "redirect:appelsDoffre";
 			}
 			
 		} else {
-			return "redirect:/fournisseur/login";
+			return "redirect:login";
 	    }
 	}
 	
@@ -124,11 +124,11 @@ public class FournisseurPropositionController {
 		if(this.propositionController.addProposition(propositionDTO) != null) {
 			// un message d'erreur
 			redirectAttributes.addFlashAttribute("succesMessage", "Vous proposition a été ajouté avec succès.");
-			return "redirect:/appels-d-offres";
+			return "redirect:appelsDoffre";
 		} else {
 			// un message d'erreur
 			redirectAttributes.addFlashAttribute("warningMessage", "Un erreur se prrduite lors de l'ajout de votre proposition, veuillez essayez à nouveau.");
-			return "redirect:/appels-d-offres";
+			return "redirect:appelsDoffre";
 		}
 	    
 	}
@@ -145,7 +145,7 @@ public class FournisseurPropositionController {
 			model.addAttribute("details", details);
 			return "Fournisseur/detailProposition";
 		} else {
-			return "redirect:/fournisseur/login";
+			return "redirect:login";
 		}
 	}
 

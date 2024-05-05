@@ -1,3 +1,4 @@
+<%@ page import="model.Proposition" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +39,7 @@
             <div class="sidebar-brand-text mx-3">Ressources</div>
         </a>
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
+        <li class="nav-item ">
             <a class="nav-link" href="home">
                 <i class="fas fa-fw fa-home"></i>
                 <span>Accueil</span>
@@ -51,7 +52,7 @@
         </div>
 
         <!-- Nav Item - Charts -->
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link" href="myPropositions" >
                 <i class="fas fa-users"></i>
                 <span>Propositions</span></a>
@@ -162,9 +163,8 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Accueil</h1>
-                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                    <h1 class="h3 mb-0 text-gray-800">Proposition</h1>
+
                 </div>
 
                 <!-- Begin Page Content -->
@@ -172,8 +172,54 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Bienvenue sur votre espace de gestion des ressources</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Proposition</h1>
                     </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date Proposition</th>
+                                <th>État Proposition</th>
+                                <th>Montant Total</th>
+                                <th>Date Livraison</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <%
+                                List<Proposition> propositions = (List<Proposition>) request.getAttribute("propositions");
+                                int index = 1;
+                                for (Proposition proposition : propositions) {
+                            %>
+                            <tr>
+                                <td><%= index %></td>
+                                <td><%= proposition.getDateProposition() %></td>
+
+                                <% if ("accepte".equals(proposition.getEtatProposition())) { %>
+                                <td class="td-status"><small class="accepted">acceptée</small></td>
+                                <% } else if ("NonTraite".equals(proposition.getEtatProposition())) { %>
+                                <td class="td-status"><small class="encours">En Cours</small></td>
+                                <% } else if ("refuse".equals(proposition.getEtatProposition())) { %>
+                                <td class="td-status"><small class="refused">réfusée</small></td>
+                                <% } %>
+
+                                <td><%= proposition.getMontantTotal() %> DHs</td>
+                                <td><%= proposition.getDateLivraison() %></td>
+                                <td>
+                                    <a href="/fournisseur/propositions/detail?idProposition=<%= proposition.getId() %>">
+                                        <button>Details Proposition</button>
+                                    </a>
+                                </td>
+                            </tr>
+                            <%
+                                    index++;
+                                }
+                            %>
+                            </tbody>
+                        </table>
+                    </div>
+
 
 
 
@@ -190,33 +236,33 @@
                 </div>
                 <!-- End of Content Wrapper -->
 
-</div>
-<!-- End of Page Wrapper -->
-
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
-
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
             </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="logout">Logout</a>
+            <!-- End of Page Wrapper -->
+
+            <!-- Scroll to Top Button-->
+            <a class="scroll-to-top rounded" href="#page-top">
+                <i class="fas fa-angle-up"></i>
+            </a>
+
+            <!-- Logout Modal-->
+            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                            <a class="btn btn-primary" href="logout">Logout</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
             <!-- Profile Modal -->
             <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -263,22 +309,22 @@
             </div>
         </div>
 
-<!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-<!-- Custom scripts for all pages-->
-<script src="js/sb-admin-2.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
 
-<!-- Page level plugins -->
-<script src="vendor/chart.js/Chart.min.js"></script>
+        <!-- Page level plugins -->
+        <script src="vendor/chart.js/Chart.min.js"></script>
 
-<!-- Page level custom scripts -->
-<script src="js/demo/chart-area-demo.js"></script>
-<script src="js/demo/chart-pie-demo.js"></script>
+        <!-- Page level custom scripts -->
+        <script src="js/demo/chart-area-demo.js"></script>
+        <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
 
