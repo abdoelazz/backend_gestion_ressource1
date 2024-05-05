@@ -1,6 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="gestionRessource.backend.model.User" %>
 <%@ page import="gestionRessource.backend.model.Role" %>
+<%@ page import="gestionRessource.backend.model.Fournisseur" %>
+<%@ page import="gestionRessource.backend.model.Ressource" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,55 +43,49 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
             <div class="sidebar-brand-icon rotate-n-15">
-
+                <i class="fas fa-laugh-wink"></i>
             </div>
             <div class="sidebar-brand-text mx-3">Ressources</div>
         </a>
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item ">
-            <a class="nav-link" href="home">
-                <i class="fas fa-fw fa-home"></i>
-                <span>Accueil</span>
-            </a>
-        </li>
-        <hr class="sidebar-divider">
+
+
         <!-- Heading -->
         <div class="sidebar-heading">
             Interface
         </div>
 
         <!-- Nav Item - Charts -->
-        <li class="nav-item active">
-            <a class="nav-link" href="personnels" >
+        <li class="nav-item">
+            <a class="nav-link" href="/Personnels" style="background-color: #0a53be;">
                 <i class="fas fa-users"></i>
                 <span>Personnels</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="AppelDoffres">
+            <a class="nav-link" href="/AppelDoffres">
                 <i class="fas fa-bullhorn"></i>
                 <span>Proposition</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="AppelDoffres">
+            <a class="nav-link" href="/AppelDoffres">
                 <i class="fas fa-bullhorn"></i>
                 <span>Appels d'offre</span></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="Ressources">
+            <a class="nav-link" href="/Ressources">
                 <i class="fas fa-desktop"></i>
                 <span>Ressources</span></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="Pannes">
+            <a class="nav-link" href="/Pannes">
                 <i class="fas fa-bug"></i>
                 <span>Pannes</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="Fournisseurs" >
+            <a class="nav-link" href="/Fournisseurs" style="background-color: #0a53be;">
                 <i class="fas fa-users"></i>
                 <span>Fournisseurs</span></a>
         </li>
@@ -115,9 +111,11 @@
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                 <!-- Sidebar Toggle (Topbar) -->
-                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                    <i class="fa fa-bars"></i>
-                </button>
+                <form class="form-inline">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </form>
 
                 <!-- Topbar Search -->
                 <form
@@ -160,8 +158,64 @@
                         </div>
                     </li>
 
-                    <%@ include file="../notification.jspf" %>
+                    <!-- Nav Item - Alerts -->
+                    <li class="nav-item dropdown no-arrow mx-1">
+                        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-bell fa-fw"></i>
+                            <!-- Counter - Alerts -->
+                            <span class="badge badge-danger badge-counter">3+</span>
+                        </a>
+                        <!-- Dropdown - Alerts -->
+                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="alertsDropdown">
+                            <h6 class="dropdown-header">
+                                Alerts Center
+                            </h6>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="mr-3">
+                                    <div class="icon-circle bg-primary">
+                                        <i class="fas fa-file-alt text-white"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="small text-gray-500">December 12, 2019</div>
+                                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                </div>
+                            </a>
+                            <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                        </div>
+                    </li>
 
+                    <!-- Nav Item - Messages -->
+                    <li class="nav-item dropdown no-arrow mx-1">
+                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-envelope fa-fw"></i>
+                            <!-- Counter - Messages -->
+                            <span class="badge badge-danger badge-counter">7</span>
+                        </a>
+                        <!-- Dropdown - Messages -->
+                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="messagesDropdown">
+                            <h6 class="dropdown-header">
+                                Message Center
+                            </h6>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="dropdown-list-image mr-3">
+                                    <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                                         alt="...">
+                                    <div class="status-indicator bg-success"></div>
+                                </div>
+                                <div class="font-weight-bold">
+                                    <div class="text-truncate">Hi there! I am wondering if you can help me with a
+                                        problem I've been having.</div>
+                                    <div class="small text-gray-500">Emily Fowler · 58m</div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                        </div>
+                    </li>
 
                     <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -169,18 +223,29 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%User currentUser = (User) session.getAttribute("user");%><%=currentUser.getFirst_name()%> <%=currentUser.getLast_name()%></span>
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
                             <img class="img-profile rounded-circle"
-                                 src="/images/portrait/small/avatar-s-7.jpg">
+                                 src="img/undraw_profile.svg">
                         </a>
                         <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#profileModal">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Profile
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Settings
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Activity Log
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Logout
                             </a>
                         </div>
                     </li>
@@ -194,12 +259,9 @@
             <div class="container-fluid">
 
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3>liste des personnels</h3>
+                    <h3>liste des ressources</h3>
 
                     <div class="d-flex align-items-center">
-                        <form action="/newPersonnels" class="mr-2">
-                            <button class="btn btn-primary" type="submit">Add User</button>
-                        </form>
                         <i class="fas fa-filter"></i>
                     </div>
                 </div>
@@ -211,49 +273,43 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>nom</th>
-                                    <th>departement</th>
-                                    <th>Role</th>
-                                    <th></th>
+                                    <th>#</th>
+                                    <th>Code Inventaire</th>
+                                    <th>Type Ressource</th>
+                                    <th>État Demande</th>
+                                    <th>Date de Création</th>
+                                    <th>Actions</th>
                                 </tr>
                                 </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>nom</th>
-                                    <th>departement</th>
-                                    <th>Role</th>
-                                    <th></th>
-                                </tr>
-                                </tfoot>
-                                <tbody><%
-                                    List<User> users= (List<User>) session.getAttribute("Users");
-                                    if (users != null && !users.isEmpty()) {
-                                        for (User use : users) {
-                                            if(!use.getRole().equals(Role.Fournisseur)){
-                                                if(!use.getRole().equals(Role.Responsable))
-                                                {
+                                <tbody>
+                                <%
+                                    List<Ressource> ressources = (List<Ressource>) session.getAttribute("ressources");
+                                    if (ressources != null && !ressources.isEmpty()) {
+                                        int index = 1;
+                                        for (Ressource ressource : ressources) {
                                 %>
-
-                                <tr onclick="detailProfil('<%= use.getLogin() %>')">
-
+                                <tr>
+                                    <td><%= index %></td>
+                                    <td><%= ressource.getCodeInventaire() != null ? ressource.getCodeInventaire() : " " %></td>
+                                    <td><%= ressource.getTypeRessource() != null ? ressource.getTypeRessource() : " " %></td>
+                                    <td><%= ressource.getEtatDemande() != null ? ressource.getEtatDemande().name() : " " %></td>
+                                    <td><%= ressource.getDateCreation() != null ? ressource.getDateCreation().toString() : " " %></td>
                                     <td>
-                                        <p><%=use.getFirst_name()%>  <%=use.getLast_name()%></p></a>
-                                    </td>
-                                    <td><%if(use.getDepartement()!=null ){%><%=use.getDepartement().getNomDepartement()%><%}%></td>
-                                    <td>
-                                        <span class="status <% if(!use.getRole().equals(Role.Enseignant)){%> pending <%}else if(!use.getRole().equals(Role.ChefDepartement)){%>completed<%}else if(!use.getRole().equals(Role.Technicien)){%>pending<%}%>"><%=use.getRole()%></span>
-                                    </td>
-                                    <td>
-                                        <form action="/deletePerso/<%= use.getLogin() %>"  >
-                                            <div class="form-input">
-                                                <button class="btn btn-primary " type="submit" style="background:#e63c3c" >delete</button>
-
-                                            </div>
-                                        </form>
+                                        <a href="<c:url value='/Ressource=<%= ressource.getId() != null ? ressource.getId() : "" %>' />">Voir</a>
+                                        | <a href="<c:url value='/EditRessource=<%= ressource.getId() != null ? ressource.getId() : "" %>' />">Modifier</a>
                                     </td>
                                 </tr>
-                                <%}}}}%>
-
+                                <%
+                                        index++;
+                                    }
+                                } else {
+                                %>
+                                <tr>
+                                    <td colspan="6">Aucune ressource trouvée</td>
+                                </tr>
+                                <%
+                                    }
+                                %>
                                 </tbody>
                             </table>
                         </div>
