@@ -31,7 +31,7 @@ public class HandlePanneTechnicien {
                 {
                     panneController.affectPanneToTechnicien(panneId,currentUser.getId());
                     redirectAttributes.addFlashAttribute("successMessage", "Panne affectée avec succee");
-                    return "redirect:/home"; // Redirect to resource list view or dashboard
+                    return "redirect:/home";
 
                 }
                 return "redirect:/login";
@@ -73,7 +73,7 @@ public class HandlePanneTechnicien {
                 PanneDTO panneDTO = new PanneDTO(etatPanne);
                 panneController.modifyPanne(panneId,panneDTO);
                 redirectAttributes.addFlashAttribute("successMessage", "Etat de la panne changé avec succee");
-                return "redirect:/home"; // Redirect to resource list view or dashboard
+                return "redirect:/home";
 
             }
             return "redirect:/login";
@@ -81,9 +81,5 @@ public class HandlePanneTechnicien {
         } else {
             return "redirect:/login";
         }
-
-
     }
-
-
     }

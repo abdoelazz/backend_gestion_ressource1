@@ -17,7 +17,6 @@ public class Imprimante extends Ressource {
 
 	public Imprimante() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Imprimante(Long id, String codeInventaire, EtatDemande etatDemande, User user, User enseignant,
@@ -25,7 +24,6 @@ public class Imprimante extends Ressource {
 			Date dateCreation) {
 		super(id, codeInventaire, etatDemande, user, enseignant, appelDoffre, detail, departement, pannes,
 				typeRessource, dateCreation);
-		// TODO Auto-generated constructor stub
 	}
 
 	public Imprimante(int resolution, int vitesseImpression) {

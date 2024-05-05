@@ -11,10 +11,10 @@ public class Logout {
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession(false); // Fetch the session and do not create a new one if it doesn't exist
+        HttpSession session = request.getSession(false);
         if (session != null) {
-            session.invalidate(); // Invalidate the session if it exists
+            session.invalidate();
         }
-        return "redirect:/login"; // Redirect to login page after logout
+        return "redirect:/login";
     }
 }

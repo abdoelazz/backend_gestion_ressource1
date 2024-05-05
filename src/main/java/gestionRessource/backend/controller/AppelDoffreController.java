@@ -48,7 +48,6 @@ public class AppelDoffreController {
 		appelDoffre.setDateDebut(appelDoffreDto.getDateDebut());
 		appelDoffre.setDateFin(appelDoffreDto.getDateFin());
 		appelDoffre.setEtatDisponibilite(true);
-		// chercher et setter la liste des ressources à partir des ressources id
 		if (appelDoffreDto.getRessourceIdList() != null && !appelDoffreDto.getRessourceIdList().isEmpty()) {
 			List<Ressource> ressourceList = new ArrayList<Ressource>();
 			for (Long idRessource : appelDoffreDto.getRessourceIdList()) {

@@ -11,7 +11,7 @@ public class index {
     @GetMapping("/")
     public String index() {
 
-        return "login";  // This will look for /WEB-INF/jsp/index.jsp
+        return "login";
     }
     @ExceptionHandler(Exception.class)
     public String handleError(HttpServletRequest request) {
@@ -29,15 +29,15 @@ public class index {
     private String determineRedirectByRole(Role role) {
         switch (role) {
             case ChefDepartement:
-                return "chefDepartement/error";
+                return "error";
             case Responsable:
-                return "responsable/error";
+                return "error";
             case Enseignant:
-                return "enseignant/error";
+                return "error";
             case Fournisseur:
-                return "fournisseur/error";
+                return "error";
             case Technicien:
-                return "technicien/error";
+                return "error";
             default:
                 return "/login";
         }

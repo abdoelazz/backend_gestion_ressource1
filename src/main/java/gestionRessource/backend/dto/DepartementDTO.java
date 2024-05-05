@@ -8,7 +8,6 @@ public class DepartementDTO {
 
 	public DepartementDTO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public DepartementDTO(String nomDepartement, List<Long> usersId) {

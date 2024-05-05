@@ -94,7 +94,6 @@ public class DemandeRessource {
             return "home";
         }
     }
-
     private Ressource createRessource(String typeDeRess, String cpu, String ram, String ecran, String disqueDur, Integer resolution, Integer vitesseImpression,HttpServletRequest request) {
         Ressource ressource = null;
         if ("Ordinateur".equals(typeDeRess)) {

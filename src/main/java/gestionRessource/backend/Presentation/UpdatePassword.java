@@ -27,7 +27,7 @@ public class UpdatePassword {
                 User currentUser = (User) session.getAttribute("user");
                 userController.modifyPasswordUser(currentUser.getId(),password);
                 redirectAttributes.addFlashAttribute("successMessage", "Mot de passe a ete modifié avec succee");
-                return "redirect:/home"; // Redirect to resource list view or dashboard
+                return "redirect:/home";
             } else {
                 return "redirect:/login";
             }

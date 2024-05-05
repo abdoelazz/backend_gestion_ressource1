@@ -44,8 +44,6 @@ public class Home {
 
     }
 
-
-
     @PostMapping("/home")
     public String handleHome(
             @RequestParam("username") String username,
@@ -54,8 +52,6 @@ public class Home {
 
 
     ) {
-
-
         return username;
     }
 

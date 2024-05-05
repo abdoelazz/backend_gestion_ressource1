@@ -22,7 +22,7 @@ public class Registration {
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-        return "register"; // Adjust the view to cater to the Fournisseur registration form
+        return "register";
     }
 
     @PostMapping("/register")
@@ -49,15 +49,15 @@ public class Registration {
             if (savedFournisseur != null) {
                 redirectAttributes.addFlashAttribute("registrationSuccess", true);
                 model.addAttribute("successMessage", "Registration completed successfully.");
-                return "redirect:/login"; // Redirect to login after successful registration
+                return "redirect:/login";
             } else {
                 redirectAttributes.addFlashAttribute("errorMessage", "Registration failed. Please try again.");
                 model.addAttribute("errorMessage", "Registration failed: Fournisseur could not be saved.");
-                return "register"; // Return to the registration form with an error message
+                return "register";
             }
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Registration failed: " + e.getMessage());
-            return "register"; // Return to the registration form with an error message
+            return "register";
         }
     }
 
