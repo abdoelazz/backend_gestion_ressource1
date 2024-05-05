@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class DemandeRessource {
     @Autowired
     private RessourceService ressourceService;
-
+    //ajouterRessource
     @GetMapping("/ajouterRessource")
     public String showDemandeForm(HttpServletRequest request) {
         HttpSession session = request.getSession(false);

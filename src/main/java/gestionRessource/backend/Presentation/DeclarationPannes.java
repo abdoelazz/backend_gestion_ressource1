@@ -30,6 +30,7 @@ public class DeclarationPannes {
     private PanneController panneController;
     @Autowired
     private NotificationController notificationController;
+    //declarationPannes
     @GetMapping("/declarationPannes")
     public String showDeclarationPannesPage(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
@@ -55,7 +56,7 @@ public class DeclarationPannes {
             return "redirect:/login";
         }
     }
-
+    //declarationPannes
     @PostMapping("/declarationPannes")
     public String handleDeclarationPannes(
             @RequestParam("typeDeRess") String typeDeRess,

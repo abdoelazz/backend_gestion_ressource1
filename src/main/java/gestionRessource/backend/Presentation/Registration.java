@@ -24,7 +24,7 @@ public class Registration {
     public String showRegistrationForm(Model model) {
         return "register";
     }
-
+    //register
     @PostMapping("/register")
     public String registerFournisseurAccount(
             @RequestParam(name = "username") String username,

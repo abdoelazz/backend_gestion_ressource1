@@ -26,7 +26,7 @@ public class OrdinateurEnseignant {
 
         @Autowired
         private UserController userController;
-
+        //ordinateurEnseignant
         @GetMapping("/ordinateurEnseignant")
         public String showOrdinateurEnseignantPage(HttpServletRequest request) {
             HttpSession session = request.getSession(false);

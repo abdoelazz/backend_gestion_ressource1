@@ -24,7 +24,7 @@ public class ChefDepartement {
     private UserController userController;
     @Autowired
     private NotificationController notificationController;
-
+    //home
     @GetMapping("/home")
     public String home(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession(false);

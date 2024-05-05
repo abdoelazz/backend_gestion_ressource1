@@ -338,6 +338,7 @@ public class Respo {
 
 
     }
+    //Ressources
     @GetMapping("/Ressources")
     public String Ressources(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession(false);
